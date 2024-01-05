@@ -1,0 +1,1 @@
+ALTER TABLE "habits" ADD COLUMN "hidden" boolean DEFAULT true;

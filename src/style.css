@@ -1,0 +1,15 @@
+body {
+	font-family: 'MD IO', sans-serif;
+	font-weight: 200;
+	overflow-x: hidden;
+	background: #eee;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 500;
+}
