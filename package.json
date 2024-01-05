@@ -39,6 +39,7 @@
   "type": "module",
   "dependencies": {
     "@neondatabase/serverless": "^0.6.1",
+    "@sveltejs/adapter-node": "^2.0.2",
     "date-fns": "^3.0.6",
     "drizzle-orm": "^0.29.3",
     "js-cookie": "^3.0.5",

@@ -41,7 +41,7 @@ export const actions = {
 		await db.delete(checks).where(eq(checks.id, check_id));
 	},
 	async hide_habit({ locals }) {
-		const { habit_id } = locals.form_data as number;
+		const { habit_id } = locals.form_data;
 		const edit_habit = await db.query.habits.findFirst({
 			where: (habits, { eq }) => eq(habits.id, habit_id)
 		});
