@@ -4,7 +4,6 @@ import { checks, habits } from '../schema';
 import { createUTCDate } from '$lib/utils';
 
 export const load = async () => {
-	// const data = await db.select().from(habits).leftJoin(checks, eq(habits.id, checks.habit_id));
 	const data = await db.query.habits.findMany({
 		with: {
 			checks: true
