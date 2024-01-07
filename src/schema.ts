@@ -1,5 +1,14 @@
 import { relations } from 'drizzle-orm';
-import { serial, text, timestamp, pgTable, date, integer, boolean } from 'drizzle-orm/pg-core';
+import {
+	serial,
+	text,
+	timestamp,
+	pgTable,
+	date,
+	integer,
+	boolean,
+	varchar
+} from 'drizzle-orm/pg-core';
 
 export const habits = pgTable('habits', {
 	id: serial('id').primaryKey(),
@@ -26,3 +35,19 @@ export const checksRelations = relations(checks, ({ one }) => ({
 		references: [habits.id]
 	})
 }));
+
+export const user = pgTable('auth_user', {
+	id: serial('id').primaryKey(),
+	email: varchar('varchar2', { length: 256 }),
+	hashed_password: varchar('hashed_password', {
+		length: 255
+	})
+});
+
+export const session = pgTable('user_session', {
+	id: serial('id').primaryKey(),
+	user_id: integer('user_id')
+		.notNull()
+		.references(() => user.id),
+	session_token: varchar('session_token', { length: 256 })
+});

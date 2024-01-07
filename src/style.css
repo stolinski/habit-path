@@ -1,8 +1,13 @@
+:root {
+	--black: #222;
+}
+
 body {
 	font-family: 'MD IO', sans-serif;
 	font-weight: 200;
 	overflow-x: hidden;
 	background: #eee;
+	color: var(--black);
 }
 
 h1,
@@ -12,4 +17,8 @@ h4,
 h5,
 h6 {
 	font-weight: 500;
+}
+
+button {
+	cursor: pointer;
 }

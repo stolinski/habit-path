@@ -3,23 +3,31 @@ import * as schema from './schema';
 import { sequence } from '@sveltejs/kit/hooks';
 import { form_data } from 'sk-form-data';
 import { DATABASE_URL } from '$env/static/private';
-import { neon, neonConfig } from '@neondatabase/serverless';
+import { Pool, neon, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
+import { authenticate_user } from '$lib/server/auth';
+import { cookie_options } from '$lib/const';
 
 neonConfig.fetchConnectionCache = true;
 
-const sql = neon(DATABASE_URL);
+export const pool = new Pool({ connectionString: DATABASE_URL });
+export const sql = neon(DATABASE_URL);
 export const db = drizzle(sql, { schema });
 
-export const auth: Handle = async ({ event, resolve }) => {
-	const cookie_string = event.request.headers.get('cookie') ?? '';
-	const cookies = parse_cookies(cookie_string);
-	console.log('cookies', cookies);
+export const authentication: Handle = async ({ event, resolve }) => {
+	const { cookies } = event;
+	const { user, access_token, refresh_token } = await authenticate_user(cookies);
+	console.log('user', user);
+	event.locals.user = user;
+
+	if (access_token) cookies.set('accessToken', access_token, cookie_options);
+	if (refresh_token) cookies.set('refreshToken', refresh_token, cookie_options);
+
 	const response = await resolve(event);
 	return response;
 };
 
-export const handle: Handle = sequence(form_data);
+export const handle: Handle = sequence(form_data, authentication);
 
 export const parse_cookies = (cookie_string: string) => {
 	if (cookie_string)

@@ -1,36 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { eachDayOfInterval, startOfMonth, endOfMonth, format, getDay } from 'date-fns';
 	import DailyButton from './DailyButton.svelte';
-	import { today } from '$lib/state.svelte';
+	import { datez } from '$lib/state.svelte';
 	import Eye from '$lib/Eye.svelte';
-	import { createUTCDate, get_circular_array_item } from '$lib/utils';
+	import { getDaysInEachMonth, get_circular_array_item, string_2_bool } from '$lib/utils';
 	import { fade } from 'svelte/transition';
 	import Cookies from 'js-cookie';
 
-	const colors = ['#0001FB', '#FFD817', '#FF9E02', '#FF5A00', '#FF0084'];
+	const colors = ['#0001FB', '#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8'];
+	const dark_colors = ['#0001FB'];
 	let { data } = $props();
-	let show_hidden = $state(Cookies.get('show_hidden') || false);
+	let show_hidden = $state(string_2_bool(Cookies.get('show_hidden')) || false);
 	let year = $state(2024);
-	// let habits = $state(data.habits);
-
-	// $effect(() => {
-	// 	habits = data.habits;
-	// });
-	// $inspect(habits);
-
 	let days_in_each_month_for_year = getDaysInEachMonth(year);
-
-	function getDaysInEachMonth(year) {
-		const months = [];
-		for (let month = 0; month < 12; month++) {
-			const startDate = startOfMonth(createUTCDate(year, month));
-			const endDate = endOfMonth(createUTCDate(year, month));
-			const daysInMonth = eachDayOfInterval({ start: startDate, end: endDate }).length;
-			months.push(daysInMonth);
-		}
-		return months;
-	}
 
 	function toggle_hidden() {
 		show_hidden = !show_hidden;
@@ -42,13 +24,18 @@
 
 <section class="habits">
 	{#each data.habits.filter((habit) => habit.visible) as habit, i}
-		<article style:--habit_color={get_circular_array_item(colors, i)}>
-			<h3>
-				{habit.name}
-				{@render hide_habit(habit)}
-			</h3>
+		<h3>
+			{habit.name}
+			{@render hide_habit(habit)}
+		</h3>
+		<article
+			style:--habit_fg={dark_colors.includes(get_circular_array_item(colors, i))
+				? 'oklch(100% 0 0 / 90%)'
+				: 'oklch(0 0 0 / 70%)'}
+			style:--habit_color={get_circular_array_item(colors, i)}
+		>
 			<div class="day_buttons">
-				{#each [...Array(days_in_each_month_for_year[today.getMonth()])] as _, i}
+				{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i}
 					<DailyButton habit_id={habit.id} {i} checks={habit.checks} />
 				{/each}
 			</div>
@@ -61,14 +48,19 @@
 {#if show_hidden}
 	<section class="habits" transition:fade>
 		<h2>Hidden</h2>
-		{#each data.habits.filter((habit) => !habit.visible) as habit, i}
-			<article style:--habit_color={get_circular_array_item(colors, i)}>
-				<h3>
-					{habit.name}
-					{@render hide_habit(habit)}
-				</h3>
+		{#each data.habits.filter((habit) => !habit.visible) as habit, i (habit.id)}
+			<h3>
+				{habit.name}
+				{@render hide_habit(habit)}
+			</h3>
+			<article
+				style:--habit_fg={dark_colors.includes(get_circular_array_item(colors, i))
+					? 'oklch(100% 0 0 / 90%)'
+					: 'oklch(0 0 0 / 70%)'}
+				style:--habit_color={get_circular_array_item(colors, i)}
+			>
 				<div class="day_buttons">
-					{#each [...Array(days_in_each_month_for_year[today.getMonth()])] as _, i}
+					{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i}
 						<DailyButton habit_id={habit.id} {i} checks={habit.checks} />
 					{/each}
 				</div>
@@ -97,22 +89,25 @@
 	</div>
 {/snippet}
 
-<!-- TODO Hidden by default habit property with server cookie to show / hide -->
 <!-- TODO YEAR View for each habit -->
 <!-- TODO YEAR view for all habits -->
 <!-- TODO User login -->
+<!-- TODO Optimistic UI because updating is slow -->
+<!-- TODO make all habits scroll together -->
+<!-- TODO move habit form to drawer -->
+<!-- TODO streaks -->
 
 <style>
 	article {
 		margin-bottom: 2rem;
 	}
 
-	article h3 form button {
+	h3 form button {
 		opacity: 0;
 		pointer-events: none;
 	}
 
-	:is(article:hover, article:focus) h3 form button {
+	:is(h3:hover, h3:focus) form button {
 		opacity: 0.5;
 		pointer-events: all;
 	}
@@ -122,6 +117,8 @@
 		font-size: 14px;
 		display: flex;
 		gap: 10px;
+		position: sticky;
+		left: 0;
 	}
 
 	h3 form button {
@@ -129,7 +126,7 @@
 		padding: 0;
 	}
 
-	article h3 form button:hover {
+	h3 form button:hover {
 		cursor: pointer;
 		background: transparent;
 		opacity: 1;
@@ -142,9 +139,6 @@
 	.day_buttons {
 		display: flex;
 		gap: 2px;
-		max-width: 100%; /* Control the maximum width */
-		max-height: 100%; /* Control the maximum height */
-		overflow: auto;
 	}
 
 	.today {
@@ -160,6 +154,9 @@
 
 	.habits {
 		grid-column: 2/4;
+		max-width: 100%; /* Control the maximum width */
+		max-height: 100%; /* Control the maximum height */
+		overflow: auto;
 	}
 	.toggle-hidden {
 		opacity: 0.3;

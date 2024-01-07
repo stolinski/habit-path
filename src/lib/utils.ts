@@ -1,3 +1,5 @@
+import { eachDayOfInterval, endOfMonth, startOfMonth } from 'date-fns';
+
 export function createUTCDate(
 	...args:
 		| [string]
@@ -43,3 +45,18 @@ export const get_circular_array_item = (array: unknown[], index: number) => {
 	const valid_index = Math.abs(index) % array.length;
 	return array[valid_index];
 };
+
+export function getDaysInEachMonth(year) {
+	const months = [];
+	for (let month = 0; month < 12; month++) {
+		const startDate = startOfMonth(createUTCDate(year, month));
+		const endDate = endOfMonth(createUTCDate(year, month));
+		const daysInMonth = eachDayOfInterval({ start: startDate, end: endDate }).length;
+		months.push(daysInMonth);
+	}
+	return months;
+}
+
+export function string_2_bool(val: string | undefined) {
+	return val === 'true';
+}
