@@ -7,7 +7,8 @@ declare global {
 		interface Locals {
 			form_data: Record<string, unknown>;
 			user: {
-				email: 'string';
+				email: string;
+				id: number;
 			};
 		}
 		// interface PageData {}
