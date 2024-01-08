@@ -7,6 +7,7 @@ import { Pool, neon, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { authenticate_user } from '$lib/server/auth';
 import { cookie_options } from '$lib/const';
+import { redirect } from '@sveltejs/kit';
 
 neonConfig.fetchConnectionCache = true;
 
@@ -17,6 +18,10 @@ export const db = drizzle(sql, { schema });
 export const authentication: Handle = async ({ event, resolve }) => {
 	const { cookies } = event;
 	const { user, access_token, refresh_token } = await authenticate_user(cookies);
+
+	if (!user && event.url.pathname !== '/login' && event.url.pathname !== '/signup') {
+		redirect(307, '/login');
+	}
 	event.locals.user = user;
 
 	if (access_token) cookies.set('accessToken', access_token, cookie_options);
