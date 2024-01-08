@@ -17,7 +17,6 @@ export const db = drizzle(sql, { schema });
 export const authentication: Handle = async ({ event, resolve }) => {
 	const { cookies } = event;
 	const { user, access_token, refresh_token } = await authenticate_user(cookies);
-	console.log('user', user);
 	event.locals.user = user;
 
 	if (access_token) cookies.set('accessToken', access_token, cookie_options);

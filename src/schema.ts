@@ -26,7 +26,7 @@ export const habitsRelations = relations(habits, ({ many }) => ({
 export const checks = pgTable('checks', {
 	id: serial('id').primaryKey(),
 	checked_at: date('date'),
-	habit_id: integer('habit_id')
+	habit_id: date('habit_id')
 });
 
 export const checksRelations = relations(checks, ({ one }) => ({

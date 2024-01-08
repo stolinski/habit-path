@@ -14,7 +14,7 @@
 	let date_formatted_of_checked = $derived(format(day_of_checked, 'dd'));
 </script>
 
-{#if checks.includes(format(day_of_checked, 'MM-dd-yy'))}
+{#if checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
 	<form action="?/remove_check" method="POST" use:enhance>
 		{@render inputs()}
 	</form>
@@ -26,9 +26,14 @@
 
 {#snippet inputs()}
 	<input type="hidden" value={habit_id} name="habit_id" id={'habit_id_' + i} />
-	<input type="hidden" value={day_of_checked} name="checked_at" id={'checked_at_' + i} />
+	<input
+		type="hidden"
+		value={format(day_of_checked, 'yyyy-MM-dd')}
+		name="checked_at"
+		id={'checked_at_' + i}
+	/>
 	<button
-		class:complete={checks.includes(format(day_of_checked, 'MM-dd-yy'))}
+		class:complete={checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
 		class:today={i === datez.today.getDay() - 1}
 		type="submit"
 		class="daily_button"
