@@ -7,12 +7,10 @@ import { user } from '../../schema';
 import { db } from '../../hooks.server';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	// const session = await locals.auth.validate();
-	// if (session) {
-	// 	if (!session.user.emailVerified) throw redirect(302, '/email-verification');
-	// 	throw redirect(302, '/');
-	// }
-	// return {};
+	if (locals.user) {
+		throw redirect(302, '/');
+	}
+	return {};
 };
 
 export const actions: Actions = {

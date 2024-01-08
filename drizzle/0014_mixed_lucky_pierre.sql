@@ -1,0 +1,1 @@
+ALTER TABLE "auth_user" ALTER COLUMN "hashed_password" SET NOT NULL;

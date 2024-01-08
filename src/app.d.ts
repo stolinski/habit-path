@@ -1,10 +1,14 @@
 // See https://kit.svelte.dev/docs/types#app
+
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
 			form_data: Record<string, unknown>;
+			user: {
+				email: 'string';
+			};
 		}
 		// interface PageData {}
 		// interface PageState {}

@@ -35,7 +35,11 @@ export async function authenticate_user(cookies: Cookies) {
 				//  If session exists, find user
 				if (session) {
 					const user = await db.query.user.findFirst({
-						where: eq(schema_user.id, session.user_id)
+						where: eq(schema_user.id, session.user_id),
+						columns: {
+							id: true,
+							email: true
+						}
 					});
 					if (user) {
 						// Create a new access token and resume session
@@ -135,4 +139,40 @@ export function setAuthCookies({
 // Generates a token to be saved to the database to identify a session
 export function createSessionToken() {
 	return generateRandomToken();
+}
+
+export async function login_with_password(password: string, email: string) {
+	// Finds user by email
+	const user = await db.query.user.findFirst({
+		where: eq(schema_user.email, email)
+	});
+	if (user) {
+		// Compares password hash to one in database
+		const compared: boolean = await authenticate_user_password(password, user?.hashed_password);
+		if (compared) {
+			return user;
+		}
+	}
+}
+
+// Takes a user and a pw string and gives you a boolean if
+// the password matches the one in the database
+export async function authenticate_user_password(
+	password: string,
+	user_pw: string
+): Promise<boolean> {
+	// Gets password hash from plain text password
+	const formattedPassword = getPasswordString(password);
+
+	if (!user_pw) return false;
+	if (user_pw) {
+		// Compares password hash to one in database
+		const compared: boolean = await verifyPassword(formattedPassword, user_pw);
+
+		if (compared) {
+			// Returns boolean if the user password is accurate
+			return compared;
+		}
+	}
+	return false;
 }
