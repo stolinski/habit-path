@@ -51,7 +51,7 @@
 		height: 60px;
 		width: 80px;
 		color: #999;
-		font-weight: 900;
+		font-weight: 400;
 		flex: 1;
 		transition: 0.2s ease-in-out all;
 		position: relative;

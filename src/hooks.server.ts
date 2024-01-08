@@ -19,7 +19,12 @@ export const authentication: Handle = async ({ event, resolve }) => {
 	const { cookies } = event;
 	const { user, access_token, refresh_token } = await authenticate_user(cookies);
 
-	if (!user && event.url.pathname !== '/login' && event.url.pathname !== '/signup') {
+	if (
+		!user &&
+		event.url.pathname !== '/login' &&
+		event.url.pathname !== '/signup' &&
+		event.url.pathname !== '/waitlist'
+	) {
 		redirect(307, '/login');
 	}
 	event.locals.user = user;

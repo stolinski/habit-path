@@ -55,8 +55,8 @@
 			</h3>
 			<article
 				style:--habit_fg={dark_colors.includes(get_circular_array_item(colors, i))
-					? 'oklch(100% 0 0 / 90%)'
-					: 'oklch(0 0 0 / 70%)'}
+					? 'var(--fg_light)'
+					: 'var(--fg_dark)'}
 				style:--habit_color={get_circular_array_item(colors, i)}
 			>
 				<div class="day_buttons">
@@ -80,11 +80,16 @@
 	<div class="form">
 		<h3>New Habit</h3>
 		<form action="?/new_habit" method="POST" use:enhance>
-			<label for="name">Name</label>
-			<input type="text" name="name" id="name" />
-			<label for="days_per_month">Days Per Month</label>
-			<input type="number" max="31" name="days_per_month" id="days_per_month" />
-			<button type="submit">Save</button>
+			<div class="row">
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" />
+			</div>
+			<div class="row">
+				<label for="days_per_month">Goal</label>
+				<input type="number" max="31" name="days_per_month" id="days_per_month" />
+				<span>days per month</span>
+			</div>
+			<button class="button" type="submit">Add Habit</button>
 		</form>
 	</div>
 {/snippet}
@@ -134,6 +139,8 @@
 
 	label {
 		font-size: 12px;
+		font-style: italic;
+		display: block;
 	}
 
 	.day_buttons {

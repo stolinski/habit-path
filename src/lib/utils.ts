@@ -1,6 +1,6 @@
 import { eachDayOfInterval, endOfMonth, startOfMonth } from 'date-fns';
 
-export const get_circular_array_item = (array: unknown[], index: number) => {
+export const get_circular_array_item = (array: string[], index: number) => {
 	// Ensure the index is a positive number then get the modulus with the array length
 	const valid_index = Math.abs(index) % array.length;
 	return array[valid_index];
