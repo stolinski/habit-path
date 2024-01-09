@@ -4,6 +4,7 @@
 	--fg_dark: oklch(0 0 0 / 70%);
 	--fg: var(--fg_dark);
 	--bg: #eee;
+	--red: #ff0084;
 }
 
 @font-face {
@@ -164,4 +165,8 @@ input:focus {
 
 .row {
 	margin-bottom: 1rem;
+}
+
+.error {
+	color: var(--red);
 }

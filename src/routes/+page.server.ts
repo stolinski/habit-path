@@ -4,7 +4,7 @@ import { checks, habits } from '../schema';
 
 export const load = async ({ locals }) => {
 	const data = await db.query.habits.findMany({
-		where: eq(habits.user_id, parseInt(locals.user.id)),
+		where: eq(habits.user_id, locals?.user?.id),
 		with: {
 			checks: true,
 		},
@@ -46,14 +46,17 @@ export const actions = {
 	},
 
 	async remove_check({ locals }) {
-		const { check_id } = locals.form_data;
+		const { check_id } = locals.form_data as { check_id: number };
 		await db.delete(checks).where(eq(checks.id, check_id));
 	},
+
 	async hide_habit({ locals }) {
-		const { habit_id } = locals.form_data;
+		const { habit_id } = locals.form_data as { habit_id: number };
+
 		const edit_habit = await db.query.habits.findFirst({
 			where: (habits, { eq }) => eq(habits.id, habit_id),
 		});
+
 		if (edit_habit)
 			await db.update(habits).set({ visible: !edit_habit.visible }).where(eq(habits.id, habit_id));
 	},

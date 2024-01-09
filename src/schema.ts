@@ -46,6 +46,11 @@ export const user = pgTable('auth_user', {
 	}).notNull(),
 });
 
+export const waitlist = pgTable('waitlist', {
+	id: serial('id').primaryKey(),
+	email: varchar('varchar2', { length: 256 }).unique(),
+});
+
 export const session = pgTable('user_session', {
 	id: serial('id').primaryKey(),
 	user_id: integer('user_id')

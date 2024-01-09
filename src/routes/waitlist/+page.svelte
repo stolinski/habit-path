@@ -1,5 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { fade } from 'svelte/transition';
+
+	const { form } = $props();
+	$inspect(form);
+	let loading = $state(false);
 </script>
 
 <div class="container">
@@ -16,11 +21,31 @@
 		Heya, I'm working hard to make this available for anyone who wants to track their habits in a
 		painless way. No subscriptions, no fluff.
 	</p>
-	<form use:enhance>
-		<label for="email">Email</label>
-		<input required id="email" name="email" type="text" placeholder="ready2track@fake.com" />
-		<button class="button" type="submit"> Sign Me Up </button>
-	</form>
+	{#if form?.success}
+		<p transition:fade>Thank you so much. I'll let you know when it's usable. Won't be long.</p>
+	{:else}
+		<form
+			method="POST"
+			use:enhance={() => {
+				loading = true;
+				return async ({ update }) => {
+					loading = false;
+					update();
+				};
+			}}
+		>
+			<label for="email">Email</label>
+			<input required id="email" name="email" type="text" placeholder="ready2track@fake.com" />
+			<button disabled={loading} class="button" type="submit"
+				>{#if loading}Submitting...{:else}
+					Sign Me Up
+				{/if}</button
+			>
+			{#if form?.message}
+				<p class="error">{form?.message}</p>
+			{/if}
+		</form>
+	{/if}
 </div>
 
 <style>

@@ -96,11 +96,11 @@
 
 <!-- TODO YEAR View for each habit -->
 <!-- TODO YEAR view for all habits -->
-<!-- TODO User login -->
 <!-- TODO Optimistic UI because updating is slow -->
 <!-- TODO make all habits scroll together -->
 <!-- TODO move habit form to drawer -->
 <!-- TODO streaks -->
+<!-- TODO Waitlist signup -->
 
 <style>
 	article {

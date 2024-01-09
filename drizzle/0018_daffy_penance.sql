@@ -1,0 +1,1 @@
+ALTER TABLE "waitlist" ADD CONSTRAINT "waitlist_varchar2_unique" UNIQUE("varchar2");
