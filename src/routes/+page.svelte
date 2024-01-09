@@ -137,12 +137,6 @@
 		opacity: 1;
 	}
 
-	label {
-		font-size: 12px;
-		font-style: italic;
-		display: block;
-	}
-
 	.day_buttons {
 		display: flex;
 		gap: 2px;
@@ -150,13 +144,6 @@
 
 	.today {
 		border: solid 2px yellow;
-	}
-
-	.form {
-		padding: 20px;
-		margin-bottom: 2rem;
-		border-radius: 4px;
-		border: solid 1px #999;
 	}
 
 	.habits {
