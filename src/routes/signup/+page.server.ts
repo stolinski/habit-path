@@ -5,6 +5,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { bcryptPassword, getPasswordString, log_user_in, normalizeEmail } from '$lib/server/auth';
 import { user } from '../../schema';
 import { db } from '../../hooks.server';
+import { PIN } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) {
@@ -15,17 +16,23 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 export const actions: Actions = {
 	default: async ({ locals, cookies }) => {
-		const { email, password } = locals.form_data;
+		const { email, password, code } = locals.form_data;
+
+		if (code !== PIN) {
+			return fail(400, {
+				message: 'Invalid Code',
+			});
+		}
 		// basic check
 		const normalized_email = normalizeEmail(email as string);
 		if (!isValidEmail(normalized_email)) {
 			return fail(400, {
-				message: 'Invalid email'
+				message: 'Invalid email',
 			});
 		}
 		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
 			return fail(400, {
-				message: 'Invalid password'
+				message: 'Invalid password',
 			});
 		}
 		try {
@@ -41,7 +48,7 @@ export const actions: Actions = {
 				.insert(user)
 				.values({
 					email: normalized_email,
-					hashed_password: passwordBcrypt
+					hashed_password: passwordBcrypt,
 				})
 				.returning();
 
@@ -51,11 +58,11 @@ export const actions: Actions = {
 			console.error('e', e);
 			// check for unique constraint error in user table
 			return fail(500, {
-				message: 'An unknown error occurred'
+				message: 'An unknown error occurred',
 			});
 		}
 		// redirect to
 		// make sure you don't throw inside a try/catch block!
 		throw redirect(302, '/');
-	}
+	},
 };

@@ -9,7 +9,9 @@
 	<input name="email" id="email" /><br />
 	<label for="password">Password</label>
 	<input type="password" name="password" id="password" /><br />
-	<input type="submit" />
+	<label for="code">Code</label>
+	<input name="code" id="code" /><br />
+	<button class="button" type="submit">Sign Up</button>
 </form>
 {#if form?.message}
 	<p class="error">{form.message}</p>
