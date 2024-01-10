@@ -14,7 +14,7 @@
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
 	let year = $state(2024);
-	let days_in_each_month_for_year = getDaysInEachMonth(year);
+	let days_in_each_month_for_year = $derived(getDaysInEachMonth(year));
 
 	function toggle_hidden() {
 		show_hidden = !show_hidden;
@@ -25,28 +25,8 @@
 {@render new_habit()}
 
 <section class="habits">
-	{#each data.habits.filter((habit) => habit.visible) as habit, i}
-		<h3>
-			{habit.name}
-			{@render hide_habit(habit)}
-		</h3>
-		<article
-			style:--habit_fg={dark_colors.includes(get_circular_array_item(colors, i))
-				? 'oklch(100% 0 0 / 90%)'
-				: 'oklch(0 0 0 / 70%)'}
-			style:--habit_color={get_circular_array_item(colors, i)}
-		>
-			<div class="day_buttons">
-				{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i}
-					<DailyButton
-						bind:habits={data.habits}
-						habit_id={habit.id}
-						{i}
-						bind:checks={habit.checks}
-					/>
-				{/each}
-			</div>
-		</article>
+	{#each data.habits.filter((habit) => habit.visible) as habit, i (habit.id)}
+		{@render habit_row({ habit, i })}
 	{/each}
 </section>
 
@@ -56,25 +36,29 @@
 	<section class="habits" transition:fade>
 		<h2>Hidden</h2>
 		{#each data.habits.filter((habit) => !habit.visible) as habit, i (habit.id)}
-			<h3>
-				{habit.name}
-				{@render hide_habit(habit)}
-			</h3>
-			<article
-				style:--habit_fg={dark_colors.includes(get_circular_array_item(colors, i))
-					? 'var(--fg_light)'
-					: 'var(--fg_dark)'}
-				style:--habit_color={get_circular_array_item(colors, i)}
-			>
-				<div class="day_buttons">
-					{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i}
-						<DailyButton habit_id={habit.id} {i} checks={habit.checks} />
-					{/each}
-				</div>
-			</article>
+			{@render habit_row({ habit, i })}
 		{/each}
 	</section>
 {/if}
+
+{#snippet habit_row({ habit, i })}
+	<h3>
+		{habit.name}
+		{@render hide_habit(habit)}
+	</h3>
+	<article
+		style:--habit_fg={dark_colors.includes(get_circular_array_item(colors, i))
+			? 'oklch(100% 0 0 / 90%)'
+			: 'oklch(0 0 0 / 70%)'}
+		style:--habit_color={get_circular_array_item(colors, i)}
+	>
+		<div class="day_buttons">
+			{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i (habit.id + i)}
+				<DailyButton habit_id={habit.id} {i} bind:checks={habit.checks} />
+			{/each}
+		</div>
+	</article>
+{/snippet}
 
 {#snippet hide_habit(habit)}
 	<form action="?/hide_habit" method="POST" use:enhance>

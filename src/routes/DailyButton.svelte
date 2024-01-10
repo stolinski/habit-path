@@ -20,7 +20,12 @@
 		method="POST"
 		use:enhance={({ formElement }) => {
 			const day = formElement.elements['checked_at'].value;
-			checks = checks.filter((check) => check === day);
+			const index = checks.indexOf(day);
+			// Check if the element is in the array
+			if (index !== -1) {
+				// Remove the element using splice
+				checks.splice(index, 1);
+			}
 		}}
 	>
 		{@render inputs()}
