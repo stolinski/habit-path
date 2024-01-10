@@ -89,7 +89,7 @@
 
 <!-- BEEF WITH RUNES -> Not being able to export State primatives -->
 <!-- BEEF WITH RUNES  Error on wrong line -->
-<!-- BEEF WITH RUNES  let date = $state(new Date()) isn't reactive when modifying date -->
+<!-- BEEF WITH RUNES  let date = $state(new Date()) isn't reactive when modifying date aka date state isn't reactive -->
 
 <!-- TODO YEAR View for each habit -->
 <!-- TODO YEAR view for all habits -->
