@@ -18,7 +18,9 @@
 
 	function toggle_hidden() {
 		show_hidden = !show_hidden;
-		Cookies.set('show_hidden', show_hidden.toString());
+		Cookies.set('show_hidden', show_hidden.toString(), {
+			sameSite: 'lax',
+		});
 	}
 </script>
 
@@ -91,6 +93,7 @@
 <!-- TODO YEAR view for all habits -->
 <!-- TODO move habit form to drawer -->
 <!-- TODO streaks -->
+<!-- TODO redo logic for serverside to rebuild days of month array on serverside and attach checks there instead of in the ui -->
 
 <style>
 	article {
