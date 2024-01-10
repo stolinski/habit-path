@@ -21,9 +21,9 @@
 		{#if !data.url.includes('signup') && !data.url.includes('login')}
 			<div class="date_picker">
 				<h2>
-					<button>«</button>
-					{format(datez.today, 'MMMM yyyy')}
-					<button>»</button>
+					<button on:click={datez.prev_month}>«</button>
+					{format(datez.active_date, 'MMMM yyyy')}
+					<button on:click={datez.next_month}>»</button>
 				</h2>
 			</div>
 			<button>{data.user?.email[0]}</button>

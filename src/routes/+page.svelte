@@ -55,7 +55,7 @@
 		style:--habit_color={get_circular_array_item(colors, i)}
 	>
 		<div class="day_buttons">
-			{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i (habit.id + i)}
+			{#each [...Array(days_in_each_month_for_year[datez.active_date.getMonth()])] as _, i (habit.id + i)}
 				<DailyButton habit_id={habit.id} {i} bind:checks={habit.checks} />
 			{/each}
 		</div>
@@ -88,6 +88,8 @@
 {/snippet}
 
 <!-- BEEF WITH RUNES -> Not being able to export State primatives -->
+<!-- BEEF WITH RUNES  Error on wrong line -->
+<!-- BEEF WITH RUNES  let date = $state(new Date()) isn't reactive when modifying date -->
 
 <!-- TODO YEAR View for each habit -->
 <!-- TODO YEAR view for all habits -->
@@ -123,8 +125,6 @@
 		grid-column: 2 / 4;
 		overflow: auto;
 	}
-
-	/* TODO make all habits scroll together */
 
 	h3 form button {
 		border: none;

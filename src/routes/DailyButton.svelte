@@ -9,7 +9,9 @@
 		checks: string[];
 	}>();
 
-	let day_of_checked = $derived(datez.today.setDate(i + 1));
+	// TODO rethink how i'm doing this whole, ischecked or not biz
+	let day_of_checked = $derived(new Date(datez.active_date.getTime()).setDate(i + 1));
+
 	let day_formatted_of_checked = $derived(format(day_of_checked, 'E'));
 	let date_formatted_of_checked = $derived(format(day_of_checked, 'dd'));
 </script>
@@ -53,7 +55,7 @@
 	/>
 	<button
 		class:complete={checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
-		class:today={i === datez.today.getDay() - 1}
+		class:today={i === datez.active_date.getDay() - 1}
 		type="submit"
 		class="daily_button"
 	>
