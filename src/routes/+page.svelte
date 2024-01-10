@@ -10,13 +10,14 @@
 	const colors = ['#0001FB', '#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8'];
 	const dark_colors = ['#0001FB'];
 	let { data } = $props();
-	let show_hidden = $state(string_2_bool(Cookies.get('show_hidden')) || false);
+	const initial_hidden = !!string_2_bool(Cookies.get('show_hidden'));
+	let show_hidden = $state(initial_hidden);
 	let year = $state(2024);
 	let days_in_each_month_for_year = getDaysInEachMonth(year);
 
 	function toggle_hidden() {
 		show_hidden = !show_hidden;
-		Cookies.set('show_hidden', show_hidden);
+		Cookies.set('show_hidden', show_hidden.toString());
 	}
 </script>
 
@@ -36,7 +37,12 @@
 		>
 			<div class="day_buttons">
 				{#each [...Array(days_in_each_month_for_year[datez.today.getMonth()])] as _, i}
-					<DailyButton habit_id={habit.id} {i} checks={habit.checks} />
+					<DailyButton
+						bind:habits={data.habits}
+						habit_id={habit.id}
+						{i}
+						bind:checks={habit.checks}
+					/>
 				{/each}
 			</div>
 		</article>
@@ -97,10 +103,9 @@
 <!-- TODO YEAR View for each habit -->
 <!-- TODO YEAR view for all habits -->
 <!-- TODO Optimistic UI because updating is slow -->
-<!-- TODO make all habits scroll together -->
+
 <!-- TODO move habit form to drawer -->
 <!-- TODO streaks -->
-<!-- TODO Waitlist signup -->
 
 <style>
 	article {
@@ -126,6 +131,13 @@
 		left: 0;
 	}
 
+	.habits {
+		grid-column: 2 / 4;
+		overflow: auto;
+	}
+
+	/* TODO make all habits scroll together */
+
 	h3 form button {
 		border: none;
 		padding: 0;
@@ -146,12 +158,6 @@
 		border: solid 2px yellow;
 	}
 
-	.habits {
-		grid-column: 2/4;
-		max-width: 100%; /* Control the maximum width */
-		max-height: 100%; /* Control the maximum height */
-		overflow: auto;
-	}
 	.toggle-hidden {
 		opacity: 0.3;
 		cursor: pointer;

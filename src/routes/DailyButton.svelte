@@ -15,11 +15,25 @@
 </script>
 
 {#if checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
-	<form action="?/remove_check" method="POST" use:enhance>
+	<form
+		action="?/remove_check"
+		method="POST"
+		use:enhance={({ formElement }) => {
+			const day = formElement.elements['checked_at'].value;
+			checks = checks.filter((check) => check === day);
+		}}
+	>
 		{@render inputs()}
 	</form>
 {:else}
-	<form action="?/add_check" method="POST" use:enhance>
+	<form
+		action="?/add_check"
+		method="POST"
+		use:enhance={({ formElement }) => {
+			const day = formElement.elements['checked_at'].value;
+			checks.push(day);
+		}}
+	>
 		{@render inputs()}
 	</form>
 {/if}

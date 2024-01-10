@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 
@@ -46,8 +46,16 @@ export const actions = {
 	},
 
 	async remove_check({ locals }) {
-		const { check_id } = locals.form_data as { check_id: number };
-		await db.delete(checks).where(eq(checks.id, check_id));
+		const { checked_at, habit_id } = locals.form_data as { checked_at: string; habit_id: number };
+		await db
+			.delete(checks)
+			.where(
+				and(
+					eq(checks.habit_id, habit_id),
+					eq(checks.user_id, locals.user.id),
+					eq(checks.checked_at, checked_at),
+				),
+			);
 	},
 
 	async hide_habit({ locals }) {
