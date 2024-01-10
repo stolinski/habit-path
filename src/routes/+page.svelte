@@ -9,8 +9,9 @@
 
 	const colors = ['#0001FB', '#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8'];
 	const dark_colors = ['#0001FB'];
+
 	let { data } = $props();
-	const initial_hidden = !!string_2_bool(Cookies.get('show_hidden'));
+	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
 	let year = $state(2024);
 	let days_in_each_month_for_year = getDaysInEachMonth(year);
@@ -100,10 +101,10 @@
 	</div>
 {/snippet}
 
+<!-- BEEF WITH RUNES -> Not being able to export State primatives -->
+
 <!-- TODO YEAR View for each habit -->
 <!-- TODO YEAR view for all habits -->
-<!-- TODO Optimistic UI because updating is slow -->
-
 <!-- TODO move habit form to drawer -->
 <!-- TODO streaks -->
 
