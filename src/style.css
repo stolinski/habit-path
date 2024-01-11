@@ -1,9 +1,10 @@
 :root {
 	--black: #222;
+	--white: #eee;
 	--fg_light: oklch(100% 0 0 / 90%);
 	--fg_dark: oklch(0 0 0 / 70%);
 	--fg: var(--fg_dark);
-	--bg: #eee;
+	--bg: var(--white);
 	--red: #ff0084;
 }
 
@@ -182,4 +183,8 @@ label {
 	font-size: 12px;
 	font-style: italic;
 	display: block;
+}
+
+.note {
+	font-size: 12px;
 }
