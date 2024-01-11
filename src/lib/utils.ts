@@ -20,3 +20,19 @@ export function getDaysInEachMonth(year: number) {
 export function string_2_bool(val: string | undefined) {
 	return val === 'true';
 }
+
+export function jump_2_today() {
+	const button = document.querySelector('button[data-today="true"]');
+	if (button) {
+		const container = document.querySelector('#visible_habits');
+
+		// Calculate the offset of the button within the container
+		const buttonOffset = button.offsetLeft;
+
+		// Calculate the center position
+		const centerPosition = buttonOffset - container.offsetWidth / 2 + button.offsetWidth / 2;
+
+		// Scroll the container
+		container.scrollLeft = centerPosition;
+	}
+}

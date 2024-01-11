@@ -3,9 +3,15 @@
 	import DailyButton from './DailyButton.svelte';
 	import { datez } from '$lib/state.svelte';
 	import Eye from '$lib/Eye.svelte';
-	import { getDaysInEachMonth, get_circular_array_item, string_2_bool } from '$lib/utils';
+	import {
+		getDaysInEachMonth,
+		get_circular_array_item,
+		jump_2_today,
+		string_2_bool,
+	} from '$lib/utils';
 	import { fade } from 'svelte/transition';
 	import Cookies from 'js-cookie';
+	import { onMount, tick } from 'svelte';
 
 	const colors = ['#0001FB', '#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8'];
 	const dark_colors = ['#0001FB'];
@@ -22,11 +28,16 @@
 			sameSite: 'lax',
 		});
 	}
+
+	onMount(async () => {
+		await tick();
+		jump_2_today();
+	});
 </script>
 
 {@render new_habit()}
 
-<section class="habits">
+<section class="habits" id="visible_habits">
 	{#each data.habits.filter((habit) => habit.visible) as habit, i (habit.id)}
 		{@render habit_row({ habit, i })}
 	{/each}

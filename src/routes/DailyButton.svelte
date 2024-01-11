@@ -8,6 +8,7 @@
 		i: number;
 		checks: string[];
 	}>();
+	let today = format(new Date(), 'yyyy-MM-dd');
 
 	// TODO rethink how i'm doing this whole, ischecked or not biz
 	let day_of_checked = $derived(new Date(datez.active_date.getTime()).setDate(i + 1));
@@ -54,6 +55,7 @@
 		id={'checked_at_' + i}
 	/>
 	<button
+		data-today={today === format(day_of_checked, 'yyyy-MM-dd')}
 		class:complete={checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
 		class:today={i === datez.active_date.getDay() - 1}
 		type="submit"

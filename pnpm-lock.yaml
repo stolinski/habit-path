@@ -12,11 +12,11 @@ dependencies:
     specifier: ^2.0.2
     version: 2.0.2(lucia@2.7.6)(pg@8.11.3)(postgres@3.4.3)
   '@neondatabase/serverless':
-    specifier: ^0.6.1
-    version: 0.6.1
+    specifier: ^0.7.2
+    version: 0.7.2
   '@sveltejs/adapter-node':
-    specifier: ^2.0.2
-    version: 2.1.0(@sveltejs/kit@2.2.0)
+    specifier: ^3.0.0
+    version: 3.0.0(@sveltejs/kit@2.3.0)
   bcrypt:
     specifier: ^5.1.1
     version: 5.1.1
@@ -28,7 +28,7 @@ dependencies:
     version: 3.2.0
   drizzle-orm:
     specifier: ^0.29.3
-    version: 0.29.3(@neondatabase/serverless@0.6.1)(pg@8.11.3)(postgres@3.4.3)
+    version: 0.29.3(@neondatabase/serverless@0.7.2)(pg@8.11.3)(postgres@3.4.3)
   js-cookie:
     specifier: ^3.0.5
     version: 3.0.5
@@ -48,8 +48,8 @@ dependencies:
     specifier: ^1.0.1
     version: 1.0.1
   vaul-svelte:
-    specifier: ^0.0.4
-    version: 0.0.4(svelte@5.0.0-next.32)
+    specifier: ^0.0.6
+    version: 0.0.6(svelte@5.0.0-next.32)
 
 devDependencies:
   '@catdadcode/svelte-adapter-bun':
@@ -57,10 +57,10 @@ devDependencies:
     version: 0.5.7
   '@sveltejs/adapter-auto':
     specifier: ^3.0.0
-    version: 3.1.0(@sveltejs/kit@2.2.0)
+    version: 3.1.0(@sveltejs/kit@2.3.0)
   '@sveltejs/kit':
-    specifier: ^2.0.0
-    version: 2.2.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11)
+    specifier: ^2.3.0
+    version: 2.3.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.0
     version: 3.0.1(svelte@5.0.0-next.32)(vite@5.0.11)
@@ -68,8 +68,8 @@ devDependencies:
     specifier: ^2.4.6
     version: 2.4.6
   '@types/eslint':
-    specifier: 8.56.0
-    version: 8.56.0
+    specifier: 8.56.1
+    version: 8.56.1
   '@types/js-cookie':
     specifier: ^3.0.6
     version: 3.0.6
@@ -713,8 +713,8 @@ packages:
       svelte: 5.0.0-next.32
     dev: false
 
-  /@neondatabase/serverless@0.6.1:
-    resolution: {integrity: sha512-rZIyWf27WxH4eW0ZRDQT2PxUJH3AphNVEnO4x1AGjBW6XrguH3ChLokup0gNGrX8cxDbP0UyduI7qdy4OLos+A==}
+  /@neondatabase/serverless@0.7.2:
+    resolution: {integrity: sha512-wU3WA2uTyNO7wjPs3Mg0G01jztAxUxzd9/mskMmtPwPTjf7JKWi9AW5/puOGXLxmZ9PVgRFeBVRVYq5nBPhsCg==}
     dependencies:
       '@types/pg': 8.6.6
     dev: false
@@ -917,29 +917,29 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@sveltejs/adapter-auto@3.1.0(@sveltejs/kit@2.2.0):
+  /@sveltejs/adapter-auto@3.1.0(@sveltejs/kit@2.3.0):
     resolution: {integrity: sha512-igS5hqCwdiXWb8NoWzThKCVQQj9tKgUkbTtzfxBPgSLOyFjkiGNDX0SgCoY2QIUWBqOkfGTOqGlrW5Ynw9oUvw==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.2.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11)
+      '@sveltejs/kit': 2.3.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11)
       import-meta-resolve: 4.0.0
     dev: true
 
-  /@sveltejs/adapter-node@2.1.0(@sveltejs/kit@2.2.0):
-    resolution: {integrity: sha512-6R4TyCtyfxbxqxjab/18TwpPlqMmPP9i+SE+9xdQFmJ0/rKRtFuNs/lwm2nx4qzKxgRA+cjN8KPKsXQuFPbGbQ==}
+  /@sveltejs/adapter-node@3.0.0(@sveltejs/kit@2.3.0):
+    resolution: {integrity: sha512-+nmnMhgWB0c1C2kLcWXp/r1zmY22ayhO8zD2oyxy4VUHYPOKt1uEmFVvLCzF7jg5aYlTtstjmrzNdP2l0MiLoQ==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
       '@rollup/plugin-commonjs': 25.0.7(rollup@4.9.4)
       '@rollup/plugin-json': 6.1.0(rollup@4.9.4)
       '@rollup/plugin-node-resolve': 15.2.3(rollup@4.9.4)
-      '@sveltejs/kit': 2.2.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11)
+      '@sveltejs/kit': 2.3.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11)
       rollup: 4.9.4
     dev: false
 
-  /@sveltejs/kit@2.2.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11):
-    resolution: {integrity: sha512-A5VvfynqKBVWib/k/g1+6TIRgq6EsHQe7Xte8QgLssk79DZDGHWn3IB1McHFzGbPVkcC4dhf43CfzB20y4dUEA==}
+  /@sveltejs/kit@2.3.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@5.0.0-next.32)(vite@5.0.11):
+    resolution: {integrity: sha512-A6/aQTVFONDDv8nRLINNiXrERq6VeAdHT+/gHPBUSDt4+b6oBKTEF3oiGzNmxspcWDgHzBpypFO7NWtkoUK67g==}
     engines: {node: '>=18.13'}
     hasBin: true
     requiresBuild: true
@@ -1011,8 +1011,8 @@ packages:
   /@types/cookie@0.6.0:
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
-  /@types/eslint@8.56.0:
-    resolution: {integrity: sha512-FlsN0p4FhuYRjIxpbdXovvHQhtlG05O1GG/RNWvdAxTboR438IOTwmrY/vLA+Xfgg06BTkP045M3vpFwTMv1dg==}
+  /@types/eslint@8.56.1:
+    resolution: {integrity: sha512-18PLWRzhy9glDQp3+wOgfLYRWlhgX0azxgJ63rdpoUHyrC9z0f5CkFburjQx4uD7ZCruw85ZtMt6K+L+R8fLJQ==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
@@ -1608,7 +1608,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.3(@neondatabase/serverless@0.6.1)(pg@8.11.3)(postgres@3.4.3):
+  /drizzle-orm@0.29.3(@neondatabase/serverless@0.7.2)(pg@8.11.3)(postgres@3.4.3):
     resolution: {integrity: sha512-uSE027csliGSGYD0pqtM+SAQATMREb3eSM/U8s6r+Y0RFwTKwftnwwSkqx3oS65UBgqDOM0gMTl5UGNpt6lW0A==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -1679,7 +1679,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@neondatabase/serverless': 0.6.1
+      '@neondatabase/serverless': 0.7.2
       pg: 8.11.3
       postgres: 3.4.3
     dev: false
@@ -3463,8 +3463,8 @@ packages:
       which-typed-array: 1.1.13
     dev: false
 
-  /vaul-svelte@0.0.4(svelte@5.0.0-next.32):
-    resolution: {integrity: sha512-JqmjJWUM1ubJecVyUbCoKQ+K8YV1rJlSILb5kg3hARDvFggPEM0HzHWgYS2xXYuf9VTIgvwRnqFHNGAzPc1sfA==}
+  /vaul-svelte@0.0.6(svelte@5.0.0-next.32):
+    resolution: {integrity: sha512-E13mNtU4iF6sH5lMu+Q9OTSNqwToMTmostgWCFHi5Ba6rLvv7UOVxvLYQqyMOs3ZnrN+aYI9I297eA9UKjCqgA==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:

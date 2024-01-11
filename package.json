@@ -16,10 +16,10 @@
   "devDependencies": {
     "@catdadcode/svelte-adapter-bun": "^0.5.7",
     "@sveltejs/adapter-auto": "^3.0.0",
-    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/kit": "^2.3.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@types/bcryptjs": "^2.4.6",
-    "@types/eslint": "8.56.0",
+    "@types/eslint": "8.56.1",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.5",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -42,8 +42,8 @@
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "1.0.0-beta.0",
     "@lucia-auth/adapter-postgresql": "^2.0.2",
-    "@neondatabase/serverless": "^0.6.1",
-    "@sveltejs/adapter-node": "^2.0.2",
+    "@neondatabase/serverless": "^0.7.2",
+    "@sveltejs/adapter-node": "^3.0.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "date-fns": "^3.0.6",
@@ -54,6 +54,6 @@
     "pg": "^8.11.3",
     "postgres": "^3.4.3",
     "sk-form-data": "^1.0.1",
-    "vaul-svelte": "^0.0.4"
+    "vaul-svelte": "^0.0.6"
   }
 }
