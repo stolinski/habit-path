@@ -23,6 +23,7 @@ export const authentication: Handle = async ({ event, resolve }) => {
 		!user &&
 		event.url.pathname !== '/login' &&
 		event.url.pathname !== '/signup' &&
+		event.url.pathname !== '/roadmap' &&
 		event.url.pathname !== '/waitlist'
 	) {
 		redirect(307, '/login');

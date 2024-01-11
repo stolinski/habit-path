@@ -54,7 +54,7 @@
 		{/each}
 	</section>
 {/if}
-
+<!-- 
 <button class="fab button">
 	<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
 		><path
@@ -64,7 +64,7 @@
 			fill="var(--white)"
 		/></svg
 	>
-</button>
+</button> -->
 
 {#snippet habit_row({ habit, i })}
 	<h3>
