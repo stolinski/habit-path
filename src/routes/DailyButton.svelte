@@ -12,7 +12,6 @@
 
 	// TODO rethink how i'm doing this whole, ischecked or not biz
 	let day_of_checked = $derived(new Date(datez.active_date.getTime()).setDate(i + 1));
-
 	let day_formatted_of_checked = $derived(format(day_of_checked, 'E'));
 	let date_formatted_of_checked = $derived(format(day_of_checked, 'dd'));
 </script>

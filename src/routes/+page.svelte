@@ -149,7 +149,6 @@
 <!-- TODO YEAR view for all habits -->
 <!-- TODO move habit form to drawer -->
 <!-- TODO streaks -->
-<!-- TODO redo logic for serverside to rebuild days of month array on serverside and attach checks there instead of in the ui -->
 
 <style>
 	article {
