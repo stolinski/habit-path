@@ -16,10 +16,11 @@
 	const colors = ['#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8', '#0001FB'];
 	const dark_colors = ['#0001FB'];
 
-	let { data } = $props();
+	let { data, form } = $props();
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
 	let year = $state(2024);
+	let loading = $state(false);
 	let days_in_each_month_for_year = $derived(getDaysInEachMonth(year));
 
 	function toggle_hidden() {
@@ -87,7 +88,7 @@
 {/snippet}
 
 {#snippet hide_habit(habit)}
-	<form action="?/hide_habit" method="POST" use:enhance>
+	<form action="?/hide_habit" method="POST">
 		<input type="hidden" name="habit_id" value={habit.id} />
 		<button><Eye /></button>
 	</form>
@@ -109,7 +110,17 @@
 {#snippet new_habit()}
 	<div class="form">
 		<h3>New Habit</h3>
-		<form action="?/new_habit" method="POST" use:enhance>
+		<form
+			action="?/new_habit"
+			method="POST"
+			use:enhance={() => {
+				loading = true;
+				return async ({ update }) => {
+					loading = false;
+					update();
+				};
+			}}
+		>
 			<div class="row">
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" />
@@ -119,7 +130,11 @@
 				<input type="number" max="31" value="31" name="days_per_month" id="days_per_month" /><br />
 				<span class="note">days per month (31 max)</span>
 			</div>
-			<button class="button" type="submit">Add Habit</button>
+			<button class="button" type="submit" disabled={loading}
+				>{#if loading}Adding...{:else}
+					Add Habit
+				{/if}</button
+			>
 		</form>
 	</div>
 {/snippet}
