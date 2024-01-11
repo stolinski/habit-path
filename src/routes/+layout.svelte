@@ -31,6 +31,8 @@
 	</header>
 {/if}
 
+<button>Logout</button>
+
 <main>
 	<slot />
 </main>
