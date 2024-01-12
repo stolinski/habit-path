@@ -1,5 +1,6 @@
 <h1>Roadmap</h1>
 <ul>
+	<li>Add Logout</li>
 	<li>Mobile New Habit form in drawer</li>
 	<li>Transactional email</li>
 	<li>Reset Password Flow</li>

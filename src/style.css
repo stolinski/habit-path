@@ -78,6 +78,8 @@ body {
 	background: var(--bg);
 	color: var(--fg_dark);
 	line-height: 1.5;
+	padding: 0;
+	margin: 0;
 	-webkit-font-smoothing: antialiased;
 }
 

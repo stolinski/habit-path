@@ -189,6 +189,8 @@
 	.habits {
 		grid-column: 2 / 4;
 		overflow: auto;
+		margin-left: -2.5vw;
+		padding-left: 2.5vw;
 	}
 
 	.day_buttons {

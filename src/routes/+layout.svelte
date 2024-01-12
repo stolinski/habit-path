@@ -18,7 +18,7 @@
 				</svg>
 			</a>
 		</h1>
-		{#if !data.url.includes('signup') && !data.url.includes('login')}
+		{#if !data.url.includes('signup') && !data.url.includes('login') && !data.url.includes('roadmap')}
 			<div class="date_picker">
 				<h2>
 					<button on:click={datez.prev_month}>«</button>
