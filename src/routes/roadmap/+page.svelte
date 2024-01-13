@@ -1,6 +1,5 @@
 <h1>Roadmap</h1>
 <ul>
-	<li>Add Logout</li>
 	<li>Add Habit deleting and updating</li>
 	<li>Transactional email</li>
 	<li>Reset Password Flow</li>
@@ -23,6 +22,10 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Jan 13 2024</li>
+	<ul>
+		<li>Add Logout</li>
+	</ul>
 	<li>Jan 12 2024</li>
 	<ul>
 		<li>Mobile New Habit form in drawer</li>
