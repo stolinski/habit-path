@@ -77,7 +77,7 @@
 		flex: 1;
 		transition: 0.2s ease-in-out all;
 		position: relative;
-		background: #ddd;
+		background: var(--bg_1);
 		overflow: hidden;
 		border-radius: 2px;
 	}
