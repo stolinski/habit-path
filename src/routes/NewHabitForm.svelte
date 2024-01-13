@@ -3,7 +3,7 @@
 	import type { ActionData } from './$types';
 	const {
 		form,
-		mobile,
+		mobile = false,
 		onfinish = () => {},
 	} = $props<{
 		form: ActionData;

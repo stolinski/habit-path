@@ -1,7 +1,7 @@
 <h1>Roadmap</h1>
 <ul>
-	<li>Add Habit deleting and updating</li>
 	<li>Add Logout</li>
+	<li>Add Habit deleting and updating</li>
 	<li>Transactional email</li>
 	<li>Reset Password Flow</li>
 	<li>Verify Email Flow</li>

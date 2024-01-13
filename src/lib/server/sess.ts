@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from '../../hooks.server';
 import { session, user } from '../../schema';
 import { decodeAccessToken } from './jwt';
@@ -31,4 +31,10 @@ export function get_session_token_from_refresh_token(refreshToken: string): stri
 
 export function find_by_session_token(session_token: string) {
 	return db.query.session.findFirst({ where: eq(session.session_token, session_token) });
+}
+
+export function delete_session(user_id: number, token_id: number) {
+	return db.query.session.findFirst({
+		where: and(eq(session.user_id, user_id), eq(session.id, token_id)),
+	});
 }
