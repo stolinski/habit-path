@@ -26,7 +26,7 @@ export const authentication: Handle = async ({ event, resolve }) => {
 		event.url.pathname !== '/roadmap' &&
 		event.url.pathname !== '/waitlist'
 	) {
-		redirect(307, '/login');
+		redirect(307, '/waitlist');
 	}
 	event.locals.user = user;
 

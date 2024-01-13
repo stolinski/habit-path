@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import DailyButton from './DailyButton.svelte';
-	import { datez } from '$lib/state.svelte';
 	import Eye from '$lib/Eye.svelte';
+	import { datez } from '$lib/state.svelte';
 	import {
 		getDaysInEachMonth,
 		get_circular_array_item,
 		jump_2_today,
 		string_2_bool,
 	} from '$lib/utils';
-	import { fade } from 'svelte/transition';
 	import Cookies from 'js-cookie';
 	import { onMount, tick } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import DailyButton from './DailyButton.svelte';
+	import Fab from './Fab.svelte';
+	import NewHabitForm from './NewHabitForm.svelte';
 
 	const colors = ['#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8', '#0001FB'];
 	const dark_colors = ['#0001FB'];
@@ -20,7 +21,6 @@
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
 	let year = $state(2024);
-	let loading = $state(false);
 	let days_in_each_month_for_year = $derived(getDaysInEachMonth(year));
 
 	function toggle_hidden() {
@@ -36,7 +36,7 @@
 	});
 </script>
 
-{@render new_habit()}
+<NewHabitForm {form} />
 
 <section class="habits" id="visible_habits">
 	{#each data.habits.filter((habit) => habit.visible) as habit, i (habit.id)}
@@ -54,17 +54,8 @@
 		{/each}
 	</section>
 {/if}
-<!-- 
-<button class="fab button">
-	<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-		><path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
-			d="M8.75 2.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
-			fill="var(--white)"
-		/></svg
-	>
-</button> -->
+
+<Fab {form} />
 
 {#snippet habit_row({ habit, i })}
 	<h3>
@@ -107,38 +98,6 @@
 	>
 {/snippet}
 
-{#snippet new_habit()}
-	<div class="form">
-		<h3>New Habit</h3>
-		<form
-			action="?/new_habit"
-			method="POST"
-			use:enhance={() => {
-				loading = true;
-				return async ({ update }) => {
-					loading = false;
-					update();
-				};
-			}}
-		>
-			<div class="row">
-				<label for="name">Name</label>
-				<input type="text" name="name" id="name" />
-			</div>
-			<div class="row">
-				<label for="days_per_month">Goal</label>
-				<input type="number" max="31" value="31" name="days_per_month" id="days_per_month" /><br />
-				<span class="note">days per month (31 max)</span>
-			</div>
-			<button class="button" type="submit" disabled={loading}
-				>{#if loading}Adding...{:else}
-					Add Habit
-				{/if}</button
-			>
-		</form>
-	</div>
-{/snippet}
-
 <!-- BEEF WITH RUNES -> Not being able to export State primatives -->
 <!-- BEEF WITH RUNES  Error on wrong line -->
 <!-- BEEF WITH RUNES  let date = $state(new Date()) isn't reactive when modifying date aka date state isn't reactive -->
@@ -152,7 +111,7 @@
 
 <style>
 	article {
-		margin-bottom: 2rem;
+		margin-bottom: 1.2rem;
 	}
 
 	h3 {
@@ -189,6 +148,8 @@
 	.habits {
 		grid-column: 2 / 4;
 		overflow: auto;
+		margin-left: -2.5vw;
+		padding-left: 2.5vw;
 	}
 
 	.day_buttons {
@@ -215,11 +176,11 @@
 		rotate: 180deg;
 	}
 
-	.fab {
-		position: fixed;
-		right: 40px;
-		bottom: 40px;
-		border-radius: 50%;
-		height: 50px;
+	/* Desktop */
+	@media (width > 700px) {
+	}
+
+	/* Mobile */
+	@media (width < 700px) {
 	}
 </style>

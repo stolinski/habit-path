@@ -36,3 +36,7 @@ export function jump_2_today() {
 		container.scrollLeft = centerPosition;
 	}
 }
+
+export function toggle_values<A, B>(VAL: A | B, VAL_1: A, VAL_2: B): A | B {
+	return VAL === VAL_1 ? VAL_2 : VAL_1;
+}
