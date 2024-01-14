@@ -1,22 +1,8 @@
 :root {
+	/* Base */
 	--black: #222;
 	--white: #eee;
 	--light_grey: #ddd;
-
-	--fg_light: oklch(100% 0 0 / 90%);
-	--fg_dark: oklch(0 0 0 / 70%);
-
-	--bg: var(--white);
-	--red: #ff3b30;
-
-	--bg: var(--white);
-	--bg_1: var(--light_grey);
-	--bg-sheet: var(--white);
-
-	/* Foreground */
-	--fg: var(--fg_dark);
-	--fg-1: var(--black-8);
-	--fg-sheet: var(--black);
 
 	/* Fonts / Typeography */
 	--font-size-xs: clamp(0.6rem, 0.17vw + 0.76rem, 0.7rem);
@@ -45,6 +31,33 @@
 		0 -22px 18px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
 		0 -41px 33px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
 		0 -100px 80px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
+
+	/* Theme */
+	--fg_light: oklch(100% 0 0 / 90%);
+	--fg_dark: oklch(0 0 0 / 70%);
+
+	--tint: oklch(100% 0 0 / 80%);
+	--shade: oklch(0 0 0 / 10%);
+
+	--red: #ff3b30;
+	--bg: var(--white);
+	--bg_1: var(--light_grey);
+	--bg-sheet: var(--white);
+
+	/* Foreground */
+	--fg: var(--fg_dark);
+	--fg-1: var(--black-8);
+	--fg-sheet: var(--black);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: var(--black);
+		--fg: var(--white);
+
+		--tint: oklch(100% 0 0 / 20%);
+		--shade: oklch(0 0 0 / 20%);
+	}
 }
 
 @font-face {
@@ -115,7 +128,7 @@ body {
 	font-weight: 200;
 	overflow-x: hidden;
 	background: var(--bg);
-	color: var(--fg_dark);
+	color: var(--fg);
 	line-height: 1.5;
 	padding: 0;
 	margin: 0;
@@ -203,6 +216,8 @@ input {
 	padding: 2px 10px;
 	border-radius: 4px;
 	border: solid 1px var(--fg);
+	color: var(--fg);
+	background: var(--bg);
 }
 
 input:focus {

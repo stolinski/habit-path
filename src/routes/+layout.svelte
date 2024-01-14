@@ -60,9 +60,13 @@
 	}
 
 	footer {
-		background: var(--bg_1);
+		background: var(--shade);
 		padding: 40px 40px 100px;
 		margin-top: auto;
+	}
+
+	footer a {
+		color: var(--fg);
 	}
 
 	footer ul {
@@ -97,6 +101,10 @@
 		justify-content: center;
 		align-self: end;
 		justify-self: center;
+	}
+	.date_picker button {
+		background: transparent;
+		color: var(--fg);
 	}
 
 	main {

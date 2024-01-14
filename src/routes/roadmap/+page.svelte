@@ -15,7 +15,6 @@
 	<li>Year view for all habits</li>
 	<li>Make it more obvious when a habit is added after you have a lot of them</li>
 	<li>Open up app for 100 waitlist users</li>
-	<li>Dark Mode</li>
 	<li>Full theme support</li>
 	<li>iOS/Android App via Tauri</li>
 </ul>
@@ -25,6 +24,7 @@
 <ul>
 	<li>Jan 13 2024</li>
 	<ul>
+		<li>Dark Mode</li>
 		<li>Add Logout</li>
 	</ul>
 	<li>Jan 12 2024</li>

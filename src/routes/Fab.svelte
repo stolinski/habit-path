@@ -38,7 +38,7 @@
 	}
 
 	.form_drawer {
-		background: var(--white);
+		background: var(--bg);
 		border-radius: 15px;
 		position: fixed;
 		inset: 40px 0 0 0;
@@ -49,10 +49,10 @@
 	.fab {
 		position: fixed;
 		right: 20px;
-		bottom: 60px;
+		bottom: 80px;
 		border-radius: 50%;
-		height: 45px;
-		width: 45px;
+		height: 48px;
+		width: 48px;
 		overflow: hidden;
 	}
 
