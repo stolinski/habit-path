@@ -47,7 +47,10 @@
 		</nav>
 	</footer>
 </div>
-<MobileNav />
+
+{#if !data.url.includes('waitlist')}
+	<MobileNav />
+{/if}
 
 <style>
 	header {

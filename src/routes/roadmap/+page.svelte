@@ -8,6 +8,7 @@
 		Redo logic for serverside to rebuild days of month array on serverside and attach checks there
 		instead of in the ui
 	</li>
+	<li>Examine slow network performance</li>
 	<li>User assign colors to habits</li>
 	<li>Open up app for 10 waitlist users</li>
 	<li>Year view for each habit</li>

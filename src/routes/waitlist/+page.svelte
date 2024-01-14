@@ -49,6 +49,27 @@
 	<p>Already have an account? <a href="/login">Login</a></p>
 </div>
 
+<!-- <hr />
+
+<section class="faq">
+	<h2>What is Habit Path?</h2>
+	<div class="screenshots">
+		<img src={screen} alt="Mobile Screenshot" style="max-height: 400px;" />
+		<img src={desk_screen} alt="Desktop Screenshot" style="max-height: 400px;" />
+	</div>
+	<p>
+		Habit Path is a free (all core features forever) habit tracking app for people who hate
+		complexity and clutter. Put your habits in front of you without making you jump through hoops or
+		pay $8/ month for a subscription.
+	</p>
+
+	<h3>Is it an app?</h3>
+	<p>
+		Currently Habit Path is a "web app". This means it runs in the browser however it can still be
+		installed onto your home screen like a normal app, <a href="/pwa">see how!</a>.
+	</p>
+</section> -->
+
 <style>
 	.container {
 		max-width: 900px;
@@ -62,5 +83,19 @@
 	}
 	label {
 		display: block;
+	}
+
+	.faq {
+		margin-top: 8rem;
+	}
+
+	.screenshots {
+		display: flex;
+		gap: 10px;
+		flex: 0 / 0;
+	}
+	.screenshots img {
+		border: solid 5px var(--bg_1);
+		border-radius: 10px;
 	}
 </style>

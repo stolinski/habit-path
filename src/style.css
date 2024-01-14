@@ -132,9 +132,7 @@ body::after {
 	height: 100%;
 	opacity: 0.1;
 	/* background-image: url('/noise.jpg'); */
-	background-repeat: no-repeat;
 	background-position: 50% 0;
-	background-size: cover;
 	pointer-events: none;
 	z-index: -1;
 	mix-blend-mode: exclusion;

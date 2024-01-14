@@ -44,7 +44,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		padding: 10px 20px 5px;
+		padding: 10px 20px 20px;
 		display: flex;
 		justify-content: space-between;
 	}

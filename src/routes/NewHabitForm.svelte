@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	const {
-		form,
-		mobile = false,
-		onfinish = () => {},
-	} = $props<{
+	const { mobile = false, onfinish = () => {} } = $props<{
 		form: ActionData;
 		mobile: boolean;
 		onfinish: () => any;
