@@ -3,6 +3,21 @@ import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 
 export const load = async ({ locals }) => {
+	// let date_tree =
+	// TODO function that builds date
+	// Building blocks for how I want to query moving forward
+	// try {
+	// 	const test = await db.query.habits.findMany({
+	// 		where: eq(habits.user_id, locals?.user?.id),
+	// 		with: {
+	// 			checks: {
+	// 				where: between(checks.checked_at, '2024-01-01', '2024-01-31'),
+	// 			},
+	// 		},
+	// 	});
+	// } catch (e) {
+	// 	console.log('e', e);
+	// }
 	const data = await db.query.habits.findMany({
 		where: eq(habits.user_id, locals?.user?.id),
 		with: {

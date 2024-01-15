@@ -1,12 +1,12 @@
 import { relations } from 'drizzle-orm';
 import {
+	boolean,
+	date,
+	integer,
+	pgTable,
 	serial,
 	text,
 	timestamp,
-	pgTable,
-	date,
-	integer,
-	boolean,
 	varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -49,6 +49,7 @@ export const user = pgTable('auth_user', {
 export const waitlist = pgTable('waitlist', {
 	id: serial('id').primaryKey(),
 	email: varchar('varchar2', { length: 256 }).unique(),
+	invited: boolean('invited').default(false),
 });
 
 export const session = pgTable('user_session', {

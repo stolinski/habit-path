@@ -134,6 +134,13 @@
       "when": 1704770868714,
       "tag": "0018_daffy_penance",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1705340629166,
+      "tag": "0019_yielding_diamondback",
+      "breakpoints": true
     }
   ]
 }

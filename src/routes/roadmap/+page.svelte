@@ -1,13 +1,9 @@
 <h1>Roadmap</h1>
 <ul>
 	<li>Add Habit deleting and updating</li>
-	<li>Transactional email</li>
 	<li>Reset Password Flow</li>
 	<li>Verify Email Flow</li>
-	<li>
-		Redo logic for serverside to rebuild days of month array on serverside and attach checks there
-		instead of in the ui
-	</li>
+	<li>Redo logic to rebuild days of month and checks server-side</li>
 	<li>Examine slow network performance</li>
 	<li>User assign colors to habits</li>
 	<li>Open up app for 10 waitlist users</li>
@@ -22,6 +18,11 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Jan 15 2024</li>
+	<ul>
+		<li>Waitlist notification system</li>
+		<li>Transactional email</li>
+	</ul>
 	<li>Jan 13 2024</li>
 	<ul>
 		<li>Dark Mode</li>
