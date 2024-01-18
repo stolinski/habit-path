@@ -2,7 +2,6 @@
 	import { jump_2_today, string_2_bool } from '$lib/utils';
 	import Cookies from 'js-cookie';
 	import { onMount, tick } from 'svelte';
-	import { fade } from 'svelte/transition';
 	import Fab from './Fab.svelte';
 	import HabitRow from './HabitRow.svelte';
 	import NewHabitForm from './NewHabitForm.svelte';
@@ -27,13 +26,13 @@
 <NewHabitForm {form} />
 
 <section class="habits" id="visible_habits">
-	{#each data.habits.filter((habit) => habit.visible) as habit, i (habit.id)}
+	{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
 		<HabitRow {habit} row={i} />
 	{/each}
 </section>
 
 <button class:active={show_hidden} class="toggle-hidden" on:click={toggle_hidden}>↓</button>
-
+<!-- 
 {#if show_hidden}
 	<section class="habits" transition:fade>
 		<h2>Hidden</h2>
@@ -41,7 +40,7 @@
 			<HabitRow {habit} row={i} />
 		{/each}
 	</section>
-{/if}
+{/if} -->
 
 <Fab {form} />
 

@@ -1,5 +1,5 @@
 {
-  "id": "5f394dda-ad63-41f4-aa16-229264ede296",
+  "id": "9a12f460-c23c-4191-959a-9f044b96ab0b",
   "prevId": "7cb0c95a-bc98-4fd3-94bc-6dbbbdcc2376",
   "version": "5",
   "dialect": "pg",
@@ -72,13 +72,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "hidden": {
-          "name": "hidden",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": true
-        },
         "user_id": {
           "name": "user_id",
           "type": "integer",
@@ -87,9 +80,10 @@
         },
         "status": {
           "name": "status",
-          "type": "status",
+          "type": "status_enum",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'VISIBLE'"
         }
       },
       "indexes": {},
@@ -213,8 +207,8 @@
     }
   },
   "enums": {
-    "status": {
-      "name": "status",
+    "status_enum": {
+      "name": "status_enum",
       "values": {
         "HIDDEN": "HIDDEN",
         "VISIBLE": "VISIBLE",

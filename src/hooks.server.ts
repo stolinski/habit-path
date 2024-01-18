@@ -16,11 +16,10 @@ export const sql = neon(DATABASE_URL);
 export const db = drizzle(sql, { schema });
 
 export const authentication: Handle = async ({ event, resolve }) => {
-	if(event.url.pathname !== '/hang-tight') redirect(307, '/hang-tight');
-	
 	const { cookies } = event;
 	const { user, access_token, refresh_token } = await authenticate_user(cookies);
 
+	// TODO This is getting redic. Refactor
 	if (
 		!user &&
 		event.url.pathname !== '/login' &&

@@ -11,7 +11,7 @@ import {
 	varchar,
 } from 'drizzle-orm/pg-core';
 
-export const status_enum = pgEnum('status', ['HIDDEN', 'VISIBLE', 'ARCHIVED']);
+export const status_enum = pgEnum('status_enum', ['HIDDEN', 'VISIBLE', 'ARCHIVED']);
 
 export const habits = pgTable('habits', {
 	id: serial('id').primaryKey(),
@@ -19,9 +19,8 @@ export const habits = pgTable('habits', {
 	days_per_month: integer('days_per_month'),
 	created_at: timestamp('created_at'),
 	updated_at: timestamp('updated_at'),
-	visible: boolean('hidden').default(true),
 	user_id: integer('user_id').notNull(),
-	status: status_enum('status'),
+	status: status_enum('status').default('VISIBLE').notNull(),
 });
 
 export const habitsRelations = relations(habits, ({ many }) => ({

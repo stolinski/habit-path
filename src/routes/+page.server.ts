@@ -92,14 +92,15 @@ export const actions = {
 	},
 
 	async hide_habit({ locals }) {
-		const { habit_id } = locals.form_data as { habit_id: number };
+		// TODO FIX
+	// 	const { habit_id } = locals.form_data as { habit_id: number };
 
-		const edit_habit = await db.query.habits.findFirst({
-			where: (habits, { eq }) => eq(habits.id, habit_id),
-		});
+	// 	const edit_habit = await db.query.habits.findFirst({
+	// 		where: (habits, { eq }) => eq(habits.id, habit_id),
+	// 	});
 
-		if (edit_habit)
-			await db.update(habits).set({ visible: !edit_habit.visible }).where(eq(habits.id, habit_id));
+	// 	if (edit_habit)
+	// 		await db.update(habits).set({ visible: !edit_habit.visible }).where(eq(habits.id, habit_id));
 	},
 };
 
