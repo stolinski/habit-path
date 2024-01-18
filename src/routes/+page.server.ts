@@ -92,17 +92,56 @@ export const actions = {
 	},
 
 	async hide_habit({ locals }) {
-		// TODO FIX
-	// 	const { habit_id } = locals.form_data as { habit_id: number };
-
-	// 	const edit_habit = await db.query.habits.findFirst({
-	// 		where: (habits, { eq }) => eq(habits.id, habit_id),
-	// 	});
-
-	// 	if (edit_habit)
-	// 		await db.update(habits).set({ visible: !edit_habit.visible }).where(eq(habits.id, habit_id));
+		const { habit_id } = locals.form_data as { habit_id: number };
+		if (locals?.user?.id)
+			await db.update(habits).set({ status: 'HIDDEN' }).where(
+					and(
+						eq(habits.id, habit_id),
+						eq(habits.user_id, locals?.user?.id),
+					),
+				);
 	},
+
+	async archive_habit({ locals }) {
+		const { habit_id } = locals.form_data as { habit_id: number };
+
+		if (locals?.user?.id)
+			await db.update(habits).set({ status: 'ARCHIVED' }).where(
+					and(
+						eq(habits.id, habit_id),
+						eq(habits.user_id, locals?.user?.id),
+					),
+				);
+	},
+	
+	async show_habit({ locals }) {
+		const { habit_id } = locals.form_data as { habit_id: number };
+
+		if (locals?.user?.id) {
+		await db.update(habits).set({ status: 'VISIBLE' }).where(
+					and(
+						eq(habits.id, habit_id),
+						eq(habits.user_id, locals?.user?.id),
+					),
+				);
+					}
+	},
+
+	async delete_habit({ locals }) {
+		const { habit_id } = locals.form_data as { habit_id: number };
+
+		if (locals?.user?.id) {
+			await db.delete(habits)
+				.where(
+					and(
+						eq(habits.id, habit_id),
+						eq(habits.user_id, locals?.user?.id),
+					),
+				);
+					}
+		}
 };
+
 
 function transformData(input) {
 	return input.map(({ checks, ...rest }) => {
