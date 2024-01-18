@@ -14,6 +14,8 @@
 	--font-size-xxl: clamp(2.44rem, 2.38vw + 1.85rem, 3rem);
 	--font-size-xxxl: clamp(3.05rem, 3.54vw + 2.17rem, 5rem);
 
+	--brad: 4px;
+
 	--shadow-strength: 10%;
 	--shadow-color: 220 40% 2%;
 	--shadow: 0 -1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
@@ -32,6 +34,18 @@
 		0 -41px 33px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
 		0 -100px 80px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
 
+	--level1: 0 100px 80px rgb(0 0 0 / 7%), 0 41.78px 33.4px rgb(0 0 0 / 5%),
+		0 22.32px 17.87px rgb(0 0 0 / 4.17%), 0 12.52px 10.02px rgb(0 0 0 / 3.5%),
+		0 6.65px 5.32px rgb(0 0 0 / 2.83%), 0 2.77px 2.21px rgb(0 0 0 / 1.97%);
+	--level_flat: 0;
+	--level_0: inset 0 7px 9px -7px rgb(0 0 0 / 70%);
+	--level_1: 0 4px 10px rgb(0 0 0 / 15%);
+	--level_2: 0 6px 12px rgb(0 0 0 / 15%);
+	--level_3: 0 10px 20px rgb(0 0 0 / 15%);
+	--level_4: 0 14px 28px rgb(0 0 0 / 15%);
+	--level_5: 0 19px 38px rgb(0 0 0 / 15%);
+
+
 	/* Theme */
 	--fg_light: oklch(100% 0 0 / 90%);
 	--fg_dark: oklch(0 0 0 / 70%);
@@ -40,6 +54,7 @@
 	--shade: oklch(0 0 0 / 10%);
 
 	--red: #ff3b30;
+	--blue: #0001fb;
 	--bg: var(--white);
 	--bg_1: var(--light_grey);
 	--bg-sheet: var(--white);
@@ -224,13 +239,17 @@ input:focus {
 	border: solid 1px #0001fb;
 }
 
+a {
+	color: var(--fg);
+}
+
 .button {
 	box-shadow:
 		2px 2px 5px rgba(0, 0, 0, 0.1),
 		1px 1px 3px rgba(0, 0, 0, 0.3),
 		2px 2px 5px rgba(255, 255, 255, 0.1) inset,
 		1px 1px 2px rgba(255, 255, 255, 0.3) inset;
-	border-radius: 4px;
+	border-radius: var(--brad);
 	position: relative;
 	background: #0001fb;
 	color: var(--fg_light);
@@ -246,13 +265,23 @@ input:focus {
 	border: solid 1px var(--red);
 }
 
+.ghost {
+	transition: 0.3s ease background;
+	background: transparent;
+	color: var(--fg);
+	border: solid 1px var(--fg);
+}
+
+.ghost:hover {
+	background: var(--tint);
+}
+
 .button::after {
 	content: '';
 	position: absolute;
 	inset: 0;
 	mix-blend-mode: multiply;
 	opacity: 0.1;
-
 	background-image: linear-gradient(-45deg, #000, #fff);
 }
 
@@ -267,7 +296,7 @@ input:focus {
 .form {
 	padding: 20px;
 	margin-bottom: 2rem;
-	border-radius: 4px;
+	border-radius: var(--brad);
 	border: solid 1px #999;
 }
 

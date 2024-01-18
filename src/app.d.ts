@@ -9,7 +9,8 @@ declare global {
 			user: {
 				email: string;
 				id: number;
-			};
+				verified: boolean;
+			} | null;
 		}
 		// interface PageData {}
 		// interface PageState {}

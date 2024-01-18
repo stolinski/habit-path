@@ -34,3 +34,7 @@
 	<p class="error">{form.message}</p>
 {/if}
 <a href="/signup">Sign Up</a>
+<!-- <p>
+	Forgot your password?
+	<a href="/forgot-password">Recover</a>
+</p> -->

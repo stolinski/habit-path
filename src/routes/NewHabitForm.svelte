@@ -2,9 +2,9 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 	const { mobile = false, onfinish = () => {} } = $props<{
-		form: ActionData;
-		mobile: boolean;
-		onfinish: () => any;
+		form: ActionData | null;
+		mobile?: boolean;
+		onfinish?: () => any;
 	}>();
 	let loading = $state(false);
 </script>

@@ -67,8 +67,11 @@
 {/snippet}
 
 <style>
+	.today {
+		border: solid 2px var(--blue);
+	}
+
 	.daily_button {
-		border-radius: 0;
 		border: 0;
 		height: 60px;
 		width: 80px;

@@ -1,5 +1,7 @@
+import { getDaysInMonth } from 'date-fns';
+
 function createDates() {
-	let today = new Date();
+	const today = new Date();
 	let active_date = $state(today);
 
 	function next_month() {
@@ -12,6 +14,9 @@ function createDates() {
 	return {
 		get active_date() {
 			return active_date;
+		},
+		get days_in_active_month() {
+			return getDaysInMonth(active_date);
 		},
 		next_month,
 		prev_month,

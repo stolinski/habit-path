@@ -1,8 +1,9 @@
 <h1>Roadmap</h1>
 <ul>
-	<li>Add Habit deleting and updating</li>
 	<li>Reset Password Flow</li>
 	<li>Verify Email Flow</li>
+	<li>Share to jump the line</li>
+	<li>Add Habit deleting and updating</li>
 	<li>Redo logic to rebuild days of month and checks server-side</li>
 	<li>Examine slow network performance</li>
 	<li>User assign colors to habits</li>

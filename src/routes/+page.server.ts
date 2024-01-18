@@ -37,7 +37,7 @@ export const actions = {
 			days_per_month: string;
 		};
 
-		if (locals.user.id) {
+		if (locals?.user?.id) {
 			await db.insert(habits).values({
 				user_id: locals.user.id,
 				name,
@@ -46,12 +46,27 @@ export const actions = {
 		}
 	},
 
+	async update_habit({ locals }) {
+		const { habit_id, name, days_per_month } = locals.form_data as {
+			name: string;
+			days_per_month: string;
+			habit_id: number;
+		};
+
+		if (locals?.user?.id) {
+			await db
+				.update(habits)
+				.set({ name, days_per_month: parseInt(days_per_month) })
+				.where(eq(habits.id, habit_id));
+		}
+	},
+
 	async add_check({ locals }) {
 		const { habit_id, checked_at } = locals.form_data as {
 			habit_id: string;
 			checked_at: string;
 		};
-		if (locals.user.id) {
+		if (locals?.user?.id) {
 			await db.insert(checks).values({
 				user_id: locals.user.id,
 				habit_id: parseInt(habit_id),
@@ -62,15 +77,18 @@ export const actions = {
 
 	async remove_check({ locals }) {
 		const { checked_at, habit_id } = locals.form_data as { checked_at: string; habit_id: number };
-		await db
-			.delete(checks)
-			.where(
-				and(
-					eq(checks.habit_id, habit_id),
-					eq(checks.user_id, locals.user.id),
-					eq(checks.checked_at, checked_at),
-				),
-			);
+
+		if(locals?.user?.id) {
+			await db
+				.delete(checks)
+				.where(
+					and(
+						eq(checks.habit_id, habit_id),
+						eq(checks.user_id, locals?.user?.id),
+						eq(checks.checked_at, checked_at),
+					),
+				);
+		}
 	},
 
 	async hide_habit({ locals }) {

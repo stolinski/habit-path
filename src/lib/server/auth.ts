@@ -1,16 +1,17 @@
+import { cookie_options } from '$lib/const';
+import type { Cookies } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import crypto, { randomBytes } from 'crypto';
-import type { Cookies } from '@sveltejs/kit';
-import { createTokens } from './jwt';
-import { cookie_options } from '$lib/const';
-import { db } from '../../hooks.server';
-import { session, user as schema_user } from '../../schema';
 import { eq } from 'drizzle-orm';
+import { db } from '../../hooks.server';
+import { user as schema_user, session } from '../../schema';
+import { createTokens } from './jwt';
 import {
 	find_by_session_token,
 	get_session_token_from_refresh_token,
-	resume_session
+	resume_session,
 } from './sess';
+console.log('cookie_options', cookie_options);
 const { compare, genSalt, hash } = bcrypt;
 
 export async function authenticate_user(cookies: Cookies) {
@@ -38,14 +39,15 @@ export async function authenticate_user(cookies: Cookies) {
 						where: eq(schema_user.id, session.user_id),
 						columns: {
 							id: true,
-							email: true
-						}
+							email: true,
+							verified: true,
+						},
 					});
 					if (user) {
 						// Create a new access token and resume session
 						const tokens = createTokens({
 							token: session_token,
-							user_id: user.id
+							user_id: user.id,
 						});
 						access_token = tokens.accessToken;
 						refresh_token = tokens.refreshToken;
@@ -57,7 +59,7 @@ export async function authenticate_user(cookies: Cookies) {
 	return {
 		user,
 		access_token,
-		refresh_token
+		refresh_token,
 	};
 }
 
@@ -99,7 +101,7 @@ export async function log_user_in({ user_id, cookies }: { user_id: number; cooki
 		.insert(session)
 		.values({
 			user_id,
-			session_token
+			session_token,
 		})
 		.returning();
 
@@ -108,7 +110,7 @@ export async function log_user_in({ user_id, cookies }: { user_id: number; cooki
 	// accessToken has the userId
 	const { accessToken, refreshToken } = createTokens({
 		token: session_token,
-		user_id
+		user_id,
 	});
 
 	// Sets cookies for the response in the browser
@@ -118,16 +120,16 @@ export async function log_user_in({ user_id, cookies }: { user_id: number; cooki
 		sessionId: session_data[0].id,
 		tokens: {
 			refreshToken,
-			accessToken
+			accessToken,
 		},
-		user_id
+		user_id,
 	};
 }
 
 export function setAuthCookies({
 	accessToken,
 	refreshToken,
-	cookies
+	cookies,
 }: {
 	accessToken: string;
 	refreshToken: string;
@@ -144,7 +146,7 @@ export function createSessionToken() {
 export async function login_with_password(password: string, email: string) {
 	// Finds user by email
 	const user = await db.query.user.findFirst({
-		where: eq(schema_user.email, email)
+		where: eq(schema_user.email, email),
 	});
 	if (user) {
 		// Compares password hash to one in database
@@ -159,7 +161,7 @@ export async function login_with_password(password: string, email: string) {
 // the password matches the one in the database
 export async function authenticate_user_password(
 	password: string,
-	user_pw: string
+	user_pw: string,
 ): Promise<boolean> {
 	// Gets password hash from plain text password
 	const formattedPassword = getPasswordString(password);

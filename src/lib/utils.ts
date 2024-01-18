@@ -22,21 +22,23 @@ export function string_2_bool(val: string | undefined) {
 }
 
 export function jump_2_today() {
-	const button = document.querySelector('button[data-today="true"]');
-	if (button) {
+	const buttons = document.querySelectorAll('button[data-today="true"]');
+
+	buttons.forEach((button) => {
 		const container = document.querySelector('#visible_habits');
 
-		// Calculate the offset of the button within the container
-		const buttonOffset = button.offsetLeft;
+		if (container) {
+			// Calculate the offset of the button within the container
+			const buttonOffset = button.offsetLeft;
 
-		// Calculate the center position
-		const centerPosition = buttonOffset - container.offsetWidth / 2 + button.offsetWidth / 2;
+			// Calculate the center position
+			const centerPosition = buttonOffset - container.offsetWidth / 2 + button.offsetWidth / 2;
 
-		// Scroll the container
-		container.scrollLeft = centerPosition;
-	}
+			// Scroll the container
+			container.scrollLeft = centerPosition;
+		}
+	});
 }
-
 export function toggle_values<A, B>(VAL: A | B, VAL_1: A, VAL_2: B): A | B {
 	return VAL === VAL_1 ? VAL_2 : VAL_1;
 }

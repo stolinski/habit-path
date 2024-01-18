@@ -1,13 +1,13 @@
-import type { Handle } from '@sveltejs/kit';
-import * as schema from './schema';
-import { sequence } from '@sveltejs/kit/hooks';
-import { form_data } from 'sk-form-data';
 import { DATABASE_URL } from '$env/static/private';
-import { Pool, neon, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
-import { authenticate_user } from '$lib/server/auth';
 import { cookie_options } from '$lib/const';
+import { authenticate_user } from '$lib/server/auth';
+import { Pool, neon, neonConfig } from '@neondatabase/serverless';
+import type { Handle } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { form_data } from 'sk-form-data';
+import * as schema from './schema';
 
 neonConfig.fetchConnectionCache = true;
 
@@ -16,6 +16,8 @@ export const sql = neon(DATABASE_URL);
 export const db = drizzle(sql, { schema });
 
 export const authentication: Handle = async ({ event, resolve }) => {
+	if(event.url.pathname !== '/hang-tight') redirect(307, '/hang-tight');
+	
 	const { cookies } = event;
 	const { user, access_token, refresh_token } = await authenticate_user(cookies);
 
@@ -24,6 +26,8 @@ export const authentication: Handle = async ({ event, resolve }) => {
 		event.url.pathname !== '/login' &&
 		event.url.pathname !== '/signup' &&
 		event.url.pathname !== '/roadmap' &&
+		event.url.pathname !== '/forgot-password' &&
+		event.url.pathname !== '/set-password' &&
 		event.url.pathname !== '/waitlist'
 	) {
 		redirect(307, '/waitlist');

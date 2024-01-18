@@ -3,12 +3,15 @@ import {
 	boolean,
 	date,
 	integer,
+	pgEnum,
 	pgTable,
 	serial,
 	text,
 	timestamp,
 	varchar,
 } from 'drizzle-orm/pg-core';
+
+export const status_enum = pgEnum('status', ['HIDDEN', 'VISIBLE', 'ARCHIVED']);
 
 export const habits = pgTable('habits', {
 	id: serial('id').primaryKey(),
@@ -18,6 +21,7 @@ export const habits = pgTable('habits', {
 	updated_at: timestamp('updated_at'),
 	visible: boolean('hidden').default(true),
 	user_id: integer('user_id').notNull(),
+	status: status_enum('status'),
 });
 
 export const habitsRelations = relations(habits, ({ many }) => ({
@@ -41,6 +45,7 @@ export const checksRelations = relations(checks, ({ one }) => ({
 export const user = pgTable('auth_user', {
 	id: serial('id').primaryKey(),
 	email: varchar('varchar2', { length: 256 }),
+	verified: boolean('verified').default(false).notNull(),
 	hashed_password: varchar('hashed_password', {
 		length: 255,
 	}).notNull(),
@@ -74,6 +79,7 @@ export const checks_to_user_relation = relations(checks, ({ one }) => ({
 		references: [user.id],
 	}),
 }));
+
 export const habits_to_user_relation = relations(habits, ({ one }) => ({
 	user: one(user, {
 		fields: [habits.user_id],
