@@ -138,6 +138,17 @@
 	font-style: italic;
 }
 
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+
 body {
 	font-family: 'MD IO', sans-serif;
 	font-weight: 200;

@@ -43,7 +43,7 @@
 		position: fixed;
 		inset: 40px 0 0 0;
 		box-shadow: var(--shadow-upwards);
-		z-index: 100;
+		z-index: 200;
 	}
 
 	.fab {
@@ -53,6 +53,7 @@
 		border-radius: 50%;
 		height: 48px;
 		width: 48px;
+		z-index: 100;
 		overflow: hidden;
 	}
 

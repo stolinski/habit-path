@@ -2,14 +2,21 @@
 	import { enhance } from '$app/forms';
 	import Dots from './Dots.svelte';
 	import Eye from './Eye.svelte';
+	import Modal from './Modal.svelte';
+	import Trash from './Trash.svelte';
 
 	const { habit } = $props();
 	let active = $state(false);
 	let hiding = $state(false);
+	let delete_modal = $state(false);
 	const { id } = habit;
 
 	function onclick() {
 		active = !active;
+	}
+
+	function openDelete() {
+		delete_modal = true;
 	}
 </script>
 
@@ -63,10 +70,47 @@
 				</form>
 			{/if}
 			<!-- <button class="ghost"><Archive />Archive</button> -->
-			<!-- <button class="ghost"><Trash />Delete</button> -->
+			<button class="ghost" onclick={openDelete}><Trash />Delete</button>
 		</div>
 	{/if}
 </div>
+
+<Modal bind:active={delete_modal}>
+	<div class="card">
+		<h4>Delete Habit?</h4>
+		<p>This cannot be undone</p>
+		<div class="buttons">
+			<form
+				action="?/delete_habit"
+				method="POST"
+				use:enhance={() => {
+					hiding = true;
+					return async ({ update }) => {
+						hiding = false;
+						active = false;
+						update();
+						delete_modal = false;
+					};
+				}}
+			>
+				<input type="hidden" value={id} name="habit_id" />
+				<button class="close button" disabled={hiding}
+					>{#if hiding}Deleting...{:else}
+						Delete
+					{/if}</button
+				>
+			</form>
+			<button
+				class="button ghost"
+				on:click={() => {
+					delete_modal = false;
+				}}
+			>
+				Cancel
+			</button>
+		</div>
+	</div>
+</Modal>
 
 <style>
 	.menu_button {
@@ -93,18 +137,19 @@
 		display: flex;
 		position: absolute;
 		top: -10px;
-		right: 40px;
+		right: 65px;
+		border: solid 1px var(--tint);
 		width: 150px;
 	}
 
 	.select-menu-menu-wrapper button {
 		text-align: left;
+		width: 100%;
 	}
 
 	.ghost {
 		display: flex;
 		gap: 10px;
-		width: 100%;
 		padding: 5px;
 		align-items: center;
 		border-radius: var(--brad);
@@ -112,5 +157,9 @@
 
 	.ghost :global(svg) {
 		flex-shrink: 0;
+	}
+	.buttons {
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
