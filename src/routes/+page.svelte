@@ -56,6 +56,7 @@
 		overflow: auto;
 		margin-left: -2.5vw;
 		padding-left: 2.5vw;
+		padding-top: 20px;
 		padding-bottom: 80px;
 	}
 

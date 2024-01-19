@@ -112,7 +112,7 @@ export const actions = {
 						eq(habits.user_id, locals?.user?.id),
 					),
 				);
-	},
+	}, 
 	
 	async show_habit({ locals }) {
 		const { habit_id } = locals.form_data as { habit_id: number };
@@ -138,12 +138,12 @@ export const actions = {
 						eq(habits.user_id, locals?.user?.id),
 					),
 				);
-					}
+			}
 		}
 };
 
 
-function transformData(input) {
+function transformData(input): TransformedHabits[] {
 	return input.map(({ checks, ...rest }) => {
 		// Destructure the input to get the name and checks array
 		// Map over the checks array to transform each checkedAt date
@@ -155,4 +155,12 @@ function transformData(input) {
 		// Return the transformed data
 		return { ...rest, checks: transformedChecks };
 	});
+}
+
+export type TransformedHabits = {
+	id: number
+	status: 'VISIBLE' |'HIDDEN' | 'ARCHIVED'
+	checks: string[]
+	days_per_month: number
+	name: string
 }

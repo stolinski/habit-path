@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { fly } from 'svelte/transition';
+	import type { TransformedHabits } from '../routes/+page.server';
 	import Dots from './Dots.svelte';
 	import Eye from './Eye.svelte';
 	import Modal from './Modal.svelte';
 	import Trash from './Trash.svelte';
 
-	const { habit } = $props();
+	const { habit } = $props<{ habit: TransformedHabits }>();
 	let active = $state(false);
 	let hiding = $state(false);
 	let delete_modal = $state(false);
@@ -25,10 +27,9 @@
 		<Dots />
 	</button>
 	{#if active}
-		<div class="select-menu-menu-wrapper">
+		<div transition:fly={{ opacity: 0, y: 10 }} class="select-menu-menu-wrapper">
 			<!-- TODO Add Edit mode -->
 			<!-- TODO Add Archive -->
-			<!-- TODO Add Double Confirm Delete -->
 			<!-- <button class="ghost"><Edit />Edit</button>  -->
 			{#if habit.status === 'VISIBLE'}
 				<form
@@ -114,7 +115,7 @@
 
 <style>
 	.menu_button {
-		padding: 0 20px 0 10px;
+		padding: 0 30px 0 10px;
 		background: transparent;
 		--fg: var(--tint);
 	}
@@ -136,7 +137,7 @@
 		gap: 10px;
 		display: flex;
 		position: absolute;
-		top: -10px;
+		top: 0px;
 		right: 65px;
 		border: solid 1px var(--tint);
 		width: 150px;

@@ -3,11 +3,12 @@
 	import { datez } from '$lib/state.svelte';
 	import { get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
+	import type { TransformedHabits } from './+page.server';
 	import DailyButton from './DailyButton.svelte';
 
 	const { row, habit } = $props<{
 		row: number;
-		habit: { name: string; id: number; checks: string[] };
+		habit: TransformedHabits;
 	}>();
 
 	const colors = ['#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8', '#0001FB'];

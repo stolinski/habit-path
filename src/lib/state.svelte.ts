@@ -12,6 +12,7 @@ function createDates() {
 	}
 
 	return {
+		// I get it (get it), but these are kind of annoying
 		get active_date() {
 			return active_date;
 		},
@@ -22,5 +23,8 @@ function createDates() {
 		prev_month,
 	};
 }
+
+// Example of global state
+// You need to create an instance and export that
 
 export const datez = createDates();
