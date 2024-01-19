@@ -1,65 +1,82 @@
 <script lang="ts">
-	// Polyfill for Popover. Remove once Firefox supports it. https://caniuse.com/?search=popover
-	import { browser } from '$app/environment';
-	import { apply, isSupported } from '@oddbird/popover-polyfill/fn';
-	import Archive from './Archive.svelte';
+	import { enhance } from '$app/forms';
 	import Dots from './Dots.svelte';
-	import Edit from './Edit.svelte';
 	import Eye from './Eye.svelte';
-	import Trash from './Trash.svelte';
 
-	if (!isSupported() && browser) {
-		apply();
-	}
-	const { id } = $props();
-	let active = $state();
-	// let searchParams = new URLSearchParams(window.location.search);
-
-	// TODO: remove  this when typescirpt dom ships HTMLPopoverElement
-	interface HTMLPopoverElement extends HTMLElement {
-		showPopover: () => void;
-		hidePopover: () => void;
-		togglePopover: () => void;
-		popover: 'auto' | 'manual';
-	}
-
-	function closePopoverWhenSelected(node: HTMLPopoverElement) {
-		function handlePopoverSelection(event) {
-			if (event.target instanceof HTMLAnchorElement) {
-				node.hidePopover();
-			}
-		}
-		node.addEventListener('click', handlePopoverSelection);
-		return {
-			destroy() {
-				node.removeEventListener('click', handlePopoverSelection);
-			},
-		};
-	}
+	const { habit } = $props();
+	let active = $state(false);
+	let hiding = $state(false);
+	const { id } = habit;
 
 	function onclick() {
 		active = !active;
 	}
 </script>
 
-<div style="position: relative; z-index: 20;">
+<div style="position: relative;">
 	<button class="menu_button" {onclick}>
 		<Dots />
 	</button>
 	{#if active}
 		<div class="select-menu-menu-wrapper">
-			<button class="ghost"><Edit />Edit</button>
-			<button class="ghost"><Eye />Hide</button>
-			<button class="ghost"><Archive />Archive</button>
-			<button class="ghost"><Trash />Delete</button>
+			<!-- TODO Add Edit mode -->
+			<!-- TODO Add Archive -->
+			<!-- TODO Add Double Confirm Delete -->
+			<!-- <button class="ghost"><Edit />Edit</button>  -->
+			{#if habit.status === 'VISIBLE'}
+				<form
+					action="?/hide_habit"
+					method="POST"
+					use:enhance={() => {
+						hiding = true;
+						return async ({ update }) => {
+							hiding = false;
+							update();
+						};
+					}}
+				>
+					<input type="hidden" value={id} name="habit_id" />
+					<button class="ghost" disabled={hiding}
+						><Eye />{#if hiding}Hiding...{:else}
+							Hide
+						{/if}</button
+					>
+				</form>
+			{:else}
+				<form
+					action="?/show_habit"
+					method="POST"
+					use:enhance={() => {
+						hiding = true;
+						return async ({ update }) => {
+							hiding = false;
+							update();
+						};
+					}}
+				>
+					<input type="hidden" value={id} name="habit_id" />
+					<button class="ghost" disabled={hiding}
+						><Eye />{#if hiding}Showing...{:else}
+							Show
+						{/if}</button
+					>
+				</form>
+			{/if}
+			<!-- <button class="ghost"><Archive />Archive</button> -->
+			<!-- <button class="ghost"><Trash />Delete</button> -->
 		</div>
 	{/if}
 </div>
 
 <style>
 	.menu_button {
-		padding: 0 10px;
+		padding: 0 20px 0 10px;
 		background: transparent;
+		--fg: var(--tint);
+	}
+
+	form {
+		display: block;
 	}
 
 	button {
@@ -75,9 +92,9 @@
 		gap: 10px;
 		display: flex;
 		position: absolute;
-		top: 10px;
-		z-index: 10;
-		right: 0;
+		top: -10px;
+		right: 40px;
+		width: 150px;
 	}
 
 	.select-menu-menu-wrapper button {
@@ -87,7 +104,13 @@
 	.ghost {
 		display: flex;
 		gap: 10px;
+		width: 100%;
 		padding: 5px;
+		align-items: center;
 		border-radius: var(--brad);
+	}
+
+	.ghost :global(svg) {
+		flex-shrink: 0;
 	}
 </style>

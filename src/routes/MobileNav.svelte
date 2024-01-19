@@ -47,6 +47,7 @@
 		padding: 10px 40px 20px;
 		display: flex;
 		justify-content: space-between;
+		z-index: 20;
 	}
 
 	svg {

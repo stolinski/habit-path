@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DropMenu from '$lib/DropMenu.svelte';
 	import { datez } from '$lib/state.svelte';
 	import { get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
@@ -18,7 +19,7 @@
 		{habit.name}
 		<!-- {@render go_to_detail(habit)} -->
 	</h3>
-	<!-- <DropMenu id={habit.id} /> -->
+	<DropMenu {habit} />
 </div>
 <article
 	transition:fade
@@ -79,7 +80,7 @@
 
 	.heading {
 		left: 0;
-		z-index: 10;
+		z-index: 1;
 		position: sticky;
 		display: flex;
 		justify-content: space-between;
