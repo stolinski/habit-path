@@ -5,7 +5,7 @@
 	import NewHabitForm from './NewHabitForm.svelte';
 
 	const { form } = $props<{ form: ActionData }>();
-	let status = $state<'OPEN' | 'CLOSED'>('OPEN');
+	let status = $state<'OPEN' | 'CLOSED'>('CLOSED');
 
 	function toggle_drawer() {
 		status = toggle_values(status, 'OPEN', 'CLOSED');
@@ -14,10 +14,25 @@
 
 {#if status === 'OPEN'}
 	<div class="form_drawer" transition:fly={{ opacity: 0, y: '100%' }}>
-		<button class="ghost button" on:click={toggle_drawer}>Cancel</button>
-		<NewHabitForm mobile={true} {form} onfinish={toggle_drawer} />
+		<div class="form_drawer_container">
+			<button class="ghost button" on:click={toggle_drawer}>Cancel</button>
+			<NewHabitForm mobile={true} {form} onfinish={toggle_drawer} />
+		</div>
 	</div>
 {/if}
+
+<div>
+	<button class="button no-fab" on:click={toggle_drawer}>
+		<svg width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+			><path
+				fill-rule="evenodd"
+				clip-rule="evenodd"
+				d="M8.75 2.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
+				fill="var(--white)"
+			/></svg
+		> Add New Habit
+	</button>
+</div>
 
 <button class="fab button" on:click={toggle_drawer}>
 	<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
@@ -50,14 +65,16 @@
 		width: 100%;
 	}
 	.form_drawer :global(input[type='number']) {
-		width: 56px;
-	}
-	.form_drawer :global(input[type='number']:after) {
-		content: 'days per month (31 max)';
+		width: 80px;
 	}
 
 	.form_drawer :global(h3) {
 		text-align: center;
+	}
+
+	.form_drawer_container {
+		margin: 0 auto;
+		max-width: 700px;
 	}
 
 	.fab {
@@ -69,6 +86,12 @@
 		width: 48px;
 		z-index: 100;
 		overflow: hidden;
+	}
+
+	.no-fab {
+		display: flex;
+		align-items: center;
+		gap: 10px;
 	}
 
 	@media (width > 700px) {

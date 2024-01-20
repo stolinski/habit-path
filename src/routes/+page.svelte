@@ -5,7 +5,6 @@
 	import { fade } from 'svelte/transition';
 	import Fab from './Fab.svelte';
 	import HabitRow from './HabitRow.svelte';
-	import NewHabitForm from './NewHabitForm.svelte';
 
 	let { data, form } = $props();
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
@@ -24,7 +23,7 @@
 	});
 </script>
 
-<NewHabitForm {form} />
+<Fab {form} />
 
 <section class="habits" id="visible_habits">
 	{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
@@ -42,8 +41,6 @@
 		{/each}
 	</section>
 {/if}
-
-<Fab {form} />
 
 <!-- BEEF WITH RUNES -> Not being able to export State primatives -->
 <!-- BEEF WITH RUNES  Error on wrong line -->
