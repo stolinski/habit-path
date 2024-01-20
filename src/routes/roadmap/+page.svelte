@@ -3,7 +3,7 @@
 	<li>Reset Password Flow</li>
 	<li>Verify Email Flow</li>
 	<li>Share to jump the line</li>
-	<li>Add Habit deleting and updating</li>
+	<li>Add Habit Editing</li>
 	<li>Redo logic to rebuild days of month and checks server-side</li>
 	<li>Examine slow network performance</li>
 	<li>User assign colors to habits</li>
@@ -19,6 +19,15 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Jan 19 2024</li>
+	<ul>
+		<li>Tweak to new habit form</li>
+	</ul>
+	<li>Jan 18 2024</li>
+	<ul>
+		<li>Add Habit deleting</li>
+		<li>Add Habit Menu with hide/show</li>
+	</ul>
 	<li>Jan 15 2024</li>
 	<ul>
 		<li>Waitlist notification system</li>

@@ -3,6 +3,7 @@
 	--black: #222;
 	--white: #eee;
 	--light_grey: #ddd;
+	--middle_grey: #999;
 
 	/* Fonts / Typeography */
 	--font-size-xs: clamp(0.6rem, 0.17vw + 0.76rem, 0.7rem);
@@ -241,7 +242,7 @@ select {
 input {
 	padding: 2px 10px;
 	border-radius: 4px;
-	border: solid 1px var(--fg);
+	border: solid 1px var(--middle_grey);
 	color: var(--fg);
 	background: var(--bg);
 }
@@ -280,7 +281,7 @@ a {
 	transition: 0.3s ease background;
 	background: transparent;
 	color: var(--fg);
-	border: solid 1px var(--fg);
+	border: solid 1px var(--tint);
 }
 
 .ghost:hover {

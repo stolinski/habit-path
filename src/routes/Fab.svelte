@@ -12,9 +12,9 @@
 	}
 </script>
 
-{#if status === 'CLOSED'}
+{#if status === 'OPEN'}
 	<div class="form_drawer" transition:fly={{ opacity: 0, y: '100%' }}>
-		<button class="close button" on:click={toggle_drawer}>Close</button>
+		<button class="ghost button" on:click={toggle_drawer}>Cancel</button>
 		<NewHabitForm mobile={true} {form} onfinish={toggle_drawer} />
 	</div>
 {/if}
@@ -31,10 +31,10 @@
 </button>
 
 <style>
-	.close {
+	.ghost {
 		position: absolute;
 		top: 15px;
-		right: 15px;
+		left: 15px;
 	}
 
 	.form_drawer {
@@ -44,6 +44,20 @@
 		inset: 40px 0 0 0;
 		box-shadow: var(--shadow-upwards);
 		z-index: 200;
+	}
+
+	.form_drawer :global(input) {
+		width: 100%;
+	}
+	.form_drawer :global(input[type='number']) {
+		width: 56px;
+	}
+	.form_drawer :global(input[type='number']:after) {
+		content: 'days per month (31 max)';
+	}
+
+	.form_drawer :global(h3) {
+		text-align: center;
 	}
 
 	.fab {

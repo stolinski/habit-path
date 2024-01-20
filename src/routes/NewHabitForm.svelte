@@ -34,13 +34,17 @@
 		</div>
 		<button class="button" type="submit" disabled={loading}
 			>{#if loading}Adding...{:else}
-				Add Habit
+				+ Add Habit
 			{/if}</button
 		>
 	</form>
 </div>
 
 <style>
+	input {
+		font-size: var(--font-size-lg);
+	}
+
 	.mobile {
 		border: none;
 	}
