@@ -31,6 +31,7 @@
 
 <a href="/">Back</a>
 <h1>{data.habit.name}</h1>
+<p>This is currently "Read Only", so for viewing only. Checking habits here will come soon.</p>
 
 <div class="grid" style:--habit_color="#a0dcc8" style:--habit_fg="oklch(0 0 0 / 70%)">
 	{#each daysOfYear as day}
