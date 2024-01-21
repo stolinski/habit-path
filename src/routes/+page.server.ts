@@ -6,6 +6,9 @@ export const load = async ({ locals }) => {
 	// let date_tree =
 	// TODO function that builds date
 	// Building blocks for how I want to query moving forward
+
+	//  Add check for proper month between. rn will always return January 
+	// TODO fix before Feb
 		const habits_data = await db.query.habits.findMany({
 			where: eq(habits.user_id, locals?.user?.id),
 			with: {
