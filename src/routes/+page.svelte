@@ -7,6 +7,7 @@
 	import HabitRow from './HabitRow.svelte';
 
 	let { data, form } = $props();
+	$inspect(data);
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
 
@@ -41,11 +42,6 @@
 		{/each}
 	</section>
 {/if}
-
-<!-- BEEF WITH RUNES -> Not being able to export State primatives -->
-<!-- BEEF WITH RUNES  Error on wrong line -->
-<!-- BEEF WITH RUNES  let date = $state(new Date()) isn't reactive when modifying date aka date state isn't reactive -->
-<!-- aka not everything is reactive... what's the point if it's not reactive? -->
 
 <style>
 	.habits {

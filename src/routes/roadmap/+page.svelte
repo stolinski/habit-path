@@ -1,10 +1,12 @@
 <h1>Roadmap</h1>
 <ul>
+	<li>Add Habit Editing</li>
+	<li>Redo logic to rebuild days of month and checks server-side</li>
+	<li>Reorder habits</li>
 	<li>Reset Password Flow</li>
 	<li>Verify Email Flow</li>
 	<li>Share to jump the line</li>
-	<li>Add Habit Editing</li>
-	<li>Redo logic to rebuild days of month and checks server-side</li>
+	<li>End of month recaps, kinda like spotify wrapped for the month</li>
 	<li>Examine slow network performance</li>
 	<li>User assign colors to habits</li>
 	<li>Open up app for 10 waitlist users</li>
@@ -19,6 +21,11 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Jan 20/21 2024</li>
+	<ul>
+		<li>Reworks main query and data loading for better simplicity and perf.</li>
+		<li>Reworks ordering to allow for custom ordering</li>
+	</ul>
 	<li>Jan 19 2024</li>
 	<ul>
 		<li>Tweak to new habit form</li>

@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm';
+import { and, between, count, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 
@@ -6,27 +6,17 @@ export const load = async ({ locals }) => {
 	// let date_tree =
 	// TODO function that builds date
 	// Building blocks for how I want to query moving forward
-	// try {
-	// 	const test = await db.query.habits.findMany({
-	// 		where: eq(habits.user_id, locals?.user?.id),
-	// 		with: {
-	// 			checks: {
-	// 				where: between(checks.checked_at, '2024-01-01', '2024-01-31'),
-	// 			},
-	// 		},
-	// 	});
-	// } catch (e) {
-	// 	console.log('e', e);
-	// }
-	const data = await db.query.habits.findMany({
-		where: eq(habits.user_id, locals?.user?.id),
-		with: {
-			checks: true,
-		},
-	});
-
+		const habits_data = await db.query.habits.findMany({
+			where: eq(habits.user_id, locals?.user?.id),
+			with: {
+				checks: {
+					where: between(checks.checked_at, '2024-01-01', '2024-01-31'),
+				},
+			},
+		});
+		
 	return {
-		habits: transformData(data),
+		habits: transformData(habits_data),
 	};
 };
 
@@ -37,11 +27,20 @@ export const actions = {
 			days_per_month: string;
 		};
 
+	
+
 		if (locals?.user?.id) {
+
+			const result = await db.select({ count: count() }).from(habits).where(eq(habits.user_id, locals.user.id));
+			const totalCount = result[0].count;
+
 			await db.insert(habits).values({
 				user_id: locals.user.id,
 				name,
 				days_per_month: parseInt(days_per_month),
+				updated_at: new Date(),
+				created_at: new Date(),
+				order: totalCount * 10
 			});
 		}
 	},
@@ -56,7 +55,7 @@ export const actions = {
 		if (locals?.user?.id) {
 			await db
 				.update(habits)
-				.set({ name, days_per_month: parseInt(days_per_month) })
+				.set({ name, days_per_month: parseInt(days_per_month), updated_at: new Date()})
 				.where(eq(habits.id, habit_id));
 		}
 	},
@@ -94,7 +93,7 @@ export const actions = {
 	async hide_habit({ locals }) {
 		const { habit_id } = locals.form_data as { habit_id: number };
 		if (locals?.user?.id)
-			await db.update(habits).set({ status: 'HIDDEN' }).where(
+			await db.update(habits).set({ status: 'HIDDEN', updated_at: new Date() }).where(
 					and(
 						eq(habits.id, habit_id),
 						eq(habits.user_id, locals?.user?.id),
@@ -106,7 +105,7 @@ export const actions = {
 		const { habit_id } = locals.form_data as { habit_id: number };
 
 		if (locals?.user?.id)
-			await db.update(habits).set({ status: 'ARCHIVED' }).where(
+			await db.update(habits).set({ status: 'ARCHIVED', updated_at: new Date()}).where(
 					and(
 						eq(habits.id, habit_id),
 						eq(habits.user_id, locals?.user?.id),
@@ -118,7 +117,7 @@ export const actions = {
 		const { habit_id } = locals.form_data as { habit_id: number };
 
 		if (locals?.user?.id) {
-		await db.update(habits).set({ status: 'VISIBLE' }).where(
+		await db.update(habits).set({ status: 'VISIBLE', updated_at: new Date() }).where(
 					and(
 						eq(habits.id, habit_id),
 						eq(habits.user_id, locals?.user?.id),
@@ -143,24 +142,19 @@ export const actions = {
 };
 
 
-function transformData(input): TransformedHabits[] {
-	return input.map(({ checks, ...rest }) => {
-		// Destructure the input to get the name and checks array
-		// Map over the checks array to transform each checkedAt date
-		const transformedChecks = checks.map((check) => {
-			// Return the transformed check object
-			return check.checked_at;
-		});
-
-		// Return the transformed data
-		return { ...rest, checks: transformedChecks };
-	});
+function transformData(data: (typeof habits.$inferSelect) & {checks: (typeof checks.$inferSelect)[]}[]):TransformedHabits[] {
+  return data.map(item => ({
+    ...item,
+    checks: item.checks.map(check => check.checked_at)
+  }));
 }
+
+
 
 export type TransformedHabits = {
 	id: number
 	status: 'VISIBLE' |'HIDDEN' | 'ARCHIVED'
 	checks: string[]
-	days_per_month: number
-	name: string
+	days_per_month: number | null
+	name: string | null
 }

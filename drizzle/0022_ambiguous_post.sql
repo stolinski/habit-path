@@ -1,0 +1,1 @@
+ALTER TABLE "habits" ADD COLUMN "order" real DEFAULT 100 NOT NULL;

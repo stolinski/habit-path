@@ -17,7 +17,9 @@
 
 <div class="heading">
 	<h3>
-		{habit.name}
+		<a href="/{habit.id}/year">
+			{habit.name}
+		</a>
 		<!-- {@render go_to_detail(habit)} -->
 	</h3>
 	<DropMenu {habit} />
@@ -35,26 +37,6 @@
 		{/each}
 	</div>
 </article>
-
-<!-- {#snippet hide_habit(habit)}
-	<form action="?/hide_habit" method="POST">
-		<input type="hidden" name="habit_id" value={habit.id} />
-		<button><Eye /></button>
-	</form>
-{/snippet} -->
-
-<!-- {#snippet go_to_detail(habit)}
-	<a href="/{habit.id}/year"
-		><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-			><path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
-				d="M4.75 1a.75.75 0 0 1 .75.75V3h5V1.75a.75.75 0 0 1 1.5 0V3h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2V1.75A.75.75 0 0 1 4.75 1ZM2.5 4.5V6h11V4.5h-11Zm0 9v-6h11v6h-11ZM11 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
-				fill="#000"
-			/></svg
-		></a
-	>
-{/snippet} -->
 
 <style>
 	h3 :global(.menu_button) {

@@ -5,22 +5,24 @@ import {
 	integer,
 	pgEnum,
 	pgTable,
+	real,
 	serial,
 	text,
 	timestamp,
-	varchar,
+	varchar
 } from 'drizzle-orm/pg-core';
 
 export const status_enum = pgEnum('status_enum', ['HIDDEN', 'VISIBLE', 'ARCHIVED']);
 
 export const habits = pgTable('habits', {
 	id: serial('id').primaryKey(),
-	name: text('name'),
+	name: text('name').notNull(),
 	days_per_month: integer('days_per_month'),
 	created_at: timestamp('created_at'),
 	updated_at: timestamp('updated_at'),
 	user_id: integer('user_id').notNull(),
 	status: status_enum('status').default('VISIBLE').notNull(),
+	order: real('order').default(100.0).notNull(),
 });
 
 export const habitsRelations = relations(habits, ({ many }) => ({
@@ -29,7 +31,7 @@ export const habitsRelations = relations(habits, ({ many }) => ({
 
 export const checks = pgTable('checks', {
 	id: serial('id').primaryKey(),
-	checked_at: date('date'),
+	checked_at: date('date').notNull(),
 	habit_id: integer('habit_id').notNull(),
 	user_id: integer('user_id').notNull(),
 });
@@ -44,7 +46,7 @@ export const checksRelations = relations(checks, ({ one }) => ({
 export const user = pgTable('auth_user', {
 	id: serial('id').primaryKey(),
 	email: varchar('varchar2', { length: 256 }),
-	verified: boolean('verified').default(false).notNull(),
+		verified: boolean('verified').default(false).notNull(),
 	hashed_password: varchar('hashed_password', {
 		length: 255,
 	}).notNull(),
