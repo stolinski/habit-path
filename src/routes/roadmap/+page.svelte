@@ -23,6 +23,7 @@
 <ul>
 	<li>Jan 20/21 2024</li>
 	<ul>
+		<li>Adds basic yearly view for fun.</li>
 		<li>Reworks main query and data loading for better simplicity and perf.</li>
 		<li>Reworks ordering to allow for custom ordering</li>
 	</ul>

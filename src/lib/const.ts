@@ -16,3 +16,7 @@ export const cookie_options =
 				sameSite: 'lax',
 				maxAge: 60 * 60 * 24 * 365, // 1 year
 			} as const);
+
+
+export const COLORS = ['#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8', '#0001FB'] as const;
+export const DARK_COLORS = ['#0001FB'] as const;
