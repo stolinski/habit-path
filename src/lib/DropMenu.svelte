@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { fly } from 'svelte/transition';
 	import type { TransformedHabits } from '../routes/+page.server';
+	import Backdrop from './Backdrop.svelte';
 	import Dots from './Dots.svelte';
 	import Eye from './Eye.svelte';
 	import Modal from './Modal.svelte';
@@ -14,17 +15,28 @@
 	let delete_modal = $state(false);
 	const { id } = habit;
 
-	function onclick() {
-		active = !active;
+	function open() {
+		active = true;
 	}
 
 	function openDelete() {
 		delete_modal = true;
 	}
+
+	function close(fn: any) {
+		if (typeof fn === 'function') {
+			return function (event) {
+				active = false;
+				fn.call(this, event);
+			};
+		}
+		active = false;
+		return;
+	}
 </script>
 
 <div style="position: relative;">
-	<button class="menu_button" {onclick}>
+	<button class="menu_button" onclick={open}>
 		<Dots />
 	</button>
 	{#if active}
@@ -32,9 +44,9 @@
 			transition:fly={{ opacity: 0, y: 10 }}
 			class="select-menu-menu-wrapper"
 			use:click_outside
-			on:click-outside={onclick}
+			on:click-outside={close}
 		>
-			<!-- <button class="ghost" onclick={app.reorder}>Reorder</button> -->
+			<!-- <button class="ghost" onclick={close(app.reorder)}>Reorder</button> -->
 			<!-- TODO Add Edit mode -->
 			<!-- TODO Add Archive -->
 			<!-- <button class="ghost"><Edit />Edit</button>  -->
@@ -80,6 +92,10 @@
 			<!-- <button class="ghost"><Archive />Archive</button> -->
 			<button class="ghost" onclick={openDelete}><Trash />Delete</button>
 		</div>
+	{/if}
+
+	{#if active}
+		<Backdrop onclick={close} />
 	{/if}
 </div>
 
@@ -148,6 +164,7 @@
 		right: 65px;
 		border: solid 1px var(--tint);
 		width: 150px;
+		z-index: 10;
 	}
 
 	.select-menu-menu-wrapper button {

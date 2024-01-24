@@ -35,7 +35,7 @@
 	</button>
 </div>
 
-{#if app.mode === 'NORMAL' || app.mode === 'THINKING'}
+{#if app.mode === 'NORMAL'}
 	<button class="fab button" on:click={toggle_drawer}>
 		<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
 			><path
@@ -47,17 +47,11 @@
 		>
 	</button>
 {:else if app.mode === 'REORDER'}
-	<button class="fab button save" on:click={() => app.thinking()}>
-		<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-			><path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
-				d="M8.75 2.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
-				fill="var(--black)"
-			/></svg
-		>
-		Save Order
-	</button>
+	<form action="" onsubmit={app.normal}>
+		<button class="fab button save" type="submit" transition:fly={{ opacity: 0, y: '100%' }}>
+			✅ Finished Reordering
+		</button>
+	</form>
 {/if}
 
 <style>

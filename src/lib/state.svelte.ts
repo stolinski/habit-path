@@ -34,27 +34,36 @@ export const datez = createDates();
 
 // This is a prototype (not js prototype) ora global store that can power the state of the app.
 function create_app_state() {
-
 	let mode = $state<'NORMAL' | 'EDIT' | 'REORDER' | 'MODALED'>('NORMAL');
 	let is_loading = $state<boolean>(false);
+	let sortable_instance;
 
 	function reorder() {
 		mode = 'REORDER';
 		tick();
 		const node = document.querySelector('#visible_habits');
-		Sortable.create(node, {
+		sortable_instance = Sortable.create(node, {
 			ghostClass: 'ghost_row',
 			animation: 150,
 			handle: '.handle',
+			onUpdate: function (evt) {
+				const itemEl = evt.item; // dragged HTMLElement
+				console.log('itemEl', itemEl);
+				const oldIndex = evt.oldIndex; // element index before the drag started
+				const newIndex = evt.newIndex; // element index after the drag finished
+				console.log('Item moved from index ' + oldIndex + ' to ' + newIndex);
+			},
 		});
 	}
 
 	function loading() {
-		is_loading = true
+		is_loading = true;
 	}
 
 	function normal() {
-		mode = 'NORMAL'
+		mode = 'NORMAL';
+		sortable_instance.destroy();
+		sortable_instance = null;
 	}
 
 	return {
@@ -66,8 +75,10 @@ function create_app_state() {
 		},
 		reorder,
 		loading,
-		normal
-	}
+		normal,
+	};
 }
 
 export const app = create_app_state();
+
+// TODO Whimsical toast alert system

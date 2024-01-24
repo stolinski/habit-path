@@ -50,6 +50,7 @@
 		"drizzle-orm": "^0.29.3",
 		"js-cookie": "^3.0.5",
 		"jsonwebtoken": "^9.0.2",
+		"just-debounce-it": "^3.2.0",
 		"lucia": "^2.7.6",
 		"pg": "^8.11.3",
 		"postgres": "^3.4.3",

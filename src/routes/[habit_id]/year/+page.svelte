@@ -22,7 +22,7 @@
 	const year: number = 2024;
 	const daysOfYear: string[] = getAllDaysOfYear(year);
 
-	function parseIsoToLocalDate(isoStr) {
+	function parseIsoToLocalDate(isoStr: string) {
 		const parts = isoStr.split('-');
 		// Subtract 1 from month because months are 0-indexed in JavaScript Date
 		return new Date(parts[0], parts[1] - 1, parts[2]);

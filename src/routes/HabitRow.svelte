@@ -127,8 +127,6 @@
 		background: var(--bg);
 		height: 100%;
 		padding: 20px;
-
-		border: var(--shade) 1px solid;
 		opacity: 0;
 		z-index: -10;
 		pointer-events: none;

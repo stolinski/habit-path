@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { app, datez } from '$lib/state.svelte';
 	import { format } from 'date-fns';
+	import { fly } from 'svelte/transition';
 	import '../style.css';
 	import MobileNav from './MobileNav.svelte';
 	let { data } = $props();
 </script>
 
 <div class="app-rap {app.mode}">
-	{#if !data.url.includes('waitlist')}
+	{#if !data.url.includes('waitlist') && app.mode !== 'REORDER'}
 		<header>
 			<h1>
 				<a href="/">
@@ -37,18 +38,20 @@
 		<slot />
 	</main>
 
-	<footer>
-		<nav>
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/roadmap">Road Map</a></li>
-				<li><a href="/waitlist">Waitlist</a></li>
-			</ul>
-		</nav>
-	</footer>
+	{#if app.mode !== 'REORDER'}
+		<footer transition:fly={{ opacity: 0, y: '100%' }}>
+			<nav>
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="/roadmap">Road Map</a></li>
+					<li><a href="/waitlist">Waitlist</a></li>
+				</ul>
+			</nav>
+		</footer>
+	{/if}
 </div>
 
-{#if !data.url.includes('waitlist')}
+{#if !data.url.includes('waitlist') && app.mode !== 'REORDER'}
 	<MobileNav />
 {/if}
 
