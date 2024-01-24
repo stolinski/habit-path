@@ -21,6 +21,12 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Jan 23 2024</li>
+	<ul>
+		<li>Adds better year interface.</li>
+		<li>Fixes bug when you rapidly trigger a habit.</li>
+		<li>Adds bones for reorder.</li>
+	</ul>
 	<li>Jan 20/21 2024</li>
 	<ul>
 		<li>Adds basic yearly view for fun.</li>

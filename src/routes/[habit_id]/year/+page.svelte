@@ -31,8 +31,6 @@
 
 <a href="/">Back</a>
 <h1>{data.habit.name}</h1>
-<p>This is currently "Read Only", so for viewing only. Checking habits here will come soon.</p>
-
 <div class="grid" style:--habit_color="#a0dcc8" style:--habit_fg="oklch(0 0 0 / 70%)">
 	{#each daysOfYear as day}
 		<button class:complete={data.habit.checks.includes(day)} class="daily_button"
@@ -49,11 +47,12 @@
 	}
 
 	.daily_button {
+		opacity: 0.5;
 		flex-shrink: 0;
 		border-radius: 0;
+		cursor: default;
 		border: 0;
-		height: 60px;
-		width: 80px;
+		height: 40px;
 		color: #999;
 		font-weight: 400;
 		flex: 1;
@@ -61,10 +60,12 @@
 		position: relative;
 		background: var(--shade);
 		overflow: hidden;
+		font-size: var(--font-size-sm);
 		border-radius: 2px;
 	}
 
 	.complete {
+		opacity: 1;
 		background-color: var(--habit_color);
 		border: none;
 		color: var(--habit_fg);
