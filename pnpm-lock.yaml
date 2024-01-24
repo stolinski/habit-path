@@ -53,6 +53,9 @@ dependencies:
   sk-form-data:
     specifier: ^1.0.1
     version: 1.0.1
+  sortablejs:
+    specifier: ^1.15.2
+    version: 1.15.2
   vaul-svelte:
     specifier: ^0.0.7
     version: 0.0.7(svelte@5.0.0-next.37)
@@ -3473,6 +3476,10 @@ packages:
       minimist: 1.2.8
       sander: 0.5.1
     dev: true
+
+  /sortablejs@1.15.2:
+    resolution: {integrity: sha512-FJF5jgdfvoKn1MAKSdGs33bIqLi3LmsgVTliuX6iITj834F+JRQZN90Z93yql8h0K2t0RwDPBmxwlbZfDcxNZA==}
+    dev: false
 
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

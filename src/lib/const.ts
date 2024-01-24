@@ -18,5 +18,5 @@ export const cookie_options =
 			} as const);
 
 
-export const COLORS = ['#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8', '#0001FB'] as const;
-export const DARK_COLORS = ['#0001FB'] as const;
+export const COLORS = ['#FFD817', '#FF9E02', '#FF5A00', '#FF0084', '#a0dcc8', '#0001FB'];
+export const DARK_COLORS = ['#0001FB'];

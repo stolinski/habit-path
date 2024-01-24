@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { datez } from '$lib/state.svelte';
+	import type { ActionResult } from '@sveltejs/kit';
 	import { format } from 'date-fns';
 
 	let { habit_id, i, checks } = $props<{
@@ -14,6 +15,19 @@
 	let day_of_checked = $derived(new Date(datez.active_date.getTime()).setDate(i + 1));
 	let day_formatted_of_checked = $derived(format(day_of_checked, 'E'));
 	let date_formatted_of_checked = $derived(format(day_of_checked, 'dd'));
+
+	// This function rn only run refetch of data if it's not a success
+	async function optimistic_rerender_checks({
+		update,
+		result,
+	}: {
+		result: ActionResult;
+		update: (options?: { reset?: boolean; invalidateAll?: boolean }) => Promise<void>;
+	}) {
+		if (result.type !== 'success') {
+			update();
+		}
+	}
 </script>
 
 {#if checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
@@ -28,6 +42,7 @@
 				// Remove the element using splice
 				checks.splice(index, 1);
 			}
+			return optimistic_rerender_checks;
 		}}
 	>
 		{@render inputs()}
@@ -39,6 +54,7 @@
 		use:enhance={({ formElement }) => {
 			const day = formElement.elements['checked_at'].value;
 			checks.push(day);
+			return optimistic_rerender_checks;
 		}}
 	>
 		{@render inputs()}

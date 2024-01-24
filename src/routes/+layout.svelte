@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { datez } from '$lib/state.svelte';
+	import { app, datez } from '$lib/state.svelte';
 	import { format } from 'date-fns';
 	import '../style.css';
 	import MobileNav from './MobileNav.svelte';
 	let { data } = $props();
 </script>
 
-<div class="app-rap">
+<div class="app-rap {app.mode}">
 	{#if !data.url.includes('waitlist')}
 		<header>
 			<h1>

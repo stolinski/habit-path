@@ -54,8 +54,10 @@
 	--tint: oklch(100% 0 0 / 80%);
 	--shade: oklch(0 0 0 / 10%);
 
+	--green: #a0dcc8;
 	--red: #ff3b30;
 	--blue: #0001fb;
+	/* green: */
 	--bg: var(--white);
 	--bg_1: var(--light_grey);
 	--bg-sheet: var(--white);

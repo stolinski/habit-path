@@ -55,6 +55,7 @@
 		"postgres": "^3.4.3",
 		"resend": "^2.1.0",
 		"sk-form-data": "^1.0.1",
+		"sortablejs": "^1.15.2",
 		"vaul-svelte": "^0.0.7"
 	}
 }

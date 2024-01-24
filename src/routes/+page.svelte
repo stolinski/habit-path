@@ -7,7 +7,6 @@
 	import HabitRow from './HabitRow.svelte';
 
 	let { data, form } = $props();
-	$inspect(data);
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
 
@@ -35,8 +34,8 @@
 <button class:active={show_hidden} class="toggle-hidden" on:click={toggle_hidden}>↓</button>
 
 {#if show_hidden}
+	<h2 class="h4">Hidden</h2>
 	<section class="habits" transition:fade>
-		<h2 class="h4">Hidden</h2>
 		{#each data.habits.filter((habit) => habit.status === 'HIDDEN') as habit, i (habit.id)}
 			<HabitRow {habit} row={i} />
 		{/each}
@@ -60,9 +59,14 @@
 		background: transparent;
 		color: var(--fg);
 	}
+
 	.toggle-hidden:hover {
 		opacity: 1;
 		background: transparent;
+	}
+
+	:global(.ghost-row) {
+		background: red;
 	}
 
 	.active {

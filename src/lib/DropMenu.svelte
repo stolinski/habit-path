@@ -6,6 +6,7 @@
 	import Eye from './Eye.svelte';
 	import Modal from './Modal.svelte';
 	import Trash from './Trash.svelte';
+	import { click_outside } from './click_outside';
 
 	const { habit } = $props<{ habit: TransformedHabits }>();
 	let active = $state(false);
@@ -27,7 +28,13 @@
 		<Dots />
 	</button>
 	{#if active}
-		<div transition:fly={{ opacity: 0, y: 10 }} class="select-menu-menu-wrapper">
+		<div
+			transition:fly={{ opacity: 0, y: 10 }}
+			class="select-menu-menu-wrapper"
+			use:click_outside
+			on:click-outside={onclick}
+		>
+			<!-- <button class="ghost" onclick={app.reorder}>Reorder</button> -->
 			<!-- TODO Add Edit mode -->
 			<!-- TODO Add Archive -->
 			<!-- <button class="ghost"><Edit />Edit</button>  -->
