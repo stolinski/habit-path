@@ -28,11 +28,6 @@
 
 <Fab {form} clean_habits={what} bind:habits={data.habits} />
 
-<!-- TODO Check me out - Here is how to fix all your drag and drop issues -->
-<!-- TODO Simply make another view / component that will be shown here instead of this array of habits -->
-<!-- TODO THEN we don't have to worry about pos sticky, duplicating divs and moving them. -->
-<!-- TODO Might be nice to do a transition here -->
-
 {#if app.mode === 'NORMAL'}
 	<section class="habits" id="visible_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
