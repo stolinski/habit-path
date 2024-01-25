@@ -4,10 +4,15 @@
 	import { toggle_values } from '$lib/utils';
 	import { tick } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import type { TransformedHabits } from '../server/data_utils';
 	import type { ActionData } from './$types';
 	import NewHabitForm from './NewHabitForm.svelte';
 
-	const { form } = $props<{ form: ActionData }>();
+	let { form, habits, clean_habits } = $props<{
+		form: ActionData;
+		habits: TransformedHabits[];
+		clean_habits: TransformedHabits[];
+	}>();
 	let status = $state<'OPEN' | 'CLOSED'>('CLOSED');
 
 	function toggle_drawer() {
@@ -16,42 +21,32 @@
 
 	function getOrderedHabitIds() {
 		// Select the #visible_habits container
-		const container = document.querySelector('#visible_habits');
+		const container = document.querySelector('#reorder_habits');
 
 		// Find all elements with 'data-habit-id-parent' within the container
 		const elements = container.querySelectorAll('[data-habit-id-parent]');
 
 		// Extract the IDs and store them in an array
-		const habitIds = Array.from(elements).map((el) => el.getAttribute('data-habit-id-parent'));
+		const habitIds = Array.from(elements).map((el) =>
+			parseInt(el.getAttribute('data-habit-id-parent')),
+		);
 
 		// Return the array of IDs
 		return habitIds;
 	}
 
-	function reorderArticles() {
-		// Select all parent divs
-		const parentDivs = document.querySelectorAll('[data-habit-id-parent]');
-
-		parentDivs.forEach((div) => {
-			// Get the habit ID from the div's data attribute
-			const habitId = div.getAttribute('data-habit-id-parent');
-
-			// Find the associated article
-			const article = document.querySelector(`article[data-habit-id="${habitId}"]`);
-			console.log('habitId', habitId);
-			console.log('article', article);
-
-			// Move the article to be a direct sibling of the div
-			div.parentNode.insertBefore(article, div.nextSibling);
+	function sort_root_habits(habit_array: TransformedHabits[], id_array: number[]) {
+		console.log('habit_array', habit_array);
+		// Create a map for faster lookup
+		const idIndexMap = new Map();
+		habit_array.forEach((habit) => {
+			idIndexMap.set(habit.id, habit);
 		});
-	}
 
-	function save_order(fn: any) {
-		if (typeof fn === 'function') {
-			return function (event) {
-				fn.call(this, event);
-			};
-		}
+		const new_order = id_array.map((id) => idIndexMap.get(id));
+
+		console.log(new_order);
+		return new_order;
 	}
 </script>
 
@@ -95,12 +90,17 @@
 		action="?/reorder"
 		method="POST"
 		use:enhance={({ formData }) => {
-			app.normal();
-			tick();
-			reorderArticles();
 			const new_id_order = getOrderedHabitIds();
+			// This should reorder the main data without going to the server via binding
+			let test = sort_root_habits(clean_habits, getOrderedHabitIds());
+			for (let i = 0; i < habits.length; i++) {
+				habits[i] = { ...test[i] };
+			}
+			tick();
+			app.normal();
 			formData.append('new_ids', JSON.stringify(new_id_order));
-			return ({ update, result }) => {
+			return ({ update }) => {
+				update();
 				// TODO Toast system
 			};
 		}}

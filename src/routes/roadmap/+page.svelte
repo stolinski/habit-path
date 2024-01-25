@@ -1,5 +1,6 @@
 <h1>Roadmap</h1>
 <ul>
+	<li>Fix ui jank in reordering state change</li>
 	<li>User assign colors to habits</li>
 	<li>Add Habit Editing</li>
 	<li>Toast system</li>

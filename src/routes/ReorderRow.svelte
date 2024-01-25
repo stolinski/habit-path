@@ -1,30 +1,17 @@
 <script lang="ts">
-	import DropMenu from '$lib/DropMenu.svelte';
-	import { COLORS, DARK_COLORS } from '$lib/const';
-	import { app, datez } from '$lib/state.svelte';
-	import { get_circular_array_item } from '$lib/utils.js';
-	import { fade } from 'svelte/transition';
+	import { app } from '$lib/state.svelte';
 
 	import type { TransformedHabits } from '../server/data_utils';
-	import DailyButton from './DailyButton.svelte';
 
-	let { row, habit } = $props<{
-		row: number;
+	let { habit } = $props<{
 		habit: TransformedHabits;
 	}>();
 </script>
 
 <div class="heading {app.mode}" data-habit-id-parent={habit.id}>
 	<h3>
-		{#if app.mode === 'NORMAL'}
-			<a href="/{habit.id}/year">
-				{habit.name}
-			</a>
-		{:else}
-			{habit.name}
-		{/if}
+		{habit.name}
 	</h3>
-	<DropMenu {habit} />
 
 	<div class="handle {app.mode}">
 		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
@@ -37,22 +24,6 @@
 		>
 	</div>
 </div>
-
-<article
-	data-habit-id={habit.id}
-	class="habit_row {app.mode}"
-	transition:fade
-	style:--habit_fg={DARK_COLORS.includes(get_circular_array_item(COLORS, row))
-		? 'oklch(100% 0 0 / 90%)'
-		: 'oklch(0 0 0 / 70%)'}
-	style:--habit_color={get_circular_array_item(COLORS, row)}
->
-	<div class="day_buttons">
-		{#each [...Array(datez.days_in_active_month)] as _, i (habit.id + i)}
-			<DailyButton habit_id={habit.id} {i} bind:checks={habit.checks} />
-		{/each}
-	</div>
-</article>
 
 <style>
 	a {

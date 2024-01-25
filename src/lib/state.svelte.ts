@@ -43,11 +43,11 @@ function create_app_state() {
 		mode = 'REORDER';
 		window_mode = 'FOCUS';
 		tick();
-		const node = document.querySelector('#visible_habits');
+		const node = document.querySelector('#reorder_habits');
+		console.log('node', node);
 		sortable_instance = Sortable.create(node, {
 			ghostClass: 'ghost_row',
 			animation: 150,
-			handle: '.handle',
 		});
 	}
 

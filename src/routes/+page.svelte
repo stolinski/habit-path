@@ -1,14 +1,17 @@
 <script lang="ts">
+	import { app } from '$lib/state.svelte';
 	import { jump_2_today, string_2_bool } from '$lib/utils';
 	import Cookies from 'js-cookie';
 	import { onMount, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import Fab from './Fab.svelte';
 	import HabitRow from './HabitRow.svelte';
+	import ReorderRow from './ReorderRow.svelte';
 
 	let { data, form } = $props();
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
 	let show_hidden = $state(initial_hidden);
+	let what = data.habits;
 
 	function toggle_hidden() {
 		show_hidden = !show_hidden;
@@ -23,13 +26,26 @@
 	});
 </script>
 
-<Fab {form} />
+<Fab {form} clean_habits={what} bind:habits={data.habits} />
 
-<section class="habits" id="visible_habits">
-	{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
-		<HabitRow {habit} row={i} />
-	{/each}
-</section>
+<!-- TODO Check me out - Here is how to fix all your drag and drop issues -->
+<!-- TODO Simply make another view / component that will be shown here instead of this array of habits -->
+<!-- TODO THEN we don't have to worry about pos sticky, duplicating divs and moving them. -->
+<!-- TODO Might be nice to do a transition here -->
+
+{#if app.mode === 'NORMAL'}
+	<section class="habits" id="visible_habits">
+		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
+			<HabitRow {habit} row={i} />
+		{/each}
+	</section>
+{:else if app.mode === 'REORDER'}
+	<section class="habits" id="reorder_habits">
+		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
+			<ReorderRow {habit} />
+		{/each}
+	</section>
+{/if}
 
 <button class:active={show_hidden} class="toggle-hidden" on:click={toggle_hidden}>↓</button>
 
