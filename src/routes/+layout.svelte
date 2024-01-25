@@ -38,7 +38,7 @@
 		<slot />
 	</main>
 
-	{#if app.mode !== 'REORDER'}
+	{#if app.window_mode !== 'FOCUS'}
 		<footer transition:fly={{ opacity: 0, y: '100%' }}>
 			<nav>
 				<ul>
@@ -51,7 +51,7 @@
 	{/if}
 </div>
 
-{#if !data.url.includes('waitlist') && app.mode !== 'REORDER'}
+{#if !data.url.includes('waitlist') && app.window_mode !== 'FOCUS'}
 	<MobileNav />
 {/if}
 

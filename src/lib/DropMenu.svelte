@@ -8,6 +8,7 @@
 	import Modal from './Modal.svelte';
 	import Trash from './Trash.svelte';
 	import { click_outside } from './click_outside';
+	import { app } from './state.svelte';
 
 	const { habit } = $props<{ habit: TransformedHabits }>();
 	let active = $state(false);
@@ -46,7 +47,7 @@
 			use:click_outside
 			on:click-outside={close}
 		>
-			<!-- <button class="ghost" onclick={close(app.reorder)}>Reorder</button> -->
+			<button class="ghost" onclick={close(app.reorder)}>Reorder</button>
 			<!-- TODO Add Edit mode -->
 			<!-- TODO Add Archive -->
 			<!-- <button class="ghost"><Edit />Edit</button>  -->

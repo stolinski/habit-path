@@ -34,25 +34,20 @@ export const datez = createDates();
 
 // This is a prototype (not js prototype) ora global store that can power the state of the app.
 function create_app_state() {
-	let mode = $state<'NORMAL' | 'EDIT' | 'REORDER' | 'MODALED'>('NORMAL');
+	let mode = $state<'NORMAL' | 'EDIT' | 'REORDER'>('NORMAL');
+	let window_mode = $state<'NORMAL' | 'FOCUS' | 'MODALED'>('NORMAL');
 	let is_loading = $state<boolean>(false);
 	let sortable_instance;
 
 	function reorder() {
 		mode = 'REORDER';
+		window_mode = 'FOCUS';
 		tick();
 		const node = document.querySelector('#visible_habits');
 		sortable_instance = Sortable.create(node, {
 			ghostClass: 'ghost_row',
 			animation: 150,
 			handle: '.handle',
-			onUpdate: function (evt) {
-				const itemEl = evt.item; // dragged HTMLElement
-				console.log('itemEl', itemEl);
-				const oldIndex = evt.oldIndex; // element index before the drag started
-				const newIndex = evt.newIndex; // element index after the drag finished
-				console.log('Item moved from index ' + oldIndex + ' to ' + newIndex);
-			},
 		});
 	}
 
@@ -62,6 +57,7 @@ function create_app_state() {
 
 	function normal() {
 		mode = 'NORMAL';
+		window_mode = 'NORMAL';
 		sortable_instance.destroy();
 		sortable_instance = null;
 	}
@@ -69,6 +65,9 @@ function create_app_state() {
 	return {
 		get mode() {
 			return mode;
+		},
+		get window_mode() {
+			return window_mode;
 		},
 		get is_loading() {
 			return is_loading;

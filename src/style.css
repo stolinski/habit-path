@@ -46,7 +46,6 @@
 	--level_4: 0 14px 28px rgb(0 0 0 / 15%);
 	--level_5: 0 19px 38px rgb(0 0 0 / 15%);
 
-
 	/* Theme */
 	--fg_light: oklch(100% 0 0 / 90%);
 	--fg_dark: oklch(0 0 0 / 70%);
@@ -150,7 +149,6 @@ html {
 *::after {
 	box-sizing: inherit;
 }
-
 
 body {
 	font-family: 'MD IO', sans-serif;
@@ -269,14 +267,17 @@ a {
 	color: var(--fg_light);
 	border: solid 1px #0001fb;
 	padding: 2px 10px;
-	text-shadow: 0.5px 1px 1px rgba(0, 0, 0, 0.5);
+	text-shadow: 0.5px 1px 1px rgba(0, 0, 0, 0.2);
 	outline: solid 1px black;
+	font-style: italic;
+	font-weight: medium;
 }
 
 .close {
 	background: var(--red);
 	outline: solid 1px var(--red);
 	border: solid 1px var(--red);
+	color: var(--black);
 }
 
 .ghost {

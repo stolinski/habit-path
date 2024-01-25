@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, type InferSelectModel } from 'drizzle-orm';
 import {
 	boolean,
 	date,
@@ -9,7 +9,7 @@ import {
 	serial,
 	text,
 	timestamp,
-	varchar
+	varchar,
 } from 'drizzle-orm/pg-core';
 
 export const status_enum = pgEnum('status_enum', ['HIDDEN', 'VISIBLE', 'ARCHIVED']);
@@ -24,6 +24,8 @@ export const habits = pgTable('habits', {
 	status: status_enum('status').default('VISIBLE').notNull(),
 	order: real('order').default(100.0).notNull(),
 });
+
+export type Habits = InferSelectModel<typeof habits>;
 
 export const habitsRelations = relations(habits, ({ many }) => ({
 	checks: many(checks),
@@ -46,7 +48,7 @@ export const checksRelations = relations(checks, ({ one }) => ({
 export const user = pgTable('auth_user', {
 	id: serial('id').primaryKey(),
 	email: varchar('varchar2', { length: 256 }),
-		verified: boolean('verified').default(false).notNull(),
+	verified: boolean('verified').default(false).notNull(),
 	hashed_password: varchar('hashed_password', {
 		length: 255,
 	}).notNull(),

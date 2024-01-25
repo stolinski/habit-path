@@ -13,7 +13,7 @@
 	}>();
 </script>
 
-<div class="heading {app.mode}">
+<div class="heading {app.mode}" data-habit-id-parent={habit.id}>
 	<h3>
 		{#if app.mode === 'NORMAL'}
 			<a href="/{habit.id}/year">
@@ -37,24 +37,27 @@
 	</div>
 </div>
 
-{#if app.mode === 'NORMAL'}
-	<article
-		class="habit_row"
-		transition:fade
-		style:--habit_fg={DARK_COLORS.includes(get_circular_array_item(COLORS, row))
-			? 'oklch(100% 0 0 / 90%)'
-			: 'oklch(0 0 0 / 70%)'}
-		style:--habit_color={get_circular_array_item(COLORS, row)}
-	>
-		<div class="day_buttons">
-			{#each [...Array(datez.days_in_active_month)] as _, i (habit.id + i)}
-				<DailyButton habit_id={habit.id} {i} bind:checks={habit.checks} />
-			{/each}
-		</div>
-	</article>
-{/if}
+<article
+	data-habit-id={habit.id}
+	class="habit_row {app.mode}"
+	transition:fade
+	style:--habit_fg={DARK_COLORS.includes(get_circular_array_item(COLORS, row))
+		? 'oklch(100% 0 0 / 90%)'
+		: 'oklch(0 0 0 / 70%)'}
+	style:--habit_color={get_circular_array_item(COLORS, row)}
+>
+	<div class="day_buttons">
+		{#each [...Array(datez.days_in_active_month)] as _, i (habit.id + i)}
+			<DailyButton habit_id={habit.id} {i} bind:checks={habit.checks} />
+		{/each}
+	</div>
+</article>
 
 <style>
+	a {
+		text-decoration: none;
+	}
+
 	h3 :global(.menu_button) {
 		opacity: 0;
 		transition: 0.2s ease opacity;
@@ -136,5 +139,9 @@
 		z-index: 20;
 		opacity: 1;
 		pointer-events: all;
+	}
+
+	article.REORDER {
+		display: none;
 	}
 </style>

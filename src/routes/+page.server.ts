@@ -1,25 +1,27 @@
-import { and, between, count, eq } from 'drizzle-orm';
+import { and, asc, between, count, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
+import { transform_habits, update_habits_order } from '../server/data_utils';
 
 export const load = async ({ locals }) => {
 	// let date_tree =
 	// TODO function that builds date
 	// Building blocks for how I want to query moving forward
 
-	//  Add check for proper month between. rn will always return January 
+	//  Add check for proper month between. rn will always return January
 	// TODO fix before Feb
-		const habits_data = await db.query.habits.findMany({
-			where: eq(habits.user_id, locals?.user?.id),
-			with: {
-				checks: {
-					where: between(checks.checked_at, '2024-01-01', '2024-01-31'),
-				},
+	const habits_data = await db.query.habits.findMany({
+		where: eq(habits.user_id, locals?.user?.id),
+		orderBy: [asc(habits.order)],
+		with: {
+			checks: {
+				where: between(checks.checked_at, '2024-01-01', '2024-01-31'),
 			},
-		});
-		
+		},
+	});
+
 	return {
-		habits: transformData(habits_data),
+		habits: transform_habits(habits_data),
 	};
 };
 
@@ -30,11 +32,11 @@ export const actions = {
 			days_per_month: string;
 		};
 
-	
-
 		if (locals?.user?.id) {
-
-			const result = await db.select({ count: count() }).from(habits).where(eq(habits.user_id, locals.user.id));
+			const result = await db
+				.select({ count: count() })
+				.from(habits)
+				.where(eq(habits.user_id, locals.user.id));
 			const totalCount = result[0].count;
 
 			await db.insert(habits).values({
@@ -43,7 +45,7 @@ export const actions = {
 				days_per_month: parseInt(days_per_month),
 				updated_at: new Date(),
 				created_at: new Date(),
-				order: totalCount * 10
+				order: totalCount * 10,
 			});
 		}
 	},
@@ -58,7 +60,7 @@ export const actions = {
 		if (locals?.user?.id) {
 			await db
 				.update(habits)
-				.set({ name, days_per_month: parseInt(days_per_month), updated_at: new Date()})
+				.set({ name, days_per_month: parseInt(days_per_month), updated_at: new Date() })
 				.where(eq(habits.id, habit_id));
 		}
 	},
@@ -80,7 +82,7 @@ export const actions = {
 	async remove_check({ locals }) {
 		const { checked_at, habit_id } = locals.form_data as { checked_at: string; habit_id: number };
 
-		if(locals?.user?.id) {
+		if (locals?.user?.id) {
 			await db
 				.delete(checks)
 				.where(
@@ -96,68 +98,51 @@ export const actions = {
 	async hide_habit({ locals }) {
 		const { habit_id } = locals.form_data as { habit_id: number };
 		if (locals?.user?.id)
-			await db.update(habits).set({ status: 'HIDDEN', updated_at: new Date() }).where(
-					and(
-						eq(habits.id, habit_id),
-						eq(habits.user_id, locals?.user?.id),
-					),
-				);
+			await db
+				.update(habits)
+				.set({ status: 'HIDDEN', updated_at: new Date() })
+				.where(and(eq(habits.id, habit_id), eq(habits.user_id, locals?.user?.id)));
 	},
 
 	async archive_habit({ locals }) {
 		const { habit_id } = locals.form_data as { habit_id: number };
 
 		if (locals?.user?.id)
-			await db.update(habits).set({ status: 'ARCHIVED', updated_at: new Date()}).where(
-					and(
-						eq(habits.id, habit_id),
-						eq(habits.user_id, locals?.user?.id),
-					),
-				);
-	}, 
-	
+			await db
+				.update(habits)
+				.set({ status: 'ARCHIVED', updated_at: new Date() })
+				.where(and(eq(habits.id, habit_id), eq(habits.user_id, locals?.user?.id)));
+	},
+
 	async show_habit({ locals }) {
 		const { habit_id } = locals.form_data as { habit_id: number };
 
 		if (locals?.user?.id) {
-		await db.update(habits).set({ status: 'VISIBLE', updated_at: new Date() }).where(
-					and(
-						eq(habits.id, habit_id),
-						eq(habits.user_id, locals?.user?.id),
-					),
-				);
-					}
+			await db
+				.update(habits)
+				.set({ status: 'VISIBLE', updated_at: new Date() })
+				.where(and(eq(habits.id, habit_id), eq(habits.user_id, locals?.user?.id)));
+		}
 	},
 
 	async delete_habit({ locals }) {
 		const { habit_id } = locals.form_data as { habit_id: number };
 
 		if (locals?.user?.id) {
-			await db.delete(habits)
-				.where(
-					and(
-						eq(habits.id, habit_id),
-						eq(habits.user_id, locals?.user?.id),
-					),
-				);
-			}
+			await db
+				.delete(habits)
+				.where(and(eq(habits.id, habit_id), eq(habits.user_id, locals?.user?.id)));
 		}
+	},
+	async reorder({ locals }) {
+		const { new_ids } = locals.form_data as { new_ids: string };
+		const new_id_array = JSON.parse(new_ids);
+
+		if (locals?.user?.id) {
+			await update_habits_order(new_id_array, locals.user.id);
+			return {
+				message: 'Habits reordered successfully',
+			};
+		}
+	},
 };
-
-
-function transformData(data: (typeof habits.$inferSelect) & {checks: (typeof checks.$inferSelect)[]}[]):TransformedHabits[] {
-  return data.map(item => ({
-    ...item,
-    checks: item.checks.map(check => check.checked_at)
-  }));
-}
-
-
-
-export type TransformedHabits = {
-	id: number
-	status: 'VISIBLE' |'HIDDEN' | 'ARCHIVED'
-	checks: string[]
-	days_per_month: number | null
-	name: string | null
-}
