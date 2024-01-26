@@ -1,12 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	const { mobile = false, onfinish = () => {} } = $props<{
+	const { form, mobile = false, onfinish = () => {} } = $props<{
 		form: ActionData | null;
 		mobile?: boolean;
 		onfinish?: () => any;
 	}>();
 	let loading = $state(false);
+
+	function close_form() {
+		if (form?.message) {
+			onfinish();
+		}
+	}
 </script>
 
 <div class="form new_habit_form" class:mobile>
@@ -19,7 +25,7 @@
 			return async ({ update }) => {
 				loading = false;
 				update();
-				onfinish();
+				close_form();
 			};
 		}}
 	>
@@ -38,6 +44,10 @@
 			{/if}</button
 		>
 	</form>
+
+	{#if form?.message}
+		<p class="error">{form.message}</p>
+	{/if}
 </div>
 
 <style>
