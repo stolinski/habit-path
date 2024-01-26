@@ -134,16 +134,16 @@
 		background-image: linear-gradient(115deg, #000, #fff);
 		--lines: 0.0001px;
 
-		mask: repeating-radial-gradient(
+		/* mask: repeating-radial-gradient(
 			circle at center,
 			#000,
 			var(--lines),
 			#000,
 			0,
 			/* transition hints make code easier to manage */ #0000,
-			calc(var(--lines) * 2),
-			#0000 0 /* trailing 0 is part of the hard stop logic */
-		);
+			/* calc(var(--lines) * 2), */
+			/* #0000 0 trailing 0 is part of the hard stop logic */
+		/* ); */
 	}
 	[data-today='true'] {
 		outline: solid 2px rgba(255, 255, 255, 0.6);
