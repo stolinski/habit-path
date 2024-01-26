@@ -66,6 +66,15 @@
 			0 -4px 2px rgba(255, 255, 255, 0.1) inset;
 	}
 
+	@media (prefers-color-scheme: dark) {
+		header {
+			border-bottom: solid 2px var(--shade);
+			box-shadow:
+				0 2px 3px rgba(255, 255, 255, 0.1),
+				0 -4px 4px rgba(255, 255, 255, 0.04) inset;
+		}
+	}
+
 	footer {
 		background: var(--shade);
 		padding: 40px 40px 100px;

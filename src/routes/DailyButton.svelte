@@ -10,7 +10,6 @@
 		checks: string[];
 	}>();
 	let today = format(new Date(), 'yyyy-MM-dd');
-	console.log('today', today);
 
 	// TODO rethink how i'm doing this whole, ischecked or not biz
 	let day_of_checked = $derived(new Date(datez.active_date.getTime()).setDate(i + 1));
@@ -94,7 +93,6 @@
 		transition: 0.2s ease-in-out all;
 		position: relative;
 		background-color: var(--shade);
-		overflow: hidden;
 		text-shadow: 0.4px 0.4px 0 rgba(0, 0, 0, 0.1);
 		border-radius: 2px;
 		translate: 0 -1px 0;
@@ -150,4 +148,11 @@
 	[data-today='true'] {
 		outline: solid 2px rgba(255, 255, 255, 0.6);
 	}
+
+	/* .today {
+		position: absolute;
+		background: red;
+		top: 100px;
+		inset: 0;
+	} */
 </style>

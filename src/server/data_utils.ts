@@ -5,7 +5,6 @@ import { checks, habits } from '../schema';
 // Save Habits new order after a reorder sequence
 export async function update_habits_order(users_habits: string[] | number[], user_id: number) {
 	for (const [index, habit_id] of users_habits.entries()) {
-		console.log('index', index, habit_id);
 		const new_order = index * 10;
 		let int_habit_id: number;
 

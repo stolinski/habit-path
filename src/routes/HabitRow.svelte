@@ -5,8 +5,11 @@
 	import { get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
 
+	import { format } from 'date-fns';
 	import type { TransformedHabits } from '../server/data_utils';
 	import DailyButton from './DailyButton.svelte';
+
+	let today = format(new Date(), 'yyyy-MM-dd');
 
 	let { row, habit } = $props<{
 		row: number;
@@ -63,13 +66,6 @@
 		opacity: 0;
 		transition: 0.2s ease opacity;
 		pointer-events: none;
-	}
-
-	.REORDER .habit_row {
-		position: absolute;
-	}
-	.REORDER .habit_row {
-		position: absolute;
 	}
 
 	:is(h3:hover, h3:focus) :global(.menu_button) {

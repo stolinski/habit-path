@@ -29,6 +29,11 @@
 <Fab {form} clean_habits={what} bind:habits={data.habits} />
 
 {#if app.mode === 'NORMAL'}
+	<!-- <section class="habits">
+		{#each [...Array(datez.days_in_active_month)] as day}
+			<Today is_today={false} />
+		{/each}
+	</section> -->
 	<section class="habits" id="visible_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
 			<HabitRow {habit} row={i} />

@@ -11,7 +11,7 @@ import {
 	get_session_token_from_refresh_token,
 	resume_session,
 } from './sess';
-console.log('cookie_options', cookie_options);
+
 const { compare, genSalt, hash } = bcrypt;
 
 export async function authenticate_user(cookies: Cookies) {

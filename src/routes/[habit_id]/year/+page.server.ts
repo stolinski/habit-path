@@ -9,7 +9,6 @@ export const load = async ({ locals, params }) => {
 			checks: true,
 		},
 	});
-	console.log('data', data);
 
 	return {
 		habit: transformData(data),
