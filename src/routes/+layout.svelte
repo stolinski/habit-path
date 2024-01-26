@@ -108,7 +108,7 @@
 	}
 
 	a {
-		color: initial;
+		color: inherit;
 		text-decoration: none;
 	}
 
