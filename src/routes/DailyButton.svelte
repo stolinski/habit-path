@@ -96,9 +96,25 @@
 		flex: 1;
 		transition: 0.2s ease-in-out all;
 		position: relative;
-		background: var(--shade);
+		background-color: var(--shade);
 		overflow: hidden;
+		text-shadow: 0.4px 0.4px 0 rgba(0, 0, 0, 0.1);
 		border-radius: 2px;
+		translate: 0 -1px 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		border-left: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow:
+			1px 1px 2px rgba(0, 0, 0, 0.1),
+			0px 0.5px 2px rgba(0, 0, 0, 0.1);
+	}
+
+	.daily_button::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		opacity: 0.05;
+		mix-blend-mode: multiply;
+		background-image: radial-gradient(circle, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
 	}
 
 	.complete {
@@ -106,17 +122,31 @@
 		border: none;
 		color: var(--habit_fg);
 		border: solid 0.5px var(--tint);
+		translate: 0 0 0;
 		box-shadow:
 			2px 2px 5px rgba(0, 0, 0, 0.1) inset,
 			1px 1px 2px rgba(0, 0, 0, 0.3) inset;
 		position: relative;
 	}
+
 	.complete::after {
 		content: '';
 		position: absolute;
 		inset: 0;
 		mix-blend-mode: multiply;
-		opacity: 0.1;
+		opacity: 0.08;
 		background-image: linear-gradient(115deg, #000, #fff);
+		--lines: 0.0001px;
+
+		mask: repeating-radial-gradient(
+			circle at center,
+			#000,
+			var(--lines),
+			#000,
+			0,
+			/* transition hints make code easier to manage */ #0000,
+			calc(var(--lines) * 2),
+			#0000 0 /* trailing 0 is part of the hard stop logic */
+		);
 	}
 </style>

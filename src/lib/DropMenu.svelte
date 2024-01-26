@@ -141,7 +141,6 @@
 	.menu_button {
 		padding: 0 30px 0 10px;
 		background: transparent;
-		--fg: var(--tint);
 	}
 
 	form {

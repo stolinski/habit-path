@@ -19,6 +19,11 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Jan 25 2024</li>
+	<ul>
+		<li>Adds a ton of CSS fixes</li>
+		<li>Tweaks reordering</li>
+	</ul>
 	<li>Jan 24 2024</li>
 	<ul>
 		<li>Adds reordering</li>
