@@ -36,7 +36,6 @@
 	}
 
 	function sort_root_habits(habit_array: TransformedHabits[], id_array: number[]) {
-		console.log('habit_array', habit_array);
 		// Create a map for faster lookup
 		const idIndexMap = new Map();
 		habit_array.forEach((habit) => {
@@ -44,8 +43,6 @@
 		});
 
 		const new_order = id_array.map((id) => idIndexMap.get(id));
-
-		console.log(new_order);
 		return new_order;
 	}
 </script>
