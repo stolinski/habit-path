@@ -16,10 +16,10 @@
 		method="POST"
 		use:enhance={() => {
 			loading = true;
-			return async ({ update }) => {
+			return async ({ result, update }) => {
 				loading = false;
 				update();
-				if (!form?.message) {
+				if (result.type === 'success') {
 					onfinish();
 				}
 			};
@@ -42,7 +42,7 @@
 	</form>
 
 	{#if form?.message}
-		<p class="error">{form.message}</p>
+		<p class="error">{form?.message}</p>
 	{/if}
 </div>
 
