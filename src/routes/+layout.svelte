@@ -59,7 +59,11 @@
 	header {
 		padding: 10px 20px;
 		align-items: center;
-		margin-bottom: 1rem;
+		background: var(--shade);
+		border-bottom: solid 2px var(--shade);
+		box-shadow:
+			0 2px 2px var(--tint),
+			0 -4px 2px rgba(255, 255, 255, 0.1) inset;
 	}
 
 	footer {
