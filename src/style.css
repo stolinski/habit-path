@@ -175,23 +175,13 @@ body::after {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	opacity: 0.2;
-	background-image: url('/noise.png');
+	opacity: 1;
+	/* background-image: url('/noise.png'); */
 	background-repeat: repeat;
+	background-size: auto;
+
 	pointer-events: none;
 	z-index: -1;
-	/* 
-	mask: repeating-radial-gradient(
-		circle at center,
-		#000,
-		var(--lines),
-		#000,
-		0,
-		#0000,
-		calc(var(--lines) * 2),
-		#0000 0 /* trailing 0 is part of the hard stop logic 
-	); */
-	/* mix-blend-mode: exclusion; */
 }
 
 h1,
