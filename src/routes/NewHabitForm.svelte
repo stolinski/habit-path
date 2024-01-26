@@ -7,12 +7,6 @@
 		onfinish?: () => any;
 	}>();
 	let loading = $state(false);
-
-	function close_form() {
-		if (form?.message) {
-			onfinish();
-		}
-	}
 </script>
 
 <div class="form new_habit_form" class:mobile>
@@ -25,7 +19,9 @@
 			return async ({ update }) => {
 				loading = false;
 				update();
-				close_form();
+				if (!form?.message) {
+					onfinish();
+				}
 			};
 		}}
 	>
