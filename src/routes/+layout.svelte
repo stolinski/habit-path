@@ -96,7 +96,7 @@
 	}
 
 	a {
-		color: initial;
+		color: inherit;
 		text-decoration: none;
 	}
 
@@ -111,6 +111,9 @@
 
 	.user_menu {
 		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		--size: 35px;
 		height: var(--size);
 		width: var(--size);
