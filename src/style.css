@@ -395,7 +395,6 @@ label {
 	--button_5: #426fcc;
 	--button_6: #081df5;
 }
-
 .button-soft {
 	--button_1: #cdb4db;
 	--button_2: #ffc8dd;
@@ -403,4 +402,13 @@ label {
 	--button_4: #bde0fe;
 	--button_5: #a2d2ff;
 	--button_6: #081df5;
+}
+
+.button-syntax {
+	--button_1: #fabf47;
+	--button_2: #00fff5;
+	--button_3: #beff00;
+	--button_4: #ff474e;
+	--button_5: #a4a4a4;
+	--button_6: #362d59;
 }
