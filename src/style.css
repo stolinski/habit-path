@@ -67,15 +67,6 @@
 	--fg-sheet: var(--black);
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--bg: var(--black);
-		--fg: var(--white);
-		--tint: oklch(100% 0 0 / 20%);
-		--shade: oklch(0 0 0 / 20%);
-	}
-}
-
 @font-face {
 	font-family: 'MD IO';
 	src:
@@ -153,12 +144,15 @@ body {
 	font-family: 'MD IO', sans-serif;
 	font-weight: 200;
 	overflow-x: hidden;
-	background: var(--bg);
-	color: var(--fg);
 	line-height: 1.5;
 	padding: 0;
 	margin: 0;
 	-webkit-font-smoothing: antialiased;
+}
+
+.theme_wrapper {
+	background: var(--bg);
+	color: var(--fg);
 }
 
 @property --lines {
@@ -293,7 +287,8 @@ a {
 	border: solid 1px var(--tint);
 }
 
-.ghost:hover {
+.ghost:hover,
+.ghost.active {
 	background: var(--tint);
 }
 
@@ -335,4 +330,41 @@ label {
 	body::after {
 		opacity: 0.05;
 	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:has(.system) {
+		--bg: var(--black);
+		--fg: var(--white);
+		--tint: oklch(100% 0 0 / 20%);
+		--shade: oklch(0 0 0 / 20%);
+	}
+}
+
+.oled {
+	--bg: #000;
+	--fg: #fff;
+	--tint: oklch(100% 0 0 / 20%);
+	--shade: oklch(0 0 0 / 20%);
+}
+
+.dark {
+	--bg: var(--black);
+	--fg: var(--white);
+	--tint: oklch(100% 0 0 / 20%);
+	--shade: oklch(0 0 0 / 20%);
+}
+
+.content {
+	margin: 1rem 0;
+}
+
+.readable {
+	max-width: 900px;
+	width: 100%;
+}
+
+.flex {
+	display: flex;
+	gap: 10px;
 }

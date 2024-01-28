@@ -4,5 +4,6 @@ export const load = async ({ locals, url }) => {
 		user: locals.user,
 		url: url.pathname,
 		active_date: params_date ? new Date(params_date) : new Date(),
+		user_theme: locals.theme,
 	};
 };
