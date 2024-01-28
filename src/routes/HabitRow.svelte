@@ -9,7 +9,11 @@
 	import type { TransformedHabits } from '../server/data_utils';
 	import DailyButton from './DailyButton.svelte';
 
-	let today = format(new Date(), 'yyyy-MM-dd');
+	let right_now = new Date();
+	const today = format(
+		new Date(Date.UTC(right_now.getUTCFullYear(), right_now.getUTCMonth(), right_now.getUTCDate())),
+		'yyyy-MM-dd',
+	);
 
 	let { row, habit } = $props<{
 		row: number;
