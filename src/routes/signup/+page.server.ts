@@ -6,6 +6,7 @@ import { bcryptPassword, getPasswordString, log_user_in, normalizeEmail } from '
 import { user } from '../../schema';
 import { db } from '../../hooks.server';
 import { PIN } from '$env/static/private';
+import { check_is_password_valid } from '$lib/utils';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) {
@@ -30,7 +31,7 @@ export const actions: Actions = {
 				message: 'Invalid email',
 			});
 		}
-		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
+		if (!check_is_password_valid(password)) {
 			return fail(400, {
 				message: 'Invalid password',
 			});
