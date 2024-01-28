@@ -79,7 +79,7 @@ export const bcryptPassword = async (password: string): Promise<string> => {
 };
 
 export const normalizeEmail = (email: string): string => {
-	return decodeURIComponent(email).toLowerCase();
+	return decodeURIComponent(email).toLowerCase().trim();
 };
 
 // Compares password to hash to confirm they are the same

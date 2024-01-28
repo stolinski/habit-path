@@ -7,6 +7,7 @@ import { user } from '../../schema';
 import { db } from '../../hooks.server';
 import { PIN } from '$env/static/private';
 import { check_is_password_valid } from '$lib/utils';
+import { eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) {
@@ -37,6 +38,18 @@ export const actions: Actions = {
 			});
 		}
 		try {
+			// Check if user exists
+			const user_exists = await db
+				.query
+				.user
+				.findFirst({ where: eq(user.email, normalized_email) });
+
+			if (user_exists) {
+				return fail(400, {
+					message: 'User already exists',
+				});
+			}
+
 			// Hash password
 			const passwordHash: string = getPasswordString(password);
 
