@@ -21,6 +21,7 @@
 <ul>
 	<li>Jan 27 2024</li>
 	<ul>
+		<li>Adds basic theme support for oled, system, dark, light</li>
 		<li>Massive rewrite of logic. Removes date state in favor of query params.</li>
 	</ul>
 	<li>Jan 25 2024</li>

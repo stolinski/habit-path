@@ -32,6 +32,7 @@ export const authentication: Handle = async ({ event, resolve }) => {
 		redirect(307, '/waitlist');
 	}
 	event.locals.user = user;
+	event.locals.theme = decodeURIComponent(cookies.get('theme') || 'system');
 
 	if (access_token) cookies.set('accessToken', access_token, cookie_options);
 	if (refresh_token) cookies.set('refreshToken', refresh_token, cookie_options);
