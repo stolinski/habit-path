@@ -27,6 +27,7 @@ export const authentication: Handle = async ({ event, resolve }) => {
 		event.url.pathname !== '/roadmap' &&
 		event.url.pathname !== '/forgot-password' &&
 		event.url.pathname !== '/set-password' &&
+		event.url.pathname !== '/pwa' &&
 		event.url.pathname !== '/waitlist'
 	) {
 		redirect(307, '/waitlist');
