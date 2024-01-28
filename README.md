@@ -18,7 +18,15 @@ npm create svelte@latest my-app
 
 Add a `.env` file, and include the contents found in the `example.env` file.
 
+You will want to create a [Neon](https://neon.tech/) database, and add the database URL to the `.env` file.
+
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+To run migrations, run the `migrate` script:
+
+```bash
+pnpm run migrate
+````
 
 ```bash
 npm run dev
@@ -26,6 +34,10 @@ npm run dev
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
+
+To create a user account for yourself, go to `/signup` and create an account.
+The first user account to be created will be considered an admin account. Subsequent accounts will be considered regular users.
+For the "code" input, provide the `PIN` you defined in your `.env` file.
 
 ## Building
 

@@ -3,6 +3,7 @@ import { and, asc, between, count, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 import { transform_habits, update_habits_order } from '../server/data_utils';
+import { fail } from '@sveltejs/kit';
 
 export const load = async ({ locals, url }) => {
 	const date = url.searchParams.get('date') || format(new Date(), 'yyyy-MM-dd');
@@ -34,6 +35,25 @@ export const actions = {
 		};
 
 		if (locals?.user?.id) {
+			const trimmed_name = name.trim();
+			const days_per_month_int = parseInt(days_per_month);
+
+			if (trimmed_name.length < 1) {
+				return fail(422, { message: 'Name must be at least 1 character' });
+			}
+
+			if (trimmed_name.length > 255) {
+				return fail(422, { message: 'Name must be less than 255 characters' });
+			}
+
+			if (!days_per_month_int || Number.isNaN(days_per_month_int)) {
+				return fail(422, { message: 'Days per month must be a number' });
+			}
+
+			if (days_per_month_int < 1 || days_per_month_int > 31) {
+				return fail(422, { message: 'Days per month must be between 1 and 31' });
+			}
+
 			const result = await db
 				.select({ count: count() })
 				.from(habits)
@@ -42,8 +62,8 @@ export const actions = {
 
 			await db.insert(habits).values({
 				user_id: locals.user.id,
-				name,
-				days_per_month: parseInt(days_per_month),
+				name: trimmed_name,
+				days_per_month: days_per_month_int,
 				updated_at: new Date(),
 				created_at: new Date(),
 				order: totalCount * 10,
