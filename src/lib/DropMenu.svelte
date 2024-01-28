@@ -47,7 +47,17 @@
 			use:click_outside
 			on:click-outside={close}
 		>
-			<button class="ghost" onclick={close(app.reorder)}>Reorder</button>
+			<button class="ghost" onclick={close(app.reorder)}>
+				<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+					><path
+						fill-rule="evenodd"
+						clip-rule="evenodd"
+						d="M11.78 11.16a.75.75 0 0 0-1.06 0l-1.97 1.97V2.87l1.97 1.97a.75.75 0 1 0 1.06-1.06L8.53.53 8 0l-.53.53-3.25 3.25a.75.75 0 0 0 1.06 1.06l1.97-1.97v10.26l-1.97-1.97a.75.75 0 0 0-1.06 1.06l3.25 3.25L8 16l.53-.53 3.25-3.25a.75.75 0 0 0 0-1.06Z"
+						fill="var(--fg);"
+					/></svg
+				>
+				Reorder</button
+			>
 			<!-- TODO Add Edit mode -->
 			<!-- TODO Add Archive -->
 			<!-- <button class="ghost"><Edit />Edit</button>  -->

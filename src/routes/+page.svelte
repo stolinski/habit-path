@@ -31,11 +31,11 @@
 {#if app.mode === 'NORMAL'}
 	<section class="habits" id="visible_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
-			<HabitRow date={data.active_date} {habit} row={i} />
+			<HabitRow {habit} row={i} />
 		{/each}
 	</section>
 {:else if app.mode === 'REORDER'}
-	<section class="habits" id="reorder_habits">
+	<section class="reorder_habits" id="reorder_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
 			<ReorderRow {habit} />
 		{/each}
@@ -59,6 +59,13 @@
 		overflow: auto;
 		margin-left: -2.5vw;
 		padding-left: 2.5vw;
+		padding-top: 20px;
+		padding-bottom: 80px;
+	}
+
+	.reorder_habits {
+		grid-column: 2 / 3;
+		overflow: auto;
 		padding-top: 20px;
 		padding-bottom: 80px;
 	}

@@ -6,6 +6,7 @@
 	let active_theme = $state(Cookie.get('theme'));
 
 	const themes = ['System', 'Light', 'Dark', 'OLED'];
+	const button_themes = ['System'];
 
 	function change_theme(this: HTMLButtonElement, e: Event) {
 		// 1. set to theme state, for instant ui responsiveness

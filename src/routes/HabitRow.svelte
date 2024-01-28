@@ -18,7 +18,6 @@
 	let { row, habit } = $props<{
 		row: number;
 		habit: TransformedHabits;
-		date: Date;
 	}>();
 </script>
 
@@ -32,17 +31,18 @@
 			{habit.name}
 		{/if}
 	</h3>
+
 	<DropMenu {habit} />
 
 	<div class="handle {app.mode}">
-		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-			><path
+		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+			<path
 				fill-rule="evenodd"
 				clip-rule="evenodd"
 				d="M3.5 2.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm11.5 0a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm-1.25 7a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm1.25 4.5a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0ZM2.25 9.25a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm7-1.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0ZM8 15a1.25 1.25 0 1 0 0-2.5A1.25 1.25 0 0 0 8 15ZM9.25 2.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0ZM2.25 15a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z"
 				fill="var(--fg)"
-			/></svg
-		>
+			/>
+		</svg>
 	</div>
 </div>
 
@@ -57,9 +57,7 @@
 >
 	<div class="day_buttons">
 		{#each habit.checks as day, i (habit.id + i)}
-			<div transition:fade>
-				<DailyButton {today} habit_id={habit.id} {i} bind:day />
-			</div>
+			<DailyButton {today} habit_id={habit.id} {i} bind:day />
 		{/each}
 	</div>
 </article>

@@ -66,9 +66,7 @@
 		left: 0;
 		z-index: 1;
 		top: 0;
-		position: sticky;
-		display: flex;
-		width: 100vw;
+		position: relative;
 		transition: 0.3s ease padding;
 		justify-content: space-between;
 	}
