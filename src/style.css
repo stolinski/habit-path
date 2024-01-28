@@ -52,6 +52,7 @@
 
 	--tint: oklch(100% 0 0 / 80%);
 	--shade: oklch(0 0 0 / 10%);
+	--tint-or-shade: color-mix(in oklab, var(--fg), transparent 75%);
 
 	--green: #a0dcc8;
 	--red: #ff3b30;
@@ -338,6 +339,7 @@ label {
 		--fg: var(--white);
 		--tint: oklch(100% 0 0 / 20%);
 		--shade: oklch(0 0 0 / 20%);
+		--tint-or-shade: color-mix(in oklab, var(--fg), transparent 75%);
 	}
 }
 
@@ -346,6 +348,7 @@ label {
 	--fg: #fff;
 	--tint: oklch(100% 0 0 / 20%);
 	--shade: oklch(0 0 0 / 20%);
+	--tint-or-shade: color-mix(in oklab, var(--fg), transparent 75%);
 }
 
 .dark {
@@ -353,6 +356,7 @@ label {
 	--fg: var(--white);
 	--tint: oklch(100% 0 0 / 20%);
 	--shade: oklch(0 0 0 / 20%);
+	--tint-or-shade: color-mix(in oklab, var(--fg), transparent 75%);
 }
 
 .content {
