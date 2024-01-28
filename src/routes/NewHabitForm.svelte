@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	const { mobile = false, onfinish = () => {} } = $props<{
+	const { form, mobile = false, onfinish = () => {} } = $props<{
 		form: ActionData | null;
 		mobile?: boolean;
 		onfinish?: () => any;
@@ -16,10 +16,12 @@
 		method="POST"
 		use:enhance={() => {
 			loading = true;
-			return async ({ update }) => {
+			return async ({ result, update }) => {
 				loading = false;
 				update();
-				onfinish();
+				if (result.type === 'success') {
+					onfinish();
+				}
 			};
 		}}
 	>
@@ -38,6 +40,10 @@
 			{/if}</button
 		>
 	</form>
+
+	{#if form?.message}
+		<p class="error">{form?.message}</p>
+	{/if}
 </div>
 
 <style>
