@@ -12,7 +12,6 @@
 	<li>Add server side caching</li>
 	<li>Year view for all habits at once</li>
 	<li>Open up app for 100 waitlist users</li>
-	<li>Full theme support</li>
 	<li>iOS/Android App via Tauri</li>
 </ul>
 
@@ -21,6 +20,7 @@
 <ul>
 	<li>Jan 27 2024</li>
 	<ul>
+		<li>Adds button themes with 4 themes to start</li>
 		<li>Adds basic theme support for oled, system, dark, light</li>
 		<li>Massive rewrite of logic. Removes date state in favor of query params.</li>
 	</ul>
