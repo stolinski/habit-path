@@ -1,20 +1,16 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { datez } from '$lib/state.svelte';
 	import type { ActionResult } from '@sveltejs/kit';
-	import { format } from 'date-fns';
 
-	let { habit_id, i, checks } = $props<{
+	let { habit_id, i, day, today } = $props<{
 		habit_id: number;
 		i: number;
-		checks: string[];
+		day: {
+			checked_at: string;
+			is_checked: boolean;
+		};
+		today: string;
 	}>();
-	let today = format(new Date(), 'yyyy-MM-dd');
-
-	// TODO rethink how i'm doing this whole, ischecked or not biz
-	let day_of_checked = $derived(new Date(datez.active_date.getTime()).setDate(i + 1));
-	let day_formatted_of_checked = $derived(format(day_of_checked, 'E'));
-	let date_formatted_of_checked = $derived(format(day_of_checked, 'dd'));
 
 	// This function rn only run refetch of data if it's not a success
 	async function optimistic_rerender_checks({
@@ -28,20 +24,30 @@
 			update();
 		}
 	}
+
+	function formatDate(inputDate: string) {
+		const parts = inputDate.split('-');
+		if (parts.length === 3) {
+			const year = parseInt(parts[0]);
+			const month = parseInt(parts[1], 10);
+			const day = parseInt(parts[2], 10);
+
+			const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+			const dayOfWeek = daysOfWeek[new Date(year, month - 1, day).getDay()];
+
+			return `${dayOfWeek}<br />${day.toString().padStart(2, '0')}`;
+		} else {
+			return 'Invalid Date';
+		}
+	}
 </script>
 
-{#if checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
+{#if day.is_checked}
 	<form
 		action="?/remove_check"
 		method="POST"
-		use:enhance={({ formElement }) => {
-			const day = formElement.elements['checked_at'].value;
-			const index = checks.indexOf(day);
-			// Check if the element is in the array
-			if (index !== -1) {
-				// Remove the element using splice
-				checks.splice(index, 1);
-			}
+		use:enhance={() => {
+			day.is_checked = false;
 			return optimistic_rerender_checks;
 		}}
 	>
@@ -51,9 +57,8 @@
 	<form
 		action="?/add_check"
 		method="POST"
-		use:enhance={({ formElement }) => {
-			const day = formElement.elements['checked_at'].value;
-			checks.push(day);
+		use:enhance={() => {
+			day.is_checked = true;
 			return optimistic_rerender_checks;
 		}}
 	>
@@ -63,22 +68,14 @@
 
 {#snippet inputs()}
 	<input type="hidden" value={habit_id} name="habit_id" id={'habit_id_' + i} />
-	<input
-		type="hidden"
-		value={format(day_of_checked, 'yyyy-MM-dd')}
-		name="checked_at"
-		id={'checked_at_' + i}
-	/>
+	<input type="hidden" value={day.checked_at} name="checked_at" id={'checked_at_' + i} />
 	<button
-		data-today={today === format(day_of_checked, 'yyyy-MM-dd')}
-		class:complete={checks.includes(format(day_of_checked, 'yyyy-MM-dd'))}
-		class:today={i === datez.active_date.getDay() - 1}
+		data-today={today === day.checked_at}
+		class:complete={day.is_checked}
 		type="submit"
 		class="daily_button"
 	>
-		{day_formatted_of_checked}
-		<br />
-		{date_formatted_of_checked}
+		{@html formatDate(day.checked_at)}
 	</button>
 {/snippet}
 
@@ -133,26 +130,9 @@
 		opacity: 0.08;
 		background-image: linear-gradient(115deg, #000, #fff);
 		--lines: 0.0001px;
-
-		/* mask: repeating-radial-gradient(
-			circle at center,
-			#000,
-			var(--lines),
-			#000,
-			0,
-			/* transition hints make code easier to manage */ #0000,
-			/* calc(var(--lines) * 2), */
-			/* #0000 0 trailing 0 is part of the hard stop logic */
-		/* ); */
 	}
+
 	[data-today='true'] {
 		outline: solid 2px rgba(255, 255, 255, 0.6);
 	}
-
-	/* .today {
-		position: absolute;
-		background: red;
-		top: 100px;
-		inset: 0;
-	} */
 </style>

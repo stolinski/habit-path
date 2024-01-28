@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DropMenu from '$lib/DropMenu.svelte';
 	import { COLORS, DARK_COLORS } from '$lib/const';
-	import { app, datez } from '$lib/state.svelte';
+	import { app } from '$lib/state.svelte';
 	import { get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
 
@@ -14,6 +14,7 @@
 	let { row, habit } = $props<{
 		row: number;
 		habit: TransformedHabits;
+		date: Date;
 	}>();
 </script>
 
@@ -51,8 +52,10 @@
 	style:--habit_color={get_circular_array_item(COLORS, row)}
 >
 	<div class="day_buttons">
-		{#each [...Array(datez.days_in_active_month)] as _, i (habit.id + i)}
-			<DailyButton habit_id={habit.id} {i} bind:checks={habit.checks} />
+		{#each habit.checks as day, i (habit.id + i)}
+			<div transition:fade>
+				<DailyButton {today} habit_id={habit.id} {i} bind:day />
+			</div>
 		{/each}
 	</div>
 </article>

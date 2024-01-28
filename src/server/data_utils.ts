@@ -1,3 +1,4 @@
+import { format, getDaysInMonth } from 'date-fns';
 import { and, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
@@ -26,18 +27,40 @@ export async function update_habits_order(users_habits: string[] | number[], use
 
 // Transforms habits out of the db to returning just an array full of dates
 export function transform_habits(
-	data: typeof habits.$inferSelect & { checks: (typeof checks.$inferSelect)[] }[],
+	inputData: typeof habits.$inferSelect & { checks: (typeof checks.$inferSelect)[] }[],
+	active_date: string,
 ): TransformedHabits[] {
-	return data.map((item) => ({
+	const days_in_month = getDaysInMonth(new Date(active_date));
+	const days_in_month_array = [...Array(days_in_month)];
+
+	return inputData.map((item) => ({
 		...item,
-		checks: item.checks.map((check) => check.checked_at),
+		checks: days_in_month_array.map((day, i) => {
+			const check_day = new Date(active_date).setDate(i + 1);
+			return {
+				checked_at: format(check_day, 'yyyy-MM-dd'),
+				is_checked: isDateChecked(item.checks, format(check_day, 'yyyy-MM-dd')),
+			};
+		}),
 	}));
+}
+
+type Checks = {
+	id: number;
+	user_id: number;
+	checked_at: string;
+};
+
+function isDateChecked(checksArray: Checks[], dateToCheck: string) {
+	return checksArray.some((check: Checks) => {
+		return check.checked_at === dateToCheck;
+	});
 }
 
 export type TransformedHabits = {
 	id: number;
 	status: 'VISIBLE' | 'HIDDEN' | 'ARCHIVED';
-	checks: string[];
+	checks: { checked_at: string; is_checked: boolean }[];
 	days_per_month: number | null;
 	name: string | null;
 };

@@ -1,27 +1,28 @@
+import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { and, asc, between, count, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 import { transform_habits, update_habits_order } from '../server/data_utils';
 
-export const load = async ({ locals }) => {
-	// let date_tree =
-	// TODO function that builds date
-	// Building blocks for how I want to query moving forward
+export const load = async ({ locals, url }) => {
+	const date = url.searchParams.get('date') || format(new Date(), 'yyyy-MM-dd');
+	// Get first day of month and last day of month in 2024-01-01 format
+	const firstDayOfMonth = format(startOfMonth(new Date(date)), 'yyyy-MM-dd');
+	const lastDayOfMonth = format(endOfMonth(new Date(date)), 'yyyy-MM-dd');
 
-	//  Add check for proper month between. rn will always return January
-	// TODO fix before Feb
+	//  Add check for proper month between.
 	const habits_data = await db.query.habits.findMany({
 		where: eq(habits.user_id, locals?.user?.id),
 		orderBy: [asc(habits.order)],
 		with: {
 			checks: {
-				where: between(checks.checked_at, '2024-01-01', '2024-01-31'),
+				where: between(checks.checked_at, firstDayOfMonth, lastDayOfMonth),
 			},
 		},
 	});
 
 	return {
-		habits: transform_habits(habits_data),
+		habits: transform_habits(habits_data, date),
 	};
 };
 

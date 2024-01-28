@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { app, datez } from '$lib/state.svelte';
-	import { format } from 'date-fns';
+	import DatePicker from '$lib/DatePicker.svelte';
+	import { app } from '$lib/state.svelte';
 	import { fly } from 'svelte/transition';
 	import '../style.css';
 	import MobileNav from './MobileNav.svelte';
@@ -22,13 +22,7 @@
 				</a>
 			</h1>
 			{#if !data.url.includes('signup') && !data.url.includes('login') && !data.url.includes('roadmap')}
-				<div class="date_picker">
-					<h2>
-						<button on:click={datez.prev_month}>«</button>
-						{format(datez.active_date, 'MMMM yyyy')}
-						<button on:click={datez.next_month}>»</button>
-					</h2>
-				</div>
+				<DatePicker start_date={data.active_date} />
 				<a href="/user" class="user_menu">{data.user?.email[0]}</a>
 			{/if}
 		</header>
@@ -101,26 +95,9 @@
 		font-style: italic;
 	}
 
-	h2 {
-		align-self: center;
-		margin: 0;
-		font-size: 18px;
-	}
-
 	a {
 		color: initial;
 		text-decoration: none;
-	}
-
-	.date_picker {
-		display: flex;
-		justify-content: center;
-		align-self: end;
-		justify-self: center;
-	}
-	.date_picker button {
-		background: transparent;
-		color: var(--fg);
 	}
 
 	main {
@@ -130,10 +107,6 @@
 
 	main > :global(*) {
 		grid-column: 2/3;
-	}
-
-	button {
-		border: none;
 	}
 
 	.user_menu {

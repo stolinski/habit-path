@@ -57,7 +57,7 @@
 {/if}
 
 {#if app.mode === 'NORMAL'}
-	<div>
+	<div style="margin: 1rem 0;">
 		<button class="button no-fab" on:click={toggle_drawer}>
 			<svg width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
 				><path
@@ -73,14 +73,14 @@
 
 {#if app.mode === 'NORMAL'}
 	<button class="fab button" on:click={toggle_drawer}>
-		<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-			><path
+		<svg width="30" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+			<path
 				fill-rule="evenodd"
 				clip-rule="evenodd"
 				d="M8.75 2.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
 				fill="var(--white)"
-			/></svg
-		>
+			/>
+		</svg>
 	</button>
 {:else if app.mode === 'REORDER'}
 	<form
