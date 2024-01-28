@@ -54,10 +54,15 @@
 	--shade: oklch(0 0 0 / 10%);
 	--tint-or-shade: color-mix(in oklab, var(--fg), transparent 75%);
 
-	--green: #a0dcc8;
-	--red: #ff3b30;
+	--yellow: #ffd817;
+	--orange: #ff9e02;
+	--red: #ff5a00;
+	--pink: #ff0084;
+	--teal: #a0dcc8;
 	--blue: #0001fb;
-	/* green: */
+
+	--green: #a0dcc8;
+
 	--bg: var(--white);
 	--bg_1: var(--light_grey);
 	--bg-sheet: var(--white);
@@ -371,4 +376,31 @@ label {
 .flex {
 	display: flex;
 	gap: 10px;
+}
+
+.button-path {
+	--button_1: var(--yellow);
+	--button_2: var(--orange);
+	--button_3: var(--red);
+	--button_4: var(--pink);
+	--button_5: var(--teal);
+	--button_6: var(--blue);
+}
+
+.button-cyber {
+	--button_1: #75fba7;
+	--button_2: #ad23f6;
+	--button_3: #52b5f9;
+	--button_4: #c429f6;
+	--button_5: #426fcc;
+	--button_6: #081df5;
+}
+
+.button-soft {
+	--button_1: #cdb4db;
+	--button_2: #ffc8dd;
+	--button_3: #ffafcc;
+	--button_4: #bde0fe;
+	--button_5: #a2d2ff;
+	--button_6: #081df5;
 }
