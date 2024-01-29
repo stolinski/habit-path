@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	const { form, mobile = false, onfinish = () => {} } = $props<{
+	const {
+		form,
+		mobile = false,
+		onfinish = () => {},
+	} = $props<{
 		form: ActionData | null;
 		mobile?: boolean;
 		onfinish?: () => any;
@@ -9,6 +13,7 @@
 	let loading = $state(false);
 </script>
 
+<!-- TODO quick select from common habits, ie no alcohol, no marijuana, no smoking,workout,cardio, strength train -->
 <div class="form new_habit_form" class:mobile>
 	<h3 class="h5">New Habit</h3>
 	<form

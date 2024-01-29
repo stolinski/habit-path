@@ -19,6 +19,15 @@
 		row: number;
 		habit: TransformedHabits;
 	}>();
+
+	// Make this easily sharable
+	const social_string =
+		habit.checks.reduce((accumulator, currentValue) => {
+			return (accumulator += currentValue.is_checked ? '❇️' : '🔻');
+		}, '') +
+		`
+	Follow your habits at HabitPath.io
+	`;
 </script>
 
 <div class="heading {app.mode}" data-habit-id-parent={habit.id}>
