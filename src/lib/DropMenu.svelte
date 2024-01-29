@@ -9,11 +9,17 @@
 	import Trash from './Trash.svelte';
 	import { click_outside } from './click_outside';
 	import { app } from './state.svelte';
+	import HabitForm from '../routes/HabitForm.svelte';
+	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
 
-	const { habit } = $props<{ habit: TransformedHabits }>();
+	const { form, habit } = $props<{
+		form: ActionData;
+		habit: TransformedHabits;
+	}>();
 	let active = $state(false);
 	let hiding = $state(false);
 	let delete_modal = $state(false);
+	let edit_drawer = $state(false);
 	const { id } = habit;
 
 	function open() {
@@ -22,6 +28,14 @@
 
 	function openDelete() {
 		delete_modal = true;
+	}
+
+	function openEdit() {
+		edit_drawer = true;
+	}
+
+	function finishEdit() {
+		edit_drawer = false;
 	}
 
 	function close(fn: any) {
@@ -58,7 +72,17 @@
 				>
 				Reorder</button
 			>
-			<!-- TODO Add Edit mode -->
+			<button class="ghost" onclick={close(openEdit)}>
+				<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+					><path
+						fill-rule="evenodd"
+						clip-rule="evenodd"
+						d="M11.78 11.16a.75.75 0 0 0-1.06 0l-1.97 1.97V2.87l1.97 1.97a.75.75 0 1 0 1.06-1.06L8.53.53 8 0l-.53.53-3.25 3.25a.75.75 0 0 0 1.06 1.06l1.97-1.97v10.26l-1.97-1.97a.75.75 0 0 0-1.06 1.06l3.25 3.25L8 16l.53-.53 3.25-3.25a.75.75 0 0 0 0-1.06Z"
+						fill="var(--fg);"
+					/></svg
+				>
+				Edit</button
+			>
 			<!-- TODO Add Archive -->
 			<!-- <button class="ghost"><Edit />Edit</button>  -->
 			{#if habit.status === 'VISIBLE'}
@@ -147,6 +171,15 @@
 	</div>
 </Modal>
 
+{#if edit_drawer}
+	<div class="form_drawer" transition:fly={{ opacity: 0, y: '100%' }}>
+		<div class="form_drawer_container">
+			<button class="ghost button" on:click={finishEdit}>Cancel</button>
+			<HabitForm {habit} mobile={true} {form} onfinish={finishEdit} />
+		</div>
+	</div>
+{/if}
+
 <style>
 	.menu_button {
 		padding: 0 30px 0 10px;
@@ -193,8 +226,28 @@
 	.ghost :global(svg) {
 		flex-shrink: 0;
 	}
-	.buttons {
+  .form_drawer :global(h3) {
+		text-align: center;
+  }
+  .form_drawer_container .ghost {
+		position: absolute;
+		top: 15px;
+		left: 15px;
+  }
+  .buttons {
 		display: flex;
 		justify-content: space-between;
 	}
+  .form_drawer {
+		background: var(--bg);
+		border-radius: 15px;
+		position: fixed;
+		inset: 40px 0 0 0;
+		box-shadow: var(--shadow-upwards);
+		z-index: 200;
+  }
+  .form_drawer_container {
+		margin: 0 auto;
+		max-width: 700px;
+  }
 </style>

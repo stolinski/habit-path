@@ -31,7 +31,7 @@
 {#if app.mode === 'NORMAL'}
 	<section class="habits" id="visible_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
-			<HabitRow {habit} row={i} />
+			<HabitRow {form} {habit} row={i} />
 		{/each}
 	</section>
 {:else if app.mode === 'REORDER'}
