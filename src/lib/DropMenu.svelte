@@ -214,14 +214,24 @@
 	.ghost :global(svg) {
 		flex-shrink: 0;
 	}
+
+  .form_drawer :global(input) {
+      width: 100%;
+  }
+
+  .form_drawer :global(input[type='number']) {
+      width: 80px;
+  }
   .form_drawer :global(h3) {
 		text-align: center;
   }
+
   .form_drawer_container .ghost {
 		position: absolute;
 		top: 15px;
 		left: 15px;
   }
+
   .buttons {
 		display: flex;
 		justify-content: space-between;
