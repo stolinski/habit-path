@@ -42,3 +42,7 @@ export function jump_2_today() {
 export function toggle_values<A, B>(VAL: A | B, VAL_1: A, VAL_2: B): A | B {
 	return VAL === VAL_1 ? VAL_2 : VAL_1;
 }
+
+export function check_is_password_valid(password: string) {
+	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
+}

@@ -73,6 +73,8 @@
 		<h1 class="h4">User Settings</h1>
 		<h2 class="h6">{data?.user?.email}</h2>
 
+		<a href="/update-password">Change Password</a>
+
 		<form
 			action="?/logout"
 			use:enhance={() => {
