@@ -8,6 +8,7 @@
 	import { format } from 'date-fns';
 	import type { TransformedHabits } from '../server/data_utils';
 	import DailyButton from './DailyButton.svelte';
+	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
 
 	let right_now = new Date();
 	const today = format(
@@ -15,7 +16,8 @@
 		'yyyy-MM-dd',
 	);
 
-	let { row, habit } = $props<{
+	let { form, row, habit } = $props<{
+		form: ActionData;
 		row: number;
 		habit: TransformedHabits;
 	}>();
@@ -32,7 +34,7 @@
 		{/if}
 	</h3>
 
-	<DropMenu {habit} />
+	<DropMenu {form} {habit} />
 
 	<div class="handle {app.mode}">
 		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

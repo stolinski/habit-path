@@ -27,62 +27,116 @@ export const load = async ({ locals, url }) => {
 	};
 };
 
+const validate_habit_form = (locals): ({
+	error_message: string;
+	payload: null;
+} | {
+	error_message: null;
+	payload: Pick<typeof habits.$inferSelect, 'name' | 'days_per_month'>;
+}) => {
+	const { name, days_per_month } = locals.form_data as {
+		name: string;
+		days_per_month: string;
+	};
+
+	const trimmed_name = name.trim();
+	const days_per_month_int = parseInt(days_per_month);
+
+	if (trimmed_name.length < 1) {
+		return {
+			error_message: 'Name must be at least 1 character',
+			payload: null,
+		};
+	}
+
+	if (trimmed_name.length > 255) {
+		return {
+			error_message: 'Name must be less than 255 characters',
+			payload: null,
+		};
+	}
+
+	if (!days_per_month_int || Number.isNaN(days_per_month_int)) {
+		return {
+			error_message: 'Days per month must be a number',
+			payload: null,
+		};
+	}
+
+	if (days_per_month_int < 1 || days_per_month_int > 31) {
+		return {
+			error_message: 'Days per month must be between 1 and 31',
+			payload: null,
+		};
+	}
+
+	return {
+		error_message: null,
+		payload: {
+			name: trimmed_name,
+			days_per_month: days_per_month_int,
+		},
+	};
+}
+
 export const actions = {
 	async new_habit({ locals }) {
-		const { name, days_per_month } = locals.form_data as {
-			name: string;
-			days_per_month: string;
-		};
-
 		if (locals?.user?.id) {
-			const trimmed_name = name.trim();
-			const days_per_month_int = parseInt(days_per_month);
+			const {
+				error_message,
+				payload,
+			} = validate_habit_form(locals);
 
-			if (trimmed_name.length < 1) {
-				return fail(422, { message: 'Name must be at least 1 character' });
+			if (error_message) {
+				return fail(422, { message: error_message });
 			}
 
-			if (trimmed_name.length > 255) {
-				return fail(422, { message: 'Name must be less than 255 characters' });
+			if (payload) {
+				const result = await db
+					.select({ count: count() })
+					.from(habits)
+					.where(eq(habits.user_id, locals.user.id));
+				const totalCount = result[0].count;
+
+				await db.insert(habits).values({
+					user_id: locals.user.id,
+					name: payload.name,
+					days_per_month: payload.days_per_month,
+					updated_at: new Date(),
+					created_at: new Date(),
+					order: totalCount * 10,
+				});
 			}
-
-			if (!days_per_month_int || Number.isNaN(days_per_month_int)) {
-				return fail(422, { message: 'Days per month must be a number' });
-			}
-
-			if (days_per_month_int < 1 || days_per_month_int > 31) {
-				return fail(422, { message: 'Days per month must be between 1 and 31' });
-			}
-
-			const result = await db
-				.select({ count: count() })
-				.from(habits)
-				.where(eq(habits.user_id, locals.user.id));
-			const totalCount = result[0].count;
-
-			await db.insert(habits).values({
-				user_id: locals.user.id,
-				name: trimmed_name,
-				days_per_month: days_per_month_int,
-				updated_at: new Date(),
-				created_at: new Date(),
-				order: totalCount * 10,
-			});
 		}
 	},
 
 	async update_habit({ locals }) {
-		const { habit_id, name, days_per_month } = locals.form_data as {
+		const { habit_id } = locals.form_data as {
 			name: string;
 			days_per_month: string;
 			habit_id: number;
 		};
 
 		if (locals?.user?.id) {
-			await db
-				.update(habits)
-				.set({ name, days_per_month: parseInt(days_per_month), updated_at: new Date() })
-				.where(eq(habits.id, habit_id));
+			const {
+				error_message,
+				payload,
+			} = validate_habit_form(locals);
+
+			if (error_message) {
+				return fail(422, { message: error_message });
+			}
+
+			if (payload) {
+				await db
+					.update(habits)
+					.set({
+						name: payload.name,
+						days_per_month: payload.days_per_month,
+						updated_at: new Date(),
+					})
+					.where(eq(habits.id, habit_id));
+			}
 		}
 	},
 

@@ -6,7 +6,7 @@
 	import { fly } from 'svelte/transition';
 	import type { TransformedHabits } from '../server/data_utils';
 	import type { ActionData } from './$types';
-	import NewHabitForm from './NewHabitForm.svelte';
+	import HabitForm from './HabitForm.svelte';
 
 	let { form, habits, clean_habits } = $props<{
 		form: ActionData;
@@ -51,7 +51,7 @@
 	<div class="form_drawer" transition:fly={{ opacity: 0, y: '100%' }}>
 		<div class="form_drawer_container">
 			<button class="ghost button" on:click={toggle_drawer}>Cancel</button>
-			<NewHabitForm mobile={true} {form} onfinish={toggle_drawer} />
+			<HabitForm mobile={true} {form} onfinish={toggle_drawer} />
 		</div>
 	</div>
 {/if}
