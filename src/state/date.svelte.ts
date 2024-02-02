@@ -1,17 +1,22 @@
 import { goto } from '$app/navigation';
-import { format } from 'date-fns';
+import { date_without_timezone, get_param_date } from '$lib/utils';
+
+function change_month(active_date: Date, delta: number) {
+	const new_active_date = date_without_timezone(new Date(active_date));
+	new_active_date.setMonth(active_date.getMonth() + delta);
+
+	const new_data_params = get_param_date(new_active_date);
+
+	const new_params = new URLSearchParams();
+	new_params.set('date', new_data_params);
+
+	goto(`?${new_params.toString()}`, { replaceState: true });
+}
 
 export function next_month(active_date: Date) {
-	const newParams = new URLSearchParams();
-	let new_active_date = new Date(active_date.setMonth(active_date.getMonth() + 1));
-	newParams.set('date', format(new_active_date, 'yyyy-MM-dd'));
-	goto(`?${newParams.toString()}`, { replaceState: true });
+	change_month(active_date, 1);
 }
 
 export function prev_month(active_date: Date) {
-	const newParams = new URLSearchParams();
-	let new_active_date = new Date(active_date.setMonth(active_date.getMonth() - 1));
-
-	newParams.set('date', format(new_active_date, 'yyyy-MM-dd'));
-	goto(`?${newParams.toString()}`, { replaceState: true });
+	change_month(active_date, -1);
 }
