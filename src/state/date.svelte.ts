@@ -13,10 +13,10 @@ function change_month(active_date: Date, delta: number) {
 	goto(`?${new_params.toString()}`, { replaceState: true });
 }
 
-export function next_month(active_date: Date) {
-	change_month(active_date, 1);
+export function next_month(date: Date) {
+	change_month(date, 1);
 }
 
-export function prev_month(active_date: Date) {
-	change_month(active_date, -1);
+export function prev_month(date: Date) {
+	change_month(date, -1);
 }
