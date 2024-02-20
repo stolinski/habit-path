@@ -2,20 +2,22 @@
 	import DropMenu from '$lib/DropMenu.svelte';
 	import { COLORS, DARK_COLORS } from '$lib/const';
 	import { app } from '$lib/state.svelte';
-	import { get_circular_array_item } from '$lib/utils.js';
+	import { date_without_timezone, get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
 
 	import { format } from 'date-fns';
 	import type { TransformedHabits } from '../server/data_utils';
 	import DailyButton from './DailyButton.svelte';
+	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
 
-	let right_now = new Date();
+	let right_now = date_without_timezone(new Date());
 	const today = format(
 		new Date(Date.UTC(right_now.getUTCFullYear(), right_now.getUTCMonth(), right_now.getUTCDate())),
 		'yyyy-MM-dd',
 	);
 
-	let { row, habit } = $props<{
+	let { form, row, habit } = $props<{
+		form: ActionData;
 		row: number;
 		habit: TransformedHabits;
 	}>();
@@ -41,7 +43,7 @@
 		{/if}
 	</h3>
 
-	<DropMenu {habit} />
+	<DropMenu {form} {habit} />
 
 	<div class="handle {app.mode}">
 		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

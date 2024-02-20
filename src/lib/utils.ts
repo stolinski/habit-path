@@ -1,4 +1,4 @@
-import { eachDayOfInterval, endOfMonth, startOfMonth } from 'date-fns';
+import { eachDayOfInterval, endOfMonth, format, startOfMonth } from 'date-fns';
 
 export const get_circular_array_item = (array: string[], index: number) => {
 	// Ensure the index is a positive number then get the modulus with the array length
@@ -41,4 +41,25 @@ export function jump_2_today() {
 }
 export function toggle_values<A, B>(VAL: A | B, VAL_1: A, VAL_2: B): A | B {
 	return VAL === VAL_1 ? VAL_2 : VAL_1;
+}
+
+export function check_is_password_valid(password: string) {
+	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
+}
+
+// incoming date format: 2024-01-01
+export function parse_date(date: string): [year: number, month: number, day: number] {
+	const [year, month, day] = date.split('-').map(Number);
+
+	// it's fine if month returns a negative number
+	// new Date(2024, -1, 1) will return new Date(2023, 11, 1)
+	return [year, month - 1, day]; // month is 0 indexed
+}
+
+export function get_param_date(date: Date) {
+	return format(date, 'yyyy-MM-dd');
+}
+
+export function date_without_timezone(date: Date): Date {
+	return new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
 }

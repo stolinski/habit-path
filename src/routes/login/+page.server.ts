@@ -3,6 +3,7 @@ import { isValidEmail } from '$lib/server/email';
 
 import type { PageServerLoad, Actions } from './$types';
 import { login_with_password, log_user_in, normalizeEmail } from '$lib/server/auth';
+import { check_is_password_valid } from '$lib/utils';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) {
@@ -21,7 +22,7 @@ export const actions: Actions = {
 				message: 'Invalid email'
 			});
 		}
-		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
+		if (!check_is_password_valid(password)) {
 			return fail(400, {
 				message: 'Invalid password'
 			});
