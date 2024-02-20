@@ -2,19 +2,14 @@
 	import DropMenu from '$lib/DropMenu.svelte';
 	import { COLORS, DARK_COLORS } from '$lib/const';
 	import { app } from '$lib/state.svelte';
-	import { date_without_timezone, get_circular_array_item } from '$lib/utils.js';
+	import { get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
 
-	import { format } from 'date-fns';
 	import type { TransformedHabits } from '../server/data_utils';
 	import DailyButton from './DailyButton.svelte';
 	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
 
-	let right_now = date_without_timezone(new Date());
-	const today = format(
-		new Date(Date.UTC(right_now.getUTCFullYear(), right_now.getUTCMonth(), right_now.getUTCDate())),
-		'yyyy-MM-dd',
-	);
+	const today = Temporal.Now.plainDateISO();
 
 	let { form, row, habit } = $props<{
 		form: ActionData;
@@ -23,13 +18,18 @@
 	}>();
 
 	// Make this easily sharable
-	const social_string =
-		habit.checks.reduce((accumulator, currentValue) => {
-			return (accumulator += currentValue.is_checked ? '❇️' : '🔻');
-		}, '') +
-		`
+	// Not being use currently, but will be fun to have soon after bugs are fixed
+	let social_string = $state('');
+
+	$effect(() => {
+		social_string =
+			habit.checks.reduce((accumulator, currentValue) => {
+				return (accumulator += currentValue.is_checked ? '✅' : '❌');
+			}, '') +
+			`
 	Follow your habits at HabitPath.io
 	`;
+	});
 </script>
 
 <div class="heading {app.mode}" data-habit-id-parent={habit.id}>
@@ -68,7 +68,7 @@
 >
 	<div class="day_buttons">
 		{#each habit.checks as day, i (habit.id + i)}
-			<DailyButton {today} habit_id={habit.id} {i} bind:day />
+			<DailyButton {today} habit_id={habit.id} {i} {day} />
 		{/each}
 	</div>
 </article>

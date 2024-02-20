@@ -1,17 +1,15 @@
-import { eachDayOfInterval, endOfMonth, format, startOfMonth } from 'date-fns';
-
 export const get_circular_array_item = (array: string[], index: number) => {
 	// Ensure the index is a positive number then get the modulus with the array length
 	const valid_index = Math.abs(index) % array.length;
 	return array[valid_index];
 };
 
-export function getDaysInEachMonth(year: number) {
+export function get_days_in_each_month(year: number) {
 	const months = [];
-	for (let month = 0; month < 12; month++) {
-		const startDate = startOfMonth(new Date(year, month));
-		const endDate = endOfMonth(new Date(year, month));
-		const daysInMonth = eachDayOfInterval({ start: startDate, end: endDate }).length;
+	for (let month = 1; month <= 12; month++) {
+		const startDate = Temporal.PlainDate.from({ year, month, day: 1 });
+		const endDate = startDate.add({ months: 1 }).subtract({ days: 1 });
+		const daysInMonth = endDate.day - startDate.day + 1;
 		months.push(daysInMonth);
 	}
 	return months;
@@ -56,10 +54,23 @@ export function parse_date(date: string): [year: number, month: number, day: num
 	return [year, month - 1, day]; // month is 0 indexed
 }
 
-export function get_param_date(date: Date) {
-	return format(date, 'yyyy-MM-dd');
+export function get_param_date(date = Temporal.Now.plainDateISO()) {
+	return date.toString();
+}
+export function format_month_name(date = Temporal.Now.plainDateISO()) {
+	return date.toLocaleString('en-US', { month: 'long' });
+}
+export function format_month_year(date = Temporal.Now.plainDateISO()) {
+	return date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
 }
 
-export function date_without_timezone(date: Date): Date {
-	return new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+// Gets the date from iso string
+export function iso_to_plain_date(date?: string | null) {
+	return date ? Temporal.PlainDate.from(date) : Temporal.Now.plainDateISO();
+}
+
+// Function to format a Temporal ISO date to 'MM/dd'
+export function format_mmdd(isoString: string): string {
+	const date = Temporal.PlainDate.from(isoString);
+	return date.toLocaleString('en-US', { month: '2-digit', day: '2-digit' });
 }

@@ -1,32 +1,24 @@
 <script lang="ts">
-	import { format } from 'date-fns';
-
+	import { format_mmdd } from '$lib/utils.js';
 	const { data } = $props();
 
-	function getAllDaysOfYear(year: number): string[] {
-		const startDate: Date = new Date(year, 0, 1);
-		const endDate: Date = new Date(year, 11, 31);
-		const days: string[] = [];
+	// Year in, all iso date strings of year out
+	function getAllDaysInYear(year: number): string[] {
+		const daysInYear = [];
+		const startDate = Temporal.PlainDate.from({ year, month: 1, day: 1 });
+		const endDate = Temporal.PlainDate.from({ year, month: 12, day: 31 });
 
-		for (
-			let currentDate = new Date(startDate);
-			currentDate <= endDate;
-			currentDate.setDate(currentDate.getDate() + 1)
-		) {
-			const formattedDate: string = new Date(currentDate).toISOString().split('T')[0];
-			days.push(formattedDate);
+		let currentDate = startDate;
+		while (Temporal.PlainDate.compare(currentDate, endDate) <= 0) {
+			daysInYear.push(currentDate.toString());
+			currentDate = currentDate.add({ days: 1 });
 		}
 
-		return days;
+		return daysInYear;
 	}
-	const year: number = 2024;
-	const daysOfYear: string[] = getAllDaysOfYear(year);
 
-	function parseIsoToLocalDate(isoStr: string) {
-		const parts = isoStr.split('-');
-		// Subtract 1 from month because months are 0-indexed in JavaScript Date
-		return new Date(parts[0], parts[1] - 1, parts[2]);
-	}
+	const year: number = 2024;
+	const daysOfYear: string[] = getAllDaysInYear(year);
 </script>
 
 <a href="/">Back</a>
@@ -34,7 +26,7 @@
 <div class="grid" style:--habit_color="#a0dcc8" style:--habit_fg="oklch(0 0 0 / 70%)">
 	{#each daysOfYear as day}
 		<button class:complete={data.habit.checks.includes(day)} class="daily_button"
-			>{format(new Date(parseIsoToLocalDate(day)), 'MM/dd')}</button
+			>{format_mmdd(day)}</button
 		>
 	{/each}
 </div>

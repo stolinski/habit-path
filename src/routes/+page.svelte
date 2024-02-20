@@ -48,7 +48,7 @@
 	<h2 class="h4">Hidden</h2>
 	<section class="habits" transition:fade>
 		{#each data.habits.filter((habit) => habit.status === 'HIDDEN') as habit, i (habit.id)}
-			<HabitRow {habit} row={i} />
+			<HabitRow {form} {habit} row={i} />
 		{/each}
 	</section>
 {/if}

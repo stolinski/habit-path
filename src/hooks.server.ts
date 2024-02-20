@@ -1,3 +1,4 @@
+import 'temporal-polyfill/global';
 import { DATABASE_URL } from '$env/static/private';
 import { cookie_options } from '$lib/const';
 import { authenticate_user } from '$lib/server/auth';

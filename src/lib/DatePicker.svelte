@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { format } from 'date-fns';
 	import { next_month, prev_month } from '../state/date.svelte';
+	import { format_month_year } from './utils';
 
-	const { start_date } = $props<{ start_date: Date }>();
+	const { start_date } = $props<{ start_date: Temporal.PlainDate }>();
 </script>
 
 <div class="date_picker">
 	<h2 class="h6">
 		<button on:click={() => prev_month(start_date)}>«</button>
-		{format(start_date, 'MMMM yyyy')}
+		{format_month_year(start_date)}
 		<button on:click={() => next_month(start_date)}>»</button>
 	</h2>
 </div>
@@ -17,10 +17,14 @@
 	button {
 		border: none;
 	}
-	.date_picker {
+
+	h2 {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		align-self: end;
+		width: 215px;
+	}
+	.date_picker {
 		justify-self: center;
 	}
 	.date_picker button {

@@ -1,7 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { isValidEmail } from '$lib/server/email';
-import { PIN } from '$env/static/private';
-import { eq } from 'drizzle-orm';
 
 import type { PageServerLoad, Actions } from './$types';
 import { bcryptPassword, getPasswordString, log_user_in, normalizeEmail } from '$lib/server/auth';
@@ -41,10 +39,9 @@ export const actions: Actions = {
 		}
 		try {
 			// Check if user exists
-			const user_exists = await db
-				.query
-				.user
-				.findFirst({ where: eq(user.email, normalized_email) });
+			const user_exists = await db.query.user.findFirst({
+				where: eq(user.email, normalized_email),
+			});
 
 			if (user_exists) {
 				return fail(400, {

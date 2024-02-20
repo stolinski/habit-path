@@ -16,7 +16,7 @@
 	let loading = $state(false);
 </script>
 
-<!-- TODO quick select from common habits, ie no alcohol, no marijuana, no smoking,workout,cardio, strength train -->
+<!-- TODO quick select from common habits, ie no alcohol, no marijuana, no smoking, workout, cardio, strength train -->
 <div class="form new_habit_form" class:mobile>
 	<h3 class="h5">{habit ? 'Update' : 'New'} Habit</h3>
 	<form
@@ -48,7 +48,7 @@
 				value={habit?.days_per_month ?? '31'}
 				name="days_per_month"
 				id="days_per_month"
-			/><br />
+			/><br />data.active_date
 			<span class="note">days per month (31 max)</span>
 		</div>
 		<button class="button" type="submit" disabled={loading}
