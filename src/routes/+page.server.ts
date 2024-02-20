@@ -4,12 +4,14 @@ import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 import { transform_habits, update_habits_order } from '../server/data_utils';
 import { fail } from '@sveltejs/kit';
+import { date_without_timezone, get_param_date, parse_date } from '$lib/utils';
 
 export const load = async ({ locals, url }) => {
-	const date = url.searchParams.get('date') || format(new Date(), 'yyyy-MM-dd');
+	const date = url.searchParams.get('date') || get_param_date(date_without_timezone(new Date()));
+	const parsed_date = parse_date(date);
 	// Get first day of month and last day of month in 2024-01-01 format
-	const firstDayOfMonth = format(startOfMonth(new Date(date)), 'yyyy-MM-dd');
-	const lastDayOfMonth = format(endOfMonth(new Date(date)), 'yyyy-MM-dd');
+	const firstDayOfMonth = get_param_date(startOfMonth(new Date(...parsed_date)));
+	const lastDayOfMonth = get_param_date(endOfMonth(new Date(...parsed_date)));
 
 	//  Add check for proper month between.
 	const habits_data = await db.query.habits.findMany({

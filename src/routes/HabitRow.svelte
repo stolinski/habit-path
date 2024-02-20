@@ -2,7 +2,7 @@
 	import DropMenu from '$lib/DropMenu.svelte';
 	import { COLORS, DARK_COLORS } from '$lib/const';
 	import { app } from '$lib/state.svelte';
-	import { get_circular_array_item } from '$lib/utils.js';
+	import { date_without_timezone, get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
 
 	import { format } from 'date-fns';
@@ -10,7 +10,7 @@
 	import DailyButton from './DailyButton.svelte';
 	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
 
-	let right_now = new Date();
+	let right_now = date_without_timezone(new Date());
 	const today = format(
 		new Date(Date.UTC(right_now.getUTCFullYear(), right_now.getUTCMonth(), right_now.getUTCDate())),
 		'yyyy-MM-dd',
