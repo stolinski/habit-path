@@ -24,7 +24,7 @@
 						</a>
 					</h1>
 					{#if !data.url.includes('signup') && !data.url.includes('login') && !data.url.includes('roadmap') && !data.url.includes('pwa')}
-						<DatePicker start_date={data.active_date} />
+						<DatePicker start_date={Temporal.PlainDate.from(data.active_date)} />
 						<a href="/user" class="user_menu">{data.user?.email[0]}</a>
 					{/if}
 				</header>

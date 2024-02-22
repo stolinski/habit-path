@@ -1,4 +1,3 @@
-import { format, getDaysInMonth } from 'date-fns';
 import { and, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
@@ -25,24 +24,36 @@ export async function update_habits_order(users_habits: string[] | number[], use
 	}
 }
 
+export function get_days_in_month(iso: string) {
+	const date = Temporal.PlainDate.from(iso);
+	const nextMonth = date.add({ months: 1 });
+	const startOfNextMonth = nextMonth.with({ day: 1 });
+	const lastDayOfThisMonth = startOfNextMonth.subtract({ days: 1 });
+	return lastDayOfThisMonth.day;
+}
+
 // Transforms habits out of the db to returning just an array full of dates
 export function transform_habits(
 	inputData: typeof habits.$inferSelect & { checks: (typeof checks.$inferSelect)[] }[],
 	active_date: string,
 ): TransformedHabits[] {
-	const days_in_month = getDaysInMonth(new Date(active_date));
+	const days_in_month = get_days_in_month(active_date);
 	const days_in_month_array = [...Array(days_in_month)];
 
-	return inputData.map((item) => ({
-		...item,
-		checks: days_in_month_array.map((day, i) => {
-			const check_day = new Date(active_date).setDate(i + 1);
-			return {
-				checked_at: format(check_day, 'yyyy-MM-dd'),
-				is_checked: isDateChecked(item.checks, format(check_day, 'yyyy-MM-dd')),
-			};
+	return inputData.map(
+		(item: typeof habits.$inferSelect & { checks: (typeof checks.$inferSelect)[] }) => ({
+			...item,
+			checks: days_in_month_array.map((_, i) => {
+				const temp_date = Temporal.PlainDate.from(active_date);
+				const check_day = temp_date.add({ days: i });
+
+				return {
+					checked_at: check_day.toString(),
+					is_checked: isDateChecked(item.checks, check_day.toString()),
+				};
+			}),
 		}),
-	}));
+	);
 }
 
 type Checks = {

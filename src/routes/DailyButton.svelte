@@ -9,7 +9,7 @@
 			checked_at: string;
 			is_checked: boolean;
 		};
-		today: string;
+		today: Temporal.PlainDate;
 	}>();
 
 	// This function rn only run refetch of data if it's not a success
@@ -25,20 +25,11 @@
 		}
 	}
 
-	function formatDate(inputDate: string) {
-		const parts = inputDate.split('-');
-		if (parts.length === 3) {
-			const year = parseInt(parts[0]);
-			const month = parseInt(parts[1], 10);
-			const day = parseInt(parts[2], 10);
-
-			const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-			const dayOfWeek = daysOfWeek[new Date(year, month - 1, day).getDay()];
-
-			return `${dayOfWeek}<br />${day.toString().padStart(2, '0')}`;
-		} else {
-			return 'Invalid Date';
-		}
+	function formatDate(iso_date: string) {
+		const date = Temporal.PlainDate.from(iso_date);
+		const dayAbbr = date.toLocaleString('en-US', { weekday: 'short' }); // e.g., "Fri"
+		const dayOfMonth = date.day.toString().padStart(2, '0');
+		return `${dayAbbr}<br />${dayOfMonth}`;
 	}
 </script>
 
@@ -70,7 +61,7 @@
 	<input type="hidden" value={habit_id} name="habit_id" id={'habit_id_' + i} />
 	<input type="hidden" value={day.checked_at} name="checked_at" id={'checked_at_' + i} />
 	<button
-		data-today={today === day.checked_at}
+		data-today={today.toString() === day.checked_at}
 		class:complete={day.is_checked}
 		type="submit"
 		class="daily_button"

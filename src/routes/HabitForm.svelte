@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { habits } from '../schema';
 	import type { ActionData } from './$types';
-	const { form, habit, mobile = false, onfinish = () => {} } = $props<{
+	const {
+		form,
+		habit,
+		mobile = false,
+		onfinish = () => {},
+	} = $props<{
 		form: ActionData | null;
 		habit?: typeof habits.$inferSelect;
 		mobile?: boolean;
@@ -10,10 +16,11 @@
 	let loading = $state(false);
 </script>
 
+<!-- TODO quick select from common habits, ie no alcohol, no marijuana, no smoking, workout, cardio, strength train -->
 <div class="form new_habit_form" class:mobile>
 	<h3 class="h5">{habit ? 'Update' : 'New'} Habit</h3>
 	<form
-		action={habit ? "?/update_habit" : "?/new_habit"}
+		action={habit ? '?/update_habit' : '?/new_habit'}
 		method="POST"
 		use:enhance={() => {
 			loading = true;
@@ -35,7 +42,13 @@
 		</div>
 		<div class="row">
 			<label for="days_per_month">Goal</label>
-			<input type="number" max="31" value={habit?.days_per_month ?? '31'} name="days_per_month" id="days_per_month" /><br />
+			<input
+				type="number"
+				max="31"
+				value={habit?.days_per_month ?? '31'}
+				name="days_per_month"
+				id="days_per_month"
+			/><br />data.active_date
 			<span class="note">days per month (31 max)</span>
 		</div>
 		<button class="button" type="submit" disabled={loading}

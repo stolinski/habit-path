@@ -1,17 +1,18 @@
-import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { and, asc, between, count, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
 import { checks, habits } from '../schema';
 import { transform_habits, update_habits_order } from '../server/data_utils';
 import { fail } from '@sveltejs/kit';
-import { date_without_timezone, get_param_date, parse_date } from '$lib/utils';
+import { iso_to_plain_date, get_param_date } from '$lib/utils';
 
 export const load = async ({ locals, url }) => {
-	const date = url.searchParams.get('date') || get_param_date(date_without_timezone(new Date()));
-	const parsed_date = parse_date(date);
-	// Get first day of month and last day of month in 2024-01-01 format
-	const firstDayOfMonth = get_param_date(startOfMonth(new Date(...parsed_date)));
-	const lastDayOfMonth = get_param_date(endOfMonth(new Date(...parsed_date)));
+	const date = url.searchParams.get('date')
+		? iso_to_plain_date(url.searchParams.get('date'))
+		: iso_to_plain_date();
+
+	const firstDayOfMonth = get_param_date(date.with({ day: 1 }));
+	const endOfMonth = date.with({ day: 1 }).add({ months: 1 }).subtract({ days: 1 });
+	const lastDayOfMonth = get_param_date(endOfMonth);
 
 	//  Add check for proper month between.
 	const habits_data = await db.query.habits.findMany({
@@ -25,17 +26,21 @@ export const load = async ({ locals, url }) => {
 	});
 
 	return {
-		habits: transform_habits(habits_data, date),
+		habits: transform_habits(habits_data, firstDayOfMonth.toString()),
 	};
 };
 
-const validate_habit_form = (locals): ({
-	error_message: string;
-	payload: null;
-} | {
-	error_message: null;
-	payload: Pick<typeof habits.$inferSelect, 'name' | 'days_per_month'>;
-}) => {
+const validate_habit_form = (
+	locals,
+):
+	| {
+			error_message: string;
+			payload: null;
+	  }
+	| {
+			error_message: null;
+			payload: Pick<typeof habits.$inferSelect, 'name' | 'days_per_month'>;
+	  } => {
 	const { name, days_per_month } = locals.form_data as {
 		name: string;
 		days_per_month: string;
@@ -79,15 +84,12 @@ const validate_habit_form = (locals): ({
 			days_per_month: days_per_month_int,
 		},
 	};
-}
+};
 
 export const actions = {
 	async new_habit({ locals }) {
 		if (locals?.user?.id) {
-			const {
-				error_message,
-				payload,
-			} = validate_habit_form(locals);
+			const { error_message, payload } = validate_habit_form(locals);
 
 			if (error_message) {
 				return fail(422, { message: error_message });
@@ -120,10 +122,7 @@ export const actions = {
 		};
 
 		if (locals?.user?.id) {
-			const {
-				error_message,
-				payload,
-			} = validate_habit_form(locals);
+			const { error_message, payload } = validate_habit_form(locals);
 
 			if (error_message) {
 				return fail(422, { message: error_message });
