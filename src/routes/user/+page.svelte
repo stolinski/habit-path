@@ -14,7 +14,12 @@
 		const theme_name = this.innerText.toLocaleLowerCase();
 		const theme_wrapper = document.querySelector('.theme_wrapper');
 		if (theme_wrapper) theme_wrapper.className = `theme_wrapper ${theme_name}`;
-		Cookie.set('theme', theme_name);
+		Cookie.set('theme', theme_name, {
+			expires: 999,
+			sameSite: 'strict',
+			secure: true,
+			path: '/',
+		});
 		active_theme = theme_name;
 	}
 
@@ -23,7 +28,12 @@
 		const theme_name = this.innerText.toLocaleLowerCase();
 		const theme_wrapper = document.querySelector('.button_theme_wrapper');
 		if (theme_wrapper) theme_wrapper.className = `button_theme_wrapper ${theme_name}`;
-		Cookie.set('button_theme', theme_name);
+		Cookie.set('button_theme', theme_name, {
+			expires: 999,
+			sameSite: 'strict',
+			secure: true,
+			path: '/',
+		});
 		button_theme = theme_name;
 	}
 </script>
