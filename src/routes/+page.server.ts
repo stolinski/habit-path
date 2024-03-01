@@ -5,6 +5,8 @@ import { transform_habits, update_habits_order } from '../server/data_utils';
 import { fail } from '@sveltejs/kit';
 import { iso_to_plain_date, get_param_date } from '$lib/utils';
 
+export const ssr = false;
+
 export const load = async ({ locals, url }) => {
 	const date = url.searchParams.get('date')
 		? iso_to_plain_date(url.searchParams.get('date'))

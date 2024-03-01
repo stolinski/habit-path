@@ -7,6 +7,8 @@
 	import type { TransformedHabits } from '../server/data_utils';
 	import type { ActionData } from './$types';
 	import HabitForm from './HabitForm.svelte';
+	import Portal from '$lib/Portal.svelte';
+	import Drawer from '$lib/Drawer.svelte';
 
 	let { form, habits, clean_habits } = $props<{
 		form: ActionData;
@@ -47,14 +49,11 @@
 	}
 </script>
 
-{#if status === 'OPEN'}
-	<div class="form_drawer" transition:fly={{ opacity: 0, y: '100%' }}>
-		<div class="form_drawer_container">
-			<button class="ghost button" on:click={toggle_drawer}>Cancel</button>
-			<HabitForm mobile={true} {form} onfinish={toggle_drawer} />
-		</div>
-	</div>
-{/if}
+<Portal target="body">
+	<Drawer active={status === 'OPEN'} close={toggle_drawer}>
+		<HabitForm mobile={true} {form} onfinish={toggle_drawer} />
+	</Drawer>
+</Portal>
 
 {#if app.mode === 'NORMAL'}
 	<div style="margin: 1rem 0;">

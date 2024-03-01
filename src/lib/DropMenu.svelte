@@ -13,6 +13,8 @@
 	import { app } from './state.svelte';
 	import HabitForm from '../routes/HabitForm.svelte';
 	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
+	import Portal from './Portal.svelte';
+	import Drawer from './Drawer.svelte';
 
 	const { form, habit } = $props<{
 		form: ActionData;
@@ -159,14 +161,11 @@
 	</div>
 </Modal>
 
-{#if edit_drawer}
-	<div class="form_drawer" transition:fly={{ opacity: 0, y: '100%' }}>
-		<div class="form_drawer_container">
-			<button class="ghost button" on:click={finishEdit}>Cancel</button>
-			<HabitForm {habit} mobile={true} {form} onfinish={finishEdit} />
-		</div>
-	</div>
-{/if}
+<Portal target="body">
+	<Drawer active={edit_drawer} close={finishEdit}>
+		<HabitForm {habit} mobile={true} {form} onfinish={finishEdit} />
+	</Drawer>
+</Portal>
 
 <style>
 	.menu_button {
@@ -215,37 +214,8 @@
 		flex-shrink: 0;
 	}
 
-  .form_drawer :global(input) {
-      width: 100%;
-  }
-
-  .form_drawer :global(input[type='number']) {
-      width: 80px;
-  }
-  .form_drawer :global(h3) {
-		text-align: center;
-  }
-
-  .form_drawer_container .ghost {
-		position: absolute;
-		top: 15px;
-		left: 15px;
-  }
-
-  .buttons {
+	.buttons {
 		display: flex;
 		justify-content: space-between;
 	}
-  .form_drawer {
-		background: var(--bg);
-		border-radius: 15px;
-		position: fixed;
-		inset: 40px 0 0 0;
-		box-shadow: var(--shadow-upwards);
-		z-index: 200;
-  }
-  .form_drawer_container {
-		margin: 0 auto;
-		max-width: 700px;
-  }
 </style>
