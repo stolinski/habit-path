@@ -7,7 +7,6 @@
 	import Fab from './Fab.svelte';
 	import HabitRow from './HabitRow.svelte';
 	import ReorderRow from './ReorderRow.svelte';
-	import Portal from '$lib/Portal.svelte';
 
 	let { data, form } = $props();
 	const initial_hidden = string_2_bool(Cookies.get('show_hidden'));
