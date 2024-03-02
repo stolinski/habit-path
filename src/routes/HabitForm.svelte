@@ -48,7 +48,7 @@
 				value={habit?.days_per_month ?? '31'}
 				name="days_per_month"
 				id="days_per_month"
-			/><br />data.active_date
+			/><br />
 			<span class="note">days per month (31 max)</span>
 		</div>
 		<button class="button" type="submit" disabled={loading}
