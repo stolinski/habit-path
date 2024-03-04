@@ -57,15 +57,15 @@
 
 {#if app.mode === 'NORMAL'}
 	<div style="margin: 1rem 0;">
-		<button class="button no-fab" on:click={toggle_drawer}>
+		<button class="new_habit" on:click={toggle_drawer}>
 			<svg width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
 				><path
 					fill-rule="evenodd"
 					clip-rule="evenodd"
 					d="M8.75 2.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
-					fill="var(--white)"
+					fill="var(--fg)"
 				/></svg
-			> Add New Habit
+			> New Habit
 		</button>
 	</div>
 {/if}
@@ -77,7 +77,7 @@
 				fill-rule="evenodd"
 				clip-rule="evenodd"
 				d="M8.75 2.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"
-				fill="var(--white)"
+				fill="var(--fg)"
 			/>
 		</svg>
 	</button>
@@ -196,14 +196,26 @@
 			1px 1px 2px rgba(255, 255, 255, 0.3) inset;
 	}
 
-	.no-fab {
+	.new_habit {
 		display: flex;
 		align-items: center;
 		gap: 10px;
+		width: 100%;
+		background: none;
+		border: none;
+		padding: 10px;
+		cursor: pointer;
+		justify-content: center;
+		color: var(--fg);
+		transition: 0.3s ease background;
+	}
+
+	.new_habit:hover {
+		background: var(--tint-or-shade);
 	}
 
 	@media (width < 700px) {
-		.no-fab {
+		.new_habit {
 			display: none;
 		}
 	}

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { fly } from 'svelte/transition';
-	import type { TransformedHabits } from '../routes/+page.server';
 	import Backdrop from './Backdrop.svelte';
 	import Dots from './Dots.svelte';
 	import Edit from './Edit.svelte';
@@ -15,41 +14,40 @@
 	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
 	import Portal from './Portal.svelte';
 	import Drawer from './Drawer.svelte';
+	import type { TransformedHabits } from '../server/data_utils';
 
 	const { form, habit } = $props<{
 		form: ActionData;
 		habit: TransformedHabits;
 	}>();
-	let active = $state(false);
-	let hiding = $state(false);
-	let delete_modal = $state(false);
-	let edit_drawer = $state(false);
+
+	let menu_status = $state<'HIDDEN' | 'VISIBLE' | 'REORDER' | 'DELETE' | 'EDIT'>('HIDDEN');
+	let thinking = $state(false);
+
 	const { id } = habit;
 
+	$inspect(menu_status);
+
 	function open() {
-		active = true;
+		console.log('open');
+		menu_status = 'VISIBLE';
 	}
 
-	function openDelete() {
-		delete_modal = true;
+	function delete_habit() {
+		menu_status = 'DELETE';
 	}
 
-	function openEdit() {
-		edit_drawer = true;
+	function edit() {
+		menu_status = 'EDIT';
 	}
 
-	function finishEdit() {
-		edit_drawer = false;
-	}
-
-	function close(fn: any) {
-		if (typeof fn === 'function') {
+	function close(fn?: any) {
+		menu_status = 'HIDDEN';
+		if (fn && typeof fn === 'function') {
 			return function (event) {
-				active = false;
 				fn.call(this, event);
 			};
 		}
-		active = false;
 		return;
 	}
 </script>
@@ -58,38 +56,37 @@
 	<button class="menu_button" onclick={open}>
 		<Dots />
 	</button>
-	{#if active}
+	{#if menu_status === 'VISIBLE'}
 		<div
 			transition:fly={{ opacity: 0, y: 10 }}
 			class="select-menu-menu-wrapper"
 			use:click_outside
 			on:click-outside={close}
 		>
-			<button class="ghost" onclick={close(app.reorder)}>
+			<button class="ghost" onclick={() => close(app.reorder)}>
 				<Reorder />
 				Reorder</button
 			>
-			<button class="ghost" onclick={close(openEdit)}>
+			<button class="ghost" onclick={edit}>
 				<Edit />
 				Edit</button
 			>
 			<!-- TODO Add Archive -->
-			<!-- <button class="ghost"><Edit />Edit</button>  -->
 			{#if habit.status === 'VISIBLE'}
 				<form
 					action="?/hide_habit"
 					method="POST"
 					use:enhance={() => {
-						hiding = true;
+						thinking = true;
 						return async ({ update }) => {
-							hiding = false;
+							thinking = false;
 							update();
 						};
 					}}
 				>
 					<input type="hidden" value={id} name="habit_id" />
-					<button class="ghost" disabled={hiding}
-						><Eye />{#if hiding}Hiding...{:else}
+					<button class="ghost" disabled={thinking}
+						><Eye />{#if thinking}Hiding...{:else}
 							Hide
 						{/if}</button
 					>
@@ -99,32 +96,32 @@
 					action="?/show_habit"
 					method="POST"
 					use:enhance={() => {
-						hiding = true;
+						thinking = true;
 						return async ({ update }) => {
-							hiding = false;
+							thinking = false;
 							update();
 						};
 					}}
 				>
 					<input type="hidden" value={id} name="habit_id" />
-					<button class="ghost" disabled={hiding}
-						><Eye />{#if hiding}Showing...{:else}
+					<button class="ghost" disabled={thinking}
+						><Eye />{#if thinking}Showing...{:else}
 							Show
 						{/if}</button
 					>
 				</form>
 			{/if}
 			<!-- <button class="ghost"><Archive />Archive</button> -->
-			<button class="ghost" onclick={openDelete}><Trash />Delete</button>
+			<button class="ghost" onclick={delete_habit}><Trash />Delete</button>
 		</div>
 	{/if}
 
-	{#if active}
+	{#if menu_status === 'VISIBLE'}
 		<Backdrop onclick={close} />
 	{/if}
 </div>
 
-<Modal bind:active={delete_modal}>
+<Modal active={menu_status === 'DELETE'}>
 	<div class="card">
 		<h4>Delete Habit?</h4>
 		<p>This cannot be undone</p>
@@ -133,37 +130,29 @@
 				action="?/delete_habit"
 				method="POST"
 				use:enhance={() => {
-					hiding = true;
+					thinking = true;
 					return async ({ update }) => {
-						hiding = false;
-						active = false;
+						thinking = false;
 						update();
-						delete_modal = false;
+						close();
 					};
 				}}
 			>
 				<input type="hidden" value={id} name="habit_id" />
-				<button class="close button" disabled={hiding}
-					>{#if hiding}Deleting...{:else}
+				<button class="close button" disabled={thinking}
+					>{#if thinking}Deleting...{:else}
 						Delete
 					{/if}</button
 				>
 			</form>
-			<button
-				class="button ghost"
-				on:click={() => {
-					delete_modal = false;
-				}}
-			>
-				Cancel
-			</button>
+			<button class="button ghost" on:click={close}> Cancel </button>
 		</div>
 	</div>
 </Modal>
 
 <Portal target="body">
-	<Drawer active={edit_drawer} close={finishEdit}>
-		<HabitForm {habit} mobile={true} {form} onfinish={finishEdit} />
+	<Drawer active={menu_status === 'EDIT'} {close}>
+		<HabitForm {habit} mobile={true} {form} onfinish={close} />
 	</Drawer>
 </Portal>
 
@@ -179,6 +168,10 @@
 
 	button {
 		border: none;
+		transition: 0.3s ease box-shadow;
+	}
+	button:hover {
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 	}
 
 	.select-menu-menu-wrapper {

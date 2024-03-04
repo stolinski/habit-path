@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import { tick, type Snippet } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { draggable } from '@neodrag/svelte';
 	import { tweened } from 'svelte/motion';
@@ -32,17 +32,15 @@
 			},
 			onDragEnd: (data) => {
 				if (data.offsetY > 300) {
-					returnToPositionTransitionVal.set({ x: 0, y: 300 });
 					close();
-				} else {
-					returnToPositionTransitionVal.set({ x: 0, y: 0 });
 				}
+				tick();
+				returnToPositionTransitionVal.set({ x: 0, y: 0 });
 			},
 		}}
 	>
 		<div class="handle"></div>
 		<div class="form_drawer_container">
-			<button class="ghost button" onclick={close}>Cancel</button>
 			{@render children()}
 		</div>
 	</div>

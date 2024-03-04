@@ -1,23 +1,32 @@
 <h1>Roadmap</h1>
 <ul>
+	<li>Share month</li>
+	<li>End of month recaps, kinda like spotify wrapped for the month</li>
+	<li>Verify Email Flow</li>
 	<li>Fix ui jank in reordering state change</li>
 	<li>User assign colors to habits</li>
-	<li>Add Habit Editing</li>
 	<li>Toast system</li>
-	<li>Redo logic to rebuild days of month and checks server-side</li>
 	<li>Reset Password Flow</li>
-	<li>Verify Email Flow</li>
-	<li>Share to jump the line</li>
-	<li>End of month recaps, kinda like spotify wrapped for the month</li>
 	<li>Add server side caching</li>
-	<li>Year view for all habits at once</li>
-	<li>Open up app for 100 waitlist users</li>
+	<li>Level Up Theme</li>
+	<li>Year view for all habits at once - Shader</li>
 	<li>iOS/Android App via Tauri</li>
 </ul>
 
 <h2>Completed</h2>
 
 <ul>
+	<li>Mar 1 2025</li>
+	<ul>
+		<li>THESE WERE ADDED BEFORE MARCH 1</li>
+		<li>Rewrites theme logic</li>
+		<li>Rewrites all date logic to use Temporal plain date.</li>
+		<li>Makes drawers nicer, now draggable.</li>
+		<li>Rewrites drop menu state logic to be more reliable (× boolean state)</li>
+		<li>Add Habit Editing = Thanks @austinChappell Austin Chappell.</li>
+		<li>Redo logic to rebuild days of month and checks server-side</li>
+		<li>Open up app for 100 waitlist users</li>
+	</ul>
 	<li>Jan 27 2024</li>
 	<ul>
 		<li>Adds button themes with 4 themes to start</li>

@@ -26,8 +26,6 @@
 	});
 </script>
 
-<Fab {form} clean_habits={what} bind:habits={data.habits} />
-
 {#if app.mode === 'NORMAL'}
 	<section class="habits" id="visible_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
@@ -41,6 +39,7 @@
 		{/each}
 	</section>
 {/if}
+<Fab {form} clean_habits={what} bind:habits={data.habits} />
 
 <button class:active={show_hidden} class="toggle-hidden" on:click={toggle_hidden}>↓</button>
 
@@ -60,7 +59,7 @@
 		margin-left: -2.5vw;
 		padding-left: 2.5vw;
 		padding-top: 20px;
-		padding-bottom: 80px;
+		padding-bottom: 20px;
 	}
 
 	.reorder_habits {
