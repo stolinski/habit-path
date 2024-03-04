@@ -52,7 +52,7 @@
 
 	--tint: oklch(100% 0 0 / 80%);
 	--shade: oklch(0 0 0 / 10%);
-	--tint-or-shade: color-mix(in oklab, var(--fg), transparent 75%);
+	--tint-or-shade: color-mix(in oklab, var(--fg), transparent 95%);
 
 	--yellow: #ffd817;
 	--orange: #ff9e02;

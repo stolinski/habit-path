@@ -23,13 +23,17 @@
 
 	let menu_status = $state<'HIDDEN' | 'VISIBLE' | 'REORDER' | 'DELETE' | 'EDIT'>('HIDDEN');
 	let thinking = $state(false);
+	let offsetHeight = $state(0);
+	let menu = $state();
 
 	const { id } = habit;
 
-	$inspect(menu_status);
+	const anchor = (node: HTMLElement) => {
+		const rect = node.getBoundingClientRect();
+		offsetHeight = rect.top + window.scrollY;
+	};
 
 	function open() {
-		console.log('open');
 		menu_status = 'VISIBLE';
 	}
 
@@ -44,76 +48,78 @@
 	function close(fn?: any) {
 		menu_status = 'HIDDEN';
 		if (fn && typeof fn === 'function') {
-			return function (event) {
-				fn.call(this, event);
-			};
+			fn.call();
 		}
 		return;
 	}
 </script>
 
 <div style="position: relative;">
-	<button class="menu_button" onclick={open}>
+	<button class="menu_button" onclick={open} use:anchor>
 		<Dots />
 	</button>
 	{#if menu_status === 'VISIBLE'}
-		<div
-			transition:fly={{ opacity: 0, y: 10 }}
-			class="select-menu-menu-wrapper"
-			use:click_outside
-			on:click-outside={close}
-		>
-			<button class="ghost" onclick={() => close(app.reorder)}>
-				<Reorder />
-				Reorder</button
+		<Portal target="body">
+			<div
+				bind:this={menu}
+				transition:fly={{ opacity: 0, y: 10 }}
+				style:top={offsetHeight + 'px'}
+				class="select-menu-menu-wrapper"
+				use:click_outside
+				on:click-outside={close}
 			>
-			<button class="ghost" onclick={edit}>
-				<Edit />
-				Edit</button
-			>
-			<!-- TODO Add Archive -->
-			{#if habit.status === 'VISIBLE'}
-				<form
-					action="?/hide_habit"
-					method="POST"
-					use:enhance={() => {
-						thinking = true;
-						return async ({ update }) => {
-							thinking = false;
-							update();
-						};
-					}}
+				<button class="ghost" onclick={() => close(app.reorder)}>
+					<Reorder />
+					Reorder</button
 				>
-					<input type="hidden" value={id} name="habit_id" />
-					<button class="ghost" disabled={thinking}
-						><Eye />{#if thinking}Hiding...{:else}
-							Hide
-						{/if}</button
-					>
-				</form>
-			{:else}
-				<form
-					action="?/show_habit"
-					method="POST"
-					use:enhance={() => {
-						thinking = true;
-						return async ({ update }) => {
-							thinking = false;
-							update();
-						};
-					}}
+				<button class="ghost" onclick={edit}>
+					<Edit />
+					Edit</button
 				>
-					<input type="hidden" value={id} name="habit_id" />
-					<button class="ghost" disabled={thinking}
-						><Eye />{#if thinking}Showing...{:else}
-							Show
-						{/if}</button
+				<!-- TODO Add Archive -->
+				{#if habit.status === 'VISIBLE'}
+					<form
+						action="?/hide_habit"
+						method="POST"
+						use:enhance={() => {
+							thinking = true;
+							return async ({ update }) => {
+								thinking = false;
+								update();
+							};
+						}}
 					>
-				</form>
-			{/if}
-			<!-- <button class="ghost"><Archive />Archive</button> -->
-			<button class="ghost" onclick={delete_habit}><Trash />Delete</button>
-		</div>
+						<input type="hidden" value={id} name="habit_id" />
+						<button class="ghost" disabled={thinking}
+							><Eye />{#if thinking}Hiding...{:else}
+								Hide
+							{/if}</button
+						>
+					</form>
+				{:else}
+					<form
+						action="?/show_habit"
+						method="POST"
+						use:enhance={() => {
+							thinking = true;
+							return async ({ update }) => {
+								thinking = false;
+								update();
+							};
+						}}
+					>
+						<input type="hidden" value={id} name="habit_id" />
+						<button class="ghost" disabled={thinking}
+							><Eye />{#if thinking}Showing...{:else}
+								Show
+							{/if}</button
+						>
+					</form>
+				{/if}
+				<!-- <button class="ghost"><Archive />Archive</button> -->
+				<button class="ghost" onclick={delete_habit}><Trash />Delete</button>
+			</div>
+		</Portal>
 	{/if}
 
 	{#if menu_status === 'VISIBLE'}
