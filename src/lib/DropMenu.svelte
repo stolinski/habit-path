@@ -15,6 +15,7 @@
 	import Portal from './Portal.svelte';
 	import Drawer from './Drawer.svelte';
 	import type { TransformedHabits } from '../server/data_utils';
+	import Share from './Share.svelte';
 
 	const { form, habit } = $props<{
 		form: ActionData;
@@ -55,6 +56,7 @@
 </script>
 
 <div style="position: relative;">
+	<Share {habit} />
 	<button class="menu_button" onclick={open} use:anchor>
 		<Dots />
 	</button>
