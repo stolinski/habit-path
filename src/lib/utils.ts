@@ -74,3 +74,8 @@ export function format_mmdd(isoString: string): string {
 	const date = Temporal.PlainDate.from(isoString);
 	return date.toLocaleString('en-US', { month: '2-digit', day: '2-digit' });
 }
+
+export function is_in_future(iso_string: string) {
+	const date = Temporal.PlainDate.from(iso_string);
+	return Temporal.PlainDate.compare(date, Temporal.Now.plainDateISO()) > 0;
+}

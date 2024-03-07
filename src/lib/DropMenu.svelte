@@ -15,10 +15,12 @@
 	import Portal from './Portal.svelte';
 	import Drawer from './Drawer.svelte';
 	import type { TransformedHabits } from '../server/data_utils';
+	import Share from './Share.svelte';
 
-	const { form, habit } = $props<{
+	const { form, habit, active_date } = $props<{
 		form: ActionData;
 		habit: TransformedHabits;
+		active_date: string;
 	}>();
 
 	let menu_status = $state<'HIDDEN' | 'VISIBLE' | 'REORDER' | 'DELETE' | 'EDIT'>('HIDDEN');
@@ -55,6 +57,7 @@
 </script>
 
 <div style="position: relative;">
+	<Share {habit} {active_date} />
 	<button class="menu_button" onclick={open} use:anchor>
 		<Dots />
 	</button>
