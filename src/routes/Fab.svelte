@@ -49,7 +49,7 @@
 	}
 </script>
 
-<Portal target="body">
+<Portal target="#theme-wrapper">
 	<Drawer active={status === 'OPEN'} close={toggle_drawer}>
 		<HabitForm mobile={true} {form} onfinish={toggle_drawer} />
 	</Drawer>

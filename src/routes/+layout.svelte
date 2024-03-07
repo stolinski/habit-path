@@ -10,7 +10,7 @@
 </script>
 
 <div class="button_theme_wrapper button-{data.user_button_theme}">
-	<div class="theme_wrapper {data.user_theme}">
+	<div id="theme-wrapper" class="theme_wrapper {data.user_theme}">
 		<div class="app-rap {app.mode}">
 			{#if !data.url.includes('waitlist') && app.mode !== 'REORDER'}
 				<header>

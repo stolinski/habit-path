@@ -62,7 +62,7 @@
 		<Dots />
 	</button>
 	{#if menu_status === 'VISIBLE'}
-		<Portal target="body">
+		<Portal target="#theme-wrapper">
 			<div
 				bind:this={menu}
 				transition:fly={{ opacity: 0, y: 10 }}
@@ -159,7 +159,7 @@
 	</div>
 </Modal>
 
-<Portal target="body">
+<Portal target="#theme-wrapper">
 	<Drawer active={menu_status === 'EDIT'} {close}>
 		<HabitForm {habit} mobile={true} {form} onfinish={close} />
 	</Drawer>

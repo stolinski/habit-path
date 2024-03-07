@@ -9,7 +9,7 @@
 </script>
 
 {#if active}
-	<Portal target="body">
+	<Portal target="#theme-wrapper">
 		<div transition:fly={{ opacity: 0, y: 100 }} class="modal-wrapper">
 			<button class="button close" on:click={closeModal} aria-label="Close Modal Box">×</button>
 			<slot />
