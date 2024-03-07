@@ -11,25 +11,12 @@
 
 	const today = Temporal.Now.plainDateISO();
 
-	let { form, row, habit } = $props<{
+	let { form, row, habit, active_date } = $props<{
 		form: ActionData;
 		row: number;
 		habit: TransformedHabits;
+		active_date: string;
 	}>();
-
-	// Make this easily sharable
-	// Not being use currently, but will be fun to have soon after bugs are fixed
-	let social_string = $state('');
-
-	$effect(() => {
-		social_string =
-			habit.checks.reduce((accumulator, currentValue) => {
-				return (accumulator += currentValue.is_checked ? '✅' : '❌');
-			}, '') +
-			`
-	Follow your habits at HabitPath.io
-	`;
-	});
 </script>
 
 <div class="heading {app.mode}" data-habit-id-parent={habit.id}>
@@ -43,7 +30,7 @@
 		{/if}
 	</h3>
 
-	<DropMenu {form} {habit} />
+	<DropMenu {form} {habit} {active_date} />
 
 	<div class="handle {app.mode}">
 		<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -110,6 +97,7 @@
 		width: 100vw;
 		transition: 0.3s ease padding;
 		justify-content: space-between;
+		padding-right: 10px;
 	}
 
 	.heading.REORDER {

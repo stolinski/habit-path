@@ -1,6 +1,5 @@
 <h1>Roadmap</h1>
 <ul>
-	<li>Share month</li>
 	<li>End of month recaps, kinda like spotify wrapped for the month</li>
 	<li>Verify Email Flow</li>
 	<li>Fix ui jank in reordering state change</li>
@@ -16,6 +15,11 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Mar 6 2025</li>
+	<ul>
+		<li>Share your progress and success with the new share button.</li>
+	</ul>
+
 	<li>Mar 1 2025</li>
 	<ul>
 		<li>THESE WERE ADDED BEFORE MARCH 1</li>

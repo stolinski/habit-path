@@ -58,6 +58,7 @@
 		"resend": "^3.2.0",
 		"sk-form-data": "^1.0.1",
 		"sortablejs": "^1.15.2",
+		"svelte-french-toast": "^1.2.0",
 		"temporal-polyfill": "^0.2.3"
 	}
 }

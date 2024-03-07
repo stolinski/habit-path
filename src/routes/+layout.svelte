@@ -4,6 +4,8 @@
 	import { fly } from 'svelte/transition';
 	import '../style.css';
 	import MobileNav from './MobileNav.svelte';
+	import { Toaster } from 'svelte-french-toast';
+
 	let { data } = $props();
 </script>
 
@@ -52,6 +54,8 @@
 		{/if}
 	</div>
 </div>
+
+<Toaster />
 
 <style>
 	header {

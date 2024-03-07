@@ -29,7 +29,7 @@
 {#if app.mode === 'NORMAL'}
 	<section class="habits" id="visible_habits">
 		{#each data.habits.filter((habit) => habit.status === 'VISIBLE') as habit, i (habit.id)}
-			<HabitRow {form} {habit} row={i} />
+			<HabitRow {form} {habit} active_date={data.active_date} row={i} />
 		{/each}
 	</section>
 {:else if app.mode === 'REORDER'}
@@ -47,7 +47,7 @@
 	<h2 class="h4">Hidden</h2>
 	<section class="habits" transition:fade>
 		{#each data.habits.filter((habit) => habit.status === 'HIDDEN') as habit, i (habit.id)}
-			<HabitRow {form} {habit} row={i} />
+			<HabitRow {form} active_date={data.active_date} {habit} row={i} />
 		{/each}
 	</section>
 {/if}
