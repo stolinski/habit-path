@@ -60,6 +60,12 @@
 <style>
 	button {
 		border: none;
+		background: transparent;
+		border: none;
+		transition: 0.3s ease box-shadow;
+	}
+	button:hover {
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 	}
 	textarea {
 		width: 100%;
