@@ -98,7 +98,6 @@
 	.screenshots {
 		display: flex;
 		gap: 10px;
-		overflow: auto;
 		justify-content: center;
 	}
 
