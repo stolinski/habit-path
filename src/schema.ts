@@ -52,6 +52,7 @@ export const user = pgTable('auth_user', {
 	hashed_password: varchar('hashed_password', {
 		length: 255,
 	}).notNull(),
+	verification_token: varchar('verification_token', { length: 64 }),
 });
 
 export const waitlist = pgTable('waitlist', {

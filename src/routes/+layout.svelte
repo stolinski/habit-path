@@ -5,9 +5,14 @@
 	import '../style.css';
 	import MobileNav from './MobileNav.svelte';
 	import { Toaster } from 'svelte-french-toast';
+	import Verify from '$lib/Verify.svelte';
 
 	let { data } = $props();
 </script>
+
+{#if data.user && !data.user.verified}
+	<Verify />
+{/if}
 
 <div class="button_theme_wrapper button-{data.user_button_theme}">
 	<div id="theme-wrapper" class="theme_wrapper {data.user_theme}">

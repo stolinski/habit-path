@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { Resend } from 'resend';
 import { db } from '../../hooks.server';
-import { waitlist } from '../../schema';
+import { user, waitlist } from '../../schema';
 
 const resend = new Resend(RESEND_TOKEN);
 
@@ -62,4 +62,28 @@ export async function send_reset_password_email(email: string) {
 		<p> <a href="${set_password_url}">Reset Password</a></p>
 		`,
 	});
+}
+function generate_verification_token() {
+	const token = crypto.randomBytes(32).toString('hex');
+	return token;
+}
+
+export async function send_verification_email(user_id: number) {
+	const found_user = await db.select().from(user).where(eq(user.id, user_id)).execute();
+	const email = found_user[0].email;
+	const verification_token = generate_verification_token();
+
+	const verification_link = `https://habitpath.io/verify-email/${verification_token}`;
+
+	await resend.emails.send({
+		from: 'no-reply@habitpath.io',
+		to: email,
+		subject: 'Verify your email - Habit Path',
+		html: `<p>Please click the following link to verify your email:</p>
+           <p><a href="${verification_link}">${verification_link}</a></p>
+           <p>If you did not request this verification, please ignore this email.</p>`,
+	});
+
+	// Store the verification token in the database for later verification
+	await db.update(user).set({ verification_token }).where(eq(user.id, user_id)).execute();
 }

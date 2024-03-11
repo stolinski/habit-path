@@ -1,7 +1,6 @@
 <h1>Roadmap</h1>
 <ul>
 	<li>End of month recaps, kinda like spotify wrapped for the month</li>
-	<li>Verify Email Flow</li>
 	<li>Fix ui jank in reordering state change</li>
 	<li>User assign colors to habits</li>
 	<li>Toast system</li>
@@ -15,6 +14,10 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Mar 10 2025</li>
+	<ul>
+		<li>Adds verify email.</li>
+	</ul>
 	<li>Mar 6 2025</li>
 	<ul>
 		<li>Share your progress and success with the new share button.</li>
