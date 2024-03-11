@@ -5,7 +5,6 @@
 	import mobile_screen from './Mobile-dark.png';
 
 	const { form } = $props();
-	$inspect(form);
 	let loading = $state(false);
 </script>
 
@@ -19,17 +18,11 @@
 			<path d="M71 41L74 26H69.5L66.5 41H71Z" fill="var(--fg)" />
 		</svg>
 	</div>
-
-	<div class="screenshots">
-		<img src={screen} alt="Mobile Screenshot" />
-		<img src={mobile_screen} alt="Mobile Screenshot" />
+	<div class="readable">
+		<h1>Habit Path is a simple and effective habit tracker to achieve your goals</h1>
 	</div>
 
 	<div class="readable">
-		<p>
-			Heya, I'm working hard to make this available for anyone who wants to track their habits in a
-			painless way. No subscriptions, no fluff.
-		</p>
 		{#if form?.success}
 			<p transition:fade>Thank you so much. I'll let you know when it's usable. Won't be long.</p>
 		{:else}
@@ -43,11 +36,13 @@
 					};
 				}}
 			>
-				<label for="email">Email</label>
-				<input required id="email" name="email" type="text" placeholder="ready2track@fake.com" />
+				<div class="input-wrapper">
+					<label for="email">Email</label>
+					<input required id="email" name="email" type="text" placeholder="ready2track@fake.com" />
+				</div>
 				<button disabled={loading} class="button" type="submit"
 					>{#if loading}Submitting...{:else}
-						Sign Me Up
+						Join the waitlist
 					{/if}</button
 				>
 				{#if form?.message}
@@ -59,21 +54,19 @@
 	</div>
 </div>
 
+<div class="screenshots">
+	<img src={screen} alt="Mobile Screenshot" />
+	<img src={mobile_screen} alt="Mobile Screenshot" />
+</div>
+
 <hr />
 
 <section class="faq readable">
-	<h2>FAQ</h2>
-	<h3 class="h5">What is Habit Path?</h3>
+	<h2>What is Habit Path?</h2>
 	<p>
-		Habit Path is a free (all core features forever) habit tracking app for people who hate
-		complexity and clutter. Put your habits in front of you without making you jump through hoops or
-		pay $8/ month for a subscription.
-	</p>
-
-	<h3 class="h5">Is it an app?</h3>
-	<p>
-		Currently Habit Path is a "web app". This means it runs in the browser however it can still be
-		installed onto your home screen like a normal app, <a href="/pwa">see how!</a>.
+		Habit Path is a habit tracking app for people who hate complexity and clutter. Put your habits
+		in front of you without making you jump through hoops or pay $8/ month for a subscription unless
+		you want extras.
 	</p>
 </section>
 
@@ -88,11 +81,8 @@
 
 	.container {
 		max-width: 900px;
-	}
-
-	h1 {
-		font-style: italic;
-		font-weight: 100;
+		margin-inline: auto;
+		text-align: center;
 	}
 
 	label {
@@ -109,13 +99,18 @@
 		display: flex;
 		gap: 10px;
 		overflow: auto;
-		flex: 0 / 0;
+		justify-content: center;
 	}
 
 	.screenshots img {
-		border: solid 5px var(--tint-or-shade);
+		border: solid 1px var(--tint-or-shade);
 		border-radius: 26px;
-		height: 400px;
+		max-height: 400px;
 		flex-shrink: 0;
+	}
+
+	.input-wrapper {
+		display: inline-block;
+		text-align: left;
 	}
 </style>

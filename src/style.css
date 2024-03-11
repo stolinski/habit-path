@@ -71,6 +71,8 @@
 	--fg: var(--fg_dark);
 	--fg-1: var(--black-8);
 	--fg-sheet: var(--black);
+
+	--heading-font-family: 'Nohemi';
 }
 
 @font-face {
@@ -190,11 +192,10 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: 500;
 	margin-block: 0.2em;
 	line-height: 1.4;
-	font-style: italic;
 	text-wrap: balance;
+	font-family: var(--heading-font-family);
 }
 
 h1,
