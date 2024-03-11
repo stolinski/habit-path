@@ -104,8 +104,7 @@
 	.screenshots img {
 		border: solid 1px var(--tint-or-shade);
 		border-radius: 26px;
-		max-height: 400px;
-		flex-shrink: 0;
+		min-width: 0;
 	}
 
 	.input-wrapper {
