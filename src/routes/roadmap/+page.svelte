@@ -1,12 +1,11 @@
 <h1>Roadmap</h1>
 <ul>
+	<li>Reset Password Flow</li>
+	<li>Streaks</li>
 	<li>End of month recaps, kinda like spotify wrapped for the month</li>
 	<li>Fix ui jank in reordering state change</li>
 	<li>User assign colors to habits</li>
-	<li>Toast system</li>
-	<li>Reset Password Flow</li>
 	<li>Add server side caching</li>
-	<li>Level Up Theme</li>
 	<li>Year view for all habits at once - Shader</li>
 	<li>iOS/Android App via Tauri</li>
 </ul>
@@ -20,6 +19,7 @@
 	</ul>
 	<li>Mar 6 2025</li>
 	<ul>
+		<li>Toast system</li>
 		<li>Share your progress and success with the new share button.</li>
 	</ul>
 
