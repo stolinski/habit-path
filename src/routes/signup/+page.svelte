@@ -24,10 +24,6 @@
 		<label for="password">Password</label>
 		<input type="password" name="password" id="password" /><br />
 	</div>
-	<div class="row">
-		<label for="code">Code</label>
-		<input name="code" id="code" /><br />
-	</div>
 	<button class="button" type="submit" disabled={loading}
 		>{#if loading}Signing up...{:else}
 			Sign Me Up

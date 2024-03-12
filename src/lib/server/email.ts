@@ -15,7 +15,7 @@ export const isValidEmail = (maybeEmail: unknown): maybeEmail is string => {
 };
 
 export async function send_waitlist_invite(email: string) {
-	// Send email with code
+	// Send email with link
 	resend.emails.send({
 		from: 'no-reply@habitpath.io',
 		to: email,
@@ -23,7 +23,6 @@ export async function send_waitlist_invite(email: string) {
 		html: `<p>
 		Welcome to Habit Path, you can now sign up here: <a href="https://habitpath.io/signup">Habit Path Signup</a>
 		</p>
-		<p>You'll need this code: ${PIN}</p>
 		<p>Before asking for a feature, please check out <a href="https://habitpath.io/roadmap">Habit Path Roadmap</a> for information on what's changed and what's coming.</p>
 		<p>Thank you, I hope you make positive change with Habit Path.</a>
 		`,

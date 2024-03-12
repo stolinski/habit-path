@@ -1,11 +1,6 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { fade } from 'svelte/transition';
 	import screen from './Desktop-dark.png';
 	import mobile_screen from './Mobile-dark.png';
-
-	const { form } = $props();
-	let loading = $state(false);
 </script>
 
 <div class="container">
@@ -23,33 +18,7 @@
 	</div>
 
 	<div class="readable">
-		{#if form?.success}
-			<p transition:fade>Thank you so much. I'll let you know when it's usable. Won't be long.</p>
-		{:else}
-			<form
-				method="POST"
-				use:enhance={() => {
-					loading = true;
-					return async ({ update }) => {
-						loading = false;
-						update();
-					};
-				}}
-			>
-				<div class="input-wrapper">
-					<label for="email">Email</label>
-					<input required id="email" name="email" type="text" placeholder="ready2track@fake.com" />
-				</div>
-				<button disabled={loading} class="button" type="submit"
-					>{#if loading}Submitting...{:else}
-						Join the waitlist
-					{/if}</button
-				>
-				{#if form?.message}
-					<p class="error">{form?.message}</p>
-				{/if}
-			</form>
-		{/if}
+		<a class="button signup" href="/signup">Sign up</a>
 		<p>Already have an account? <a href="/login">Login</a></p>
 	</div>
 </div>
@@ -79,6 +48,11 @@
 		justify-content: center;
 	}
 
+	.signup {
+		font-size: var(--font-size-md);
+		text-decoration: none;
+	}
+
 	.container {
 		max-width: 900px;
 		margin-inline: auto;
@@ -87,6 +61,9 @@
 
 	label {
 		display: block;
+	}
+	h1 {
+		margin-bottom: 2rem;
 	}
 
 	hr {

@@ -5,7 +5,6 @@ import type { PageServerLoad, Actions } from './$types';
 import { bcryptPassword, getPasswordString, log_user_in, normalizeEmail } from '$lib/server/auth';
 import { user } from '../../schema';
 import { db } from '../../hooks.server';
-import { PIN } from '$env/static/private';
 import { check_is_password_valid } from '$lib/utils';
 import { eq } from 'drizzle-orm';
 
@@ -18,13 +17,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 export const actions: Actions = {
 	default: async ({ locals, cookies }) => {
-		const { email, password, code } = locals.form_data;
+		const { email, password } = locals.form_data;
 
-		if (code !== PIN) {
-			return fail(400, {
-				message: 'Invalid Code',
-			});
-		}
 		// basic check
 		const normalized_email = normalizeEmail(email as string);
 		if (!isValidEmail(normalized_email)) {

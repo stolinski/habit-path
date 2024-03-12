@@ -29,9 +29,9 @@ export const authentication: Handle = async ({ event, resolve }) => {
 		event.url.pathname !== '/forgot-password' &&
 		event.url.pathname !== '/set-password' &&
 		event.url.pathname !== '/pwa' &&
-		event.url.pathname !== '/waitlist'
+		event.url.pathname !== '/landing'
 	) {
-		redirect(307, '/waitlist');
+		redirect(307, '/landing');
 	}
 	event.locals.user = user;
 	event.locals.theme = decodeURIComponent(cookies.get('theme') || 'system');

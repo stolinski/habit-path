@@ -17,7 +17,7 @@
 <div class="button_theme_wrapper button-{data.user_button_theme}">
 	<div id="theme-wrapper" class="theme_wrapper {data.user_theme}">
 		<div class="app-rap {app.mode}">
-			{#if !data.url.includes('waitlist') && app.mode !== 'REORDER'}
+			{#if !data.url.includes('landing') && app.mode !== 'REORDER'}
 				<header>
 					<h1>
 						<a href="/">
@@ -45,16 +45,16 @@
 				<footer transition:fly={{ opacity: 0, y: '100%' }}>
 					<nav>
 						<ul>
-							<li><a href="/">Home</a></li>
+							<li><a href="/landing">Home</a></li>
+							<li><a href="/">My Habits</a></li>
 							<li><a href="/roadmap">Road Map</a></li>
-							<li><a href="/waitlist">Waitlist</a></li>
 						</ul>
 					</nav>
 				</footer>
 			{/if}
 		</div>
 
-		{#if !data.url.includes('waitlist') && app.window_mode !== 'FOCUS'}
+		{#if !data.url.includes('landing') && app.window_mode !== 'FOCUS'}
 			<MobileNav />
 		{/if}
 	</div>
