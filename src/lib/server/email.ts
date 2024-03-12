@@ -19,7 +19,7 @@ export async function send_waitlist_invite(email: string) {
 	resend.emails.send({
 		from: 'no-reply@habitpath.io',
 		to: email,
-		subject: 'Track your habits now with Habit Path - Habit Path Invite',
+		subject: 'Track your habits now with Habit Path - Habit Path Now Open',
 		html: `<p>
 		Welcome to Habit Path, you can now sign up here: <a href="https://habitpath.io/signup">Habit Path Signup</a>
 		</p>
