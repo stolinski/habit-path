@@ -23,9 +23,15 @@
 		justify-content: space-between;
 		align-self: end;
 		width: 215px;
+		font-family: var(--mono-font-family);
+		font-weight: 100;
+		font-style: italic;
 	}
 	.date_picker {
 		justify-self: center;
+		display: flex;
+		width: 100%;
+		justify-content: center;
 	}
 	.date_picker button {
 		background: transparent;

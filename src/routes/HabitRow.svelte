@@ -86,6 +86,9 @@
 		font-size: 14px;
 		display: flex;
 		gap: 10px;
+		font-family: var(--mono-font-family);
+		font-weight: 100;
+		font-style: italic;
 	}
 
 	.heading {

@@ -73,6 +73,15 @@
 	--fg-sheet: var(--black);
 
 	--heading-font-family: 'Nohemi';
+	--mono-font-family: 'MD IO';
+}
+
+@font-face {
+	font-family: 'Nohemi';
+	src: url('/fonts/Nohemi-VF.ttf') format('truetype');
+	font-weight: 100 900;
+	font-stretch: 75% 125%;
+	font-style: normal;
 }
 
 @font-face {

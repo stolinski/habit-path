@@ -1,7 +1,9 @@
 <h1>Roadmap</h1>
 <ul>
 	<li>Reset Password Flow</li>
-	<li>Streaks</li>
+	<li>OG Image</li>
+	<li>Update Landing page images</li>
+	<li>Streaks - Potentially a premium feature?</li>
 	<li>End of month recaps, kinda like spotify wrapped for the month</li>
 	<li>Fix ui jank in reordering state change</li>
 	<li>User assign colors to habits</li>

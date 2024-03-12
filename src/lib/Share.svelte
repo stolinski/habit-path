@@ -20,7 +20,6 @@
 	// Not being use currently, but will be fun to have soon after bugs are fixed
 	let social_string = $state('');
 
-	$inspect(social_string);
 	$effect(() => {
 		social_string =
 			habit.checks.reduce((accumulator, currentValue, index) => {
