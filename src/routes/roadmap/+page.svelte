@@ -15,17 +15,17 @@
 <h2>Completed</h2>
 
 <ul>
-	<li>Mar 10 2025</li>
+	<li>Mar 10 2024</li>
 	<ul>
 		<li>Adds verify email.</li>
 	</ul>
-	<li>Mar 6 2025</li>
+	<li>Mar 6 2024</li>
 	<ul>
 		<li>Toast system</li>
 		<li>Share your progress and success with the new share button.</li>
 	</ul>
 
-	<li>Mar 1 2025</li>
+	<li>Mar 1 2024</li>
 	<ul>
 		<li>THESE WERE ADDED BEFORE MARCH 1</li>
 		<li>Rewrites theme logic</li>
