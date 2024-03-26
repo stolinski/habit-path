@@ -2,7 +2,12 @@
 	import { enhance } from '$app/forms';
 	import type { ActionResult } from '@sveltejs/kit';
 
-	let { habit_id, i, day, today } = $props<{
+	let {
+		habit_id,
+		i,
+		day,
+		today,
+	}: {
 		habit_id: number;
 		i: number;
 		day: {
@@ -10,7 +15,7 @@
 			is_checked: boolean;
 		};
 		today: Temporal.PlainDate;
-	}>();
+	} = $props();
 
 	// This function rn only run refetch of data if it's not a success
 	async function optimistic_rerender_checks({

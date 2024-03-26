@@ -1,8 +1,8 @@
 import { send_waitlist_invite } from '$lib/server/email';
 import { redirect } from '@sveltejs/kit';
 import { notInArray } from 'drizzle-orm';
-import { db } from '../../../hooks.server';
-import { waitlist } from '../../../schema';
+import { db } from '$src/hooks.server';
+import { waitlist } from '$src/schema';
 
 export const load = async function ({ locals }) {
 	if (locals.user.id !== 1) return redirect(302, '/');

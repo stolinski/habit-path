@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-
-	import type { TransformedHabits } from '../server/data_utils';
-
-	let { habit } = $props<{
+	import type { TransformedHabits } from '$server/data_utils';
+	let {
+		habit,
+	}: {
 		habit: TransformedHabits;
-	}>();
+	} = $props();
 </script>
 
 <div class="heading {app.mode}" data-habit-id-parent={habit.id}>

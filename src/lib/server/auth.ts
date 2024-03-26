@@ -3,8 +3,8 @@ import type { Cookies } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import crypto, { randomBytes } from 'crypto';
 import { eq } from 'drizzle-orm';
-import { db } from '../../hooks.server';
-import { user as schema_user, session } from '../../schema';
+import { db } from '$src/hooks.server';
+import { user as schema_user, session } from '$src/schema';
 import { createTokens } from './jwt';
 import {
 	find_by_session_token,

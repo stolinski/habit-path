@@ -10,8 +10,6 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import { form_data } from 'sk-form-data';
 import * as schema from './schema';
 
-neonConfig.fetchConnectionCache = true;
-
 export const pool = new Pool({ connectionString: DATABASE_URL });
 export const sql = neon(DATABASE_URL);
 export const db = drizzle(sql, { schema });

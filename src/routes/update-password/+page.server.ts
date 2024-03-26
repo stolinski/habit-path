@@ -1,8 +1,13 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { bcryptPassword, getPasswordString, log_user_in, login_with_password, normalizeEmail } from '$lib/server/auth';
-import { db } from '../../hooks.server';
-import { user } from '../../schema';
+import {
+	bcryptPassword,
+	getPasswordString,
+	log_user_in,
+	login_with_password,
+} from '$lib/server/auth';
+import { db } from '$src/hooks.server';
+import { user } from '$src/schema';
 import { eq } from 'drizzle-orm';
 import { check_is_password_valid } from '$lib/utils';
 
@@ -25,7 +30,7 @@ export const actions: Actions = {
 		}
 
 		// basic check
-		if (!check_is_password_valid(new_password)) {
+		if (!check_is_password_valid(new_password as string)) {
 			return fail(400, {
 				message: 'New password does not meet requirements',
 			});
@@ -37,7 +42,10 @@ export const actions: Actions = {
 			});
 		}
 
-		const successful_login = await login_with_password(old_password, locals.user?.email ?? '' as string);
+		const successful_login = await login_with_password(
+			old_password,
+			locals.user?.email ?? ('' as string),
+		);
 
 		if (!successful_login) {
 			return fail(400, {

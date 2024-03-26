@@ -3,8 +3,8 @@ import { isValidEmail } from '$lib/server/email';
 
 import type { PageServerLoad, Actions } from './$types';
 import { bcryptPassword, getPasswordString, log_user_in, normalizeEmail } from '$lib/server/auth';
-import { user } from '../../schema';
-import { db } from '../../hooks.server';
+import { user } from '$src/schema';
+import { db } from '$src/hooks.server';
 import { check_is_password_valid } from '$lib/utils';
 import { eq } from 'drizzle-orm';
 

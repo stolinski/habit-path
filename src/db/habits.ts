@@ -1,6 +1,6 @@
 import { asc, between, eq } from 'drizzle-orm';
 import { transform_habits } from '../server/data_utils';
-import { checks, habits } from '../schema';
+import { checks, habits } from '$src/schema';
 import { get_param_date } from '$lib/utils';
 import { db } from '../hooks.server';
 

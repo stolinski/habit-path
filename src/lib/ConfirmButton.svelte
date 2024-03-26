@@ -2,7 +2,7 @@
 	import Modal from './Modal.svelte';
 
 	let {
-		action = (() => void),
+		action = () => {},
 		title = '',
 		description = '',
 		cancelText = 'Cancel',
@@ -11,7 +11,6 @@
 		disabled = false,
 		isConfirmActive = false,
 	} = $props();
-
 </script>
 
 <button

@@ -1,18 +1,19 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { habits } from '../schema';
-	import type { ActionData } from './$types';
+	import { habits } from '$src/schema';
+	import type { ActionData } from '../routes/(app)/$types';
+
 	const {
 		form,
 		habit,
 		mobile = false,
 		onfinish = () => {},
-	} = $props<{
+	}: {
 		form: ActionData | null;
 		habit?: typeof habits.$inferSelect;
 		mobile?: boolean;
 		onfinish?: () => any;
-	}>();
+	} = $props();
 	let loading = $state(false);
 </script>
 
