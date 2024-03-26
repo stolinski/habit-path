@@ -2,8 +2,8 @@ import { normalizeEmail } from '$lib/server/auth';
 import { send_reset_password_email } from '$lib/server/email';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import { db } from '../../hooks.server';
-import { user } from '../../schema';
+import { db } from '$src/hooks.server';
+import { user } from '$src/schema';
 
 export const load = async function ({ locals }) {
 	if (locals.user?.id) return redirect(302, '/');

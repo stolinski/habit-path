@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 
+	// TODO send email to all users in waitlist who haven't signed up
+	// TODO make this more of a data center
+	// show how many users, what their level of engagement is
+	// Users who signed up for waitlist but never signed up for app.
 	const { data } = $props();
 </script>
 

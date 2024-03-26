@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
-import { db } from '../../hooks.server';
-import { session, user } from '../../schema';
+import { db } from '$src/hooks.server';
+import { session, user } from '$src/schema';
 import { decodeAccessToken } from './jwt';
 
 export async function resume_session(access_token: string) {

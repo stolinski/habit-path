@@ -1,9 +1,9 @@
-import { PIN, RESEND_TOKEN, TOKEN_SECRET } from '$env/static/private';
+import { RESEND_TOKEN, TOKEN_SECRET } from '$env/static/private';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { Resend } from 'resend';
-import { db } from '../../hooks.server';
-import { user, waitlist } from '../../schema';
+import { db } from '$src/hooks.server';
+import { user, waitlist } from '$src/schema';
 
 const resend = new Resend(RESEND_TOKEN);
 

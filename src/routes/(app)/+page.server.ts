@@ -1,7 +1,7 @@
 import { and, asc, between, count, eq } from 'drizzle-orm';
-import { db } from '../hooks.server';
-import { checks, habits } from '../schema';
-import { transform_habits, update_habits_order } from '../server/data_utils';
+import { db } from '$src/hooks.server';
+import { checks, habits } from '$src/schema';
+import { transform_habits, update_habits_order } from '$server/data_utils';
 import { fail } from '@sveltejs/kit';
 import { iso_to_plain_date, get_param_date } from '$lib/utils';
 

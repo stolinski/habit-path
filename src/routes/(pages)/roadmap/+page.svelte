@@ -1,13 +1,13 @@
 <h1>Roadmap</h1>
 <ul>
-	<li>Reset Password Flow</li>
 	<li>OG Image</li>
+	<li>Plus Signup Flow w/ Revenue Cat</li>
+	<li>Reset Password Flow</li>
 	<li>Update Landing page images</li>
-	<li>Streaks - Potentially a premium feature?</li>
 	<li>End of month recaps, kinda like spotify wrapped for the month</li>
-	<li>Fix ui jank in reordering state change</li>
-	<li>User assign colors to habits</li>
-	<li>Add server side caching</li>
+	<li>Stats (Plus)</li>
+	<li>User assign colors to habits (Plus)</li>
+	<li>Streaks (Plus)</li>
 	<li>Year view for all habits at once - Shader</li>
 	<li>iOS/Android App via Tauri</li>
 </ul>
@@ -15,6 +15,17 @@
 <h2>Completed</h2>
 
 <ul>
+	<li>Mar 25 2024</li>
+	<ul>
+		<li>Fix ui jank in reordering state change</li>
+		<li>Complete re-write of route organization</li>
+		<li>Begins work on stats</li>
+		<li>Svelte $bindable added</li>
+	</ul>
+	<li>Mar 15 2024</li>
+	<ul>
+		<li>Major CSS Rewrite</li>
+	</ul>
 	<li>Mar 10 2024</li>
 	<ul>
 		<li>Adds verify email.</li>

@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
-import { db } from '../../../hooks.server';
-import { habits } from '../../../schema';
+import { db } from '$src/hooks.server';
+import { habits } from '$src/schema';
 
 export const load = async ({ locals, params }) => {
 	const data = await db.query.habits.findFirst({

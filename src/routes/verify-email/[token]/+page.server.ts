@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
-import { db } from '../../../hooks.server';
-import { user } from '../../../schema';
+import { db } from '$src/hooks.server';
+import { user } from '$src/schema';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const load = async ({ params }) => {

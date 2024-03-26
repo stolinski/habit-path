@@ -4,17 +4,21 @@
 	import { toggle_values } from '$lib/utils';
 	import { tick } from 'svelte';
 	import { fly } from 'svelte/transition';
-	import type { TransformedHabits } from '../server/data_utils';
 	import type { ActionData } from './$types';
-	import HabitForm from './HabitForm.svelte';
+	import HabitForm from '../../lib/HabitForm.svelte';
 	import Portal from '$lib/Portal.svelte';
 	import Drawer from '$lib/Drawer.svelte';
+	import type { TransformedHabits } from '$server/data_utils';
 
-	let { form, habits, clean_habits } = $props<{
+	let {
+		form,
+		habits = $bindable(),
+		clean_habits,
+	}: {
 		form: ActionData;
 		habits: TransformedHabits[];
 		clean_habits: TransformedHabits[];
-	}>();
+	} = $props();
 	let status = $state<'OPEN' | 'CLOSED'>('CLOSED');
 
 	function toggle_drawer() {
@@ -24,17 +28,18 @@
 	function getOrderedHabitIds() {
 		// Select the #visible_habits container
 		const container = document.querySelector('#reorder_habits');
+		if (container) {
+			// Find all elements with 'data-habit-id-parent' within the container
+			const elements = container.querySelectorAll('[data-habit-id-parent]');
 
-		// Find all elements with 'data-habit-id-parent' within the container
-		const elements = container.querySelectorAll('[data-habit-id-parent]');
+			// Extract the IDs and store them in an array
+			const habitIds = Array.from(elements).map((el) =>
+				parseInt(el.getAttribute('data-habit-id-parent')),
+			);
 
-		// Extract the IDs and store them in an array
-		const habitIds = Array.from(elements).map((el) =>
-			parseInt(el.getAttribute('data-habit-id-parent')),
-		);
-
-		// Return the array of IDs
-		return habitIds;
+			// Return the array of IDs
+			return habitIds;
+		}
 	}
 
 	function sort_root_habits(habit_array: TransformedHabits[], id_array: number[]) {

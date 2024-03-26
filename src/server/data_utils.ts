@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 import { db } from '../hooks.server';
-import { checks, habits } from '../schema';
+import { checks, habits } from '$src/schema';
 
 // Save Habits new order after a reorder sequence
 export async function update_habits_order(users_habits: string[] | number[], user_id: number) {

@@ -1,8 +1,9 @@
 import { fail } from '@sveltejs/kit';
-import { db } from '../../hooks.server';
-import { waitlist } from '../../schema';
+
 import { normalizeEmail } from '$lib/server/auth';
 import { isValidEmail } from '$lib/server/email';
+import { waitlist } from '$src/schema';
+import { db } from '$src/hooks.server';
 
 export const actions = {
 	async default({ locals }) {

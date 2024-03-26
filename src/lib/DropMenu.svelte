@@ -10,18 +10,22 @@
 	import Trash from './Trash.svelte';
 	import { click_outside } from './click_outside';
 	import { app } from './state.svelte';
-	import HabitForm from '../routes/HabitForm.svelte';
-	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
+	import HabitForm from './HabitForm.svelte';
 	import Portal from './Portal.svelte';
 	import Drawer from './Drawer.svelte';
-	import type { TransformedHabits } from '../server/data_utils';
+	import type { TransformedHabits } from '$server/data_utils';
 	import Share from './Share.svelte';
+	import type { ActionData } from '../routes/(app)/$types';
 
-	const { form, habit, active_date } = $props<{
+	const {
+		form,
+		habit,
+		active_date,
+	}: {
 		form: ActionData;
 		habit: TransformedHabits;
 		active_date: string;
-	}>();
+	} = $props();
 
 	let menu_status = $state<'HIDDEN' | 'VISIBLE' | 'REORDER' | 'DELETE' | 'EDIT'>('HIDDEN');
 	let thinking = $state(false);

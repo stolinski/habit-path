@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import Portal from './Portal.svelte';
-	let { active } = $props<{ active: boolean }>();
+	let { active = $bindable<boolean>(false) } = $props();
 
 	function closeModal() {
 		active = !active;

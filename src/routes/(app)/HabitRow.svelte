@@ -4,19 +4,23 @@
 	import { app } from '$lib/state.svelte';
 	import { get_circular_array_item } from '$lib/utils.js';
 	import { fade } from 'svelte/transition';
-
-	import type { TransformedHabits } from '../server/data_utils';
 	import DailyButton from './DailyButton.svelte';
-	import type { ActionData } from '../../.svelte-kit/types/src/routes/$types';
+	import type { ActionData } from './$types';
+	import type { TransformedHabits } from '$server/data_utils';
 
 	const today = Temporal.Now.plainDateISO();
 
-	let { form, row, habit, active_date } = $props<{
+	let {
+		form,
+		row,
+		habit,
+		active_date,
+	}: {
 		form: ActionData;
 		row: number;
 		habit: TransformedHabits;
 		active_date: string;
-	}>();
+	} = $props();
 </script>
 
 <div class="heading {app.mode}" data-habit-id-parent={habit.id}>

@@ -2,7 +2,7 @@
 	import DatePicker from '$lib/DatePicker.svelte';
 	import { app } from '$lib/state.svelte';
 	import { fly } from 'svelte/transition';
-	import '../style.css';
+	import '../../style.css';
 	import MobileNav from './MobileNav.svelte';
 	import { Toaster } from 'svelte-french-toast';
 	import Verify from '$lib/Verify.svelte';
@@ -30,28 +30,15 @@
 							</svg>
 						</a>
 					</h1>
-					{#if !data.url.includes('signup') && !data.url.includes('login') && !data.url.includes('roadmap') && !data.url.includes('pwa')}
-						<DatePicker start_date={Temporal.PlainDate.from(data.active_date)} />
-						<a href="/user" class="user_menu">{data.user?.email[0]}</a>
-					{/if}
+
+					<DatePicker start_date={Temporal.PlainDate.from(data.active_date)} />
+					<a href="/user" class="user_menu">{data.user?.email[0]}</a>
 				</header>
 			{/if}
 
 			<main>
 				<slot />
 			</main>
-
-			{#if app.window_mode !== 'FOCUS'}
-				<footer transition:fly={{ opacity: 0, y: '100%' }}>
-					<nav>
-						<ul>
-							<li><a href="/landing">Home</a></li>
-							<li><a href="/">My Habits</a></li>
-							<li><a href="/roadmap">Road Map</a></li>
-						</ul>
-					</nav>
-				</footer>
-			{/if}
 		</div>
 
 		{#if !data.url.includes('landing') && app.window_mode !== 'FOCUS'}
@@ -80,26 +67,6 @@
 				0 2px 3px rgba(255, 255, 255, 0.1),
 				0 -4px 4px rgba(255, 255, 255, 0.04) inset;
 		}
-	}
-
-	footer {
-		background: var(--shade);
-		padding: 40px 40px 100px;
-		margin-top: auto;
-	}
-
-	footer a {
-		color: var(--fg);
-	}
-
-	footer ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	footer li {
-		font-size: var(--font-size-sm);
 	}
 
 	h1 {
